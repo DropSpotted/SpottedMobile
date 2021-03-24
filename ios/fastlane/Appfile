@@ -1,0 +1,18 @@
+for_platform :ios do
+    team_id ENV['APP_STORE_CONNECT_TEAM_ID']
+    for_lane :build_fad_ios_alpha do
+        app_identifier 'com.michalsokol.spotted.alpha'
+    end
+
+    for_lane :build_fad_ios_beta do
+        app_identifier 'com.michalsokol.spotted.beta'
+    end
+
+    for_lane :build_fad_ios_production do
+        app_identifier 'com.michalsokol.spotted'
+    end
+
+    for_lane :build_ios_production do
+        app_identifier 'com.michalsokol.spotted'
+    end
+end

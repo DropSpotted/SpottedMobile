@@ -1,0 +1,101 @@
+default_platform(:ios)
+
+require 'securerandom'
+
+# Default temporary keychain password and name, if not included from environment
+TEMP_KEYCHAIN_NAME_DEFAULT = "spotted"
+TEMP_KEYCHAIN_PASSWORD_DEFAULT = SecureRandom.hex
+
+def delete_temp_keychain(name)
+  delete_keychain(
+    name: name
+  ) if File.exist? File.expand_path("~/Library/Keychains/#{name}-db")
+end
+
+# Create the temporary keychain with name and password
+def create_temp_keychain(name, password)
+  create_keychain(
+    name: name,
+    password: password,
+    unlock: false,
+    timeout: false
+  )
+end
+
+# Ensure we have a fresh, empty temporary keychain
+def ensure_temp_keychain(name, password)
+  delete_temp_keychain(name)
+  create_temp_keychain(name, password)
+end
+
+desc "Match appstore certs"
+  lane :doopa do |options|
+    match(
+      type: options[:type],
+      generate_apple_certs: options[:generate_apple_certs],
+      app_identifier: ["com.michalsokol.spotted.alpha"],
+      platform: "ios",
+      git_url: "https://github.com/michcio53/AppleCertificate.git",
+    )
+  end
+
+
+platform :ios do
+  desc "Match App Store Certificates"
+  lane :certificates do |options|
+    match(
+      type: options[:type],
+      generate_apple_certs: options[:generate_apple_certs],
+      app_identifier: ["com.michalsokol.spotted.alpha"],
+      platform: "ios",
+      readonly: true,
+    )
+  end
+  # m.sokol28@icloud.com
+
+  desc "Build & sign iOS Alpha (development) for Firebase App Distribution"
+  lane :build_fad_ios_alpha do
+    before_all do
+      app_store_connect_api_key(
+          key_id: ENV["APP_STORE_CONNECT_API_KEY_ID"],
+          issuer_id: ENV["APP_STORE_CONNECT_API_ISSUER_ID"],
+          key_filepath: "./auth_key.p8",
+          in_house: false,
+      )
+    end
+
+    update_code_signing_settings(
+      use_automatic_signing: false,
+      path: "./Runner.xcodeproj",
+    )
+
+    ensure_temp_keychain(TEMP_KEYCHAIN_NAME_DEFAULT, TEMP_KEYCHAIN_PASSWORD_DEFAULT)
+
+    match(
+      keychain_name: TEMP_KEYCHAIN_NAME_DEFAULT,
+      keychain_password: TEMP_KEYCHAIN_PASSWORD_DEFAULT,
+      readonly: true,
+      type: 'adhoc'
+    )
+
+    build_app(
+      scheme: "development",
+      output_name: "SpottedAlpha.ipa",
+      configuration: "Release-development",
+      export_method: "ad-hoc"
+    )
+
+    delete_temp_keychain(TEMP_KEYCHAIN_NAME_DEFAULT)
+  end
+
+  desc "Deploy a new Alpha (development) version to the Firebase App Distribution"
+  lane :deploy_fad_ios_alpha do
+    firebase_app_distribution(
+      app: ENV['DEVELOPMENT_IOS_FIREBASE_APP_ID'],
+      ipa_path: "./SpottedAlpha.ipa",
+      groups: "beta-testers",
+      release_notes: ""
+    )
+  end
+
+end
