@@ -7,7 +7,7 @@ on:
 
 env:
   flutter_channel: 'stable'
-  flutter_version: '1.22.5'
+  flutter_version: '2.0.1'
 
 jobs:
   build:
@@ -50,6 +50,8 @@ jobs:
       #     flutter build ios --release --flavor development --no-codesign --build-number=${{ github.run_number }}
       - name: Test & Build
         run: |
+          chmod +x build_runner_rebuild.sh
+          ./build_runner_rebuild.sh
           flutter build ios --release --flavor development --no-codesign --build-number=${{ github.run_number }}
       - name: Install Firebase
         run: npm install -g firebase-tools
