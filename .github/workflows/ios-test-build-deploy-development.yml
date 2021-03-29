@@ -3,7 +3,8 @@ name: Build iOS Development
 on:
   push:
     branches:
-      - develop
+      - master
+      # - develop
 
 env:
   flutter_channel: 'stable'

@@ -36,11 +36,54 @@ android {
         versionName flutterVersionName
     }
 
+    signingConfigs {
+        release {
+            storeFile file(System.getenv("UPLOAD_KEYSTORE_FILE") ?: localProperties.getProperty("UPLOAD_KEYSTORE_FILE") ?: "upload-keystore.jks")
+            keyAlias System.getenv("KEYSTORE_KEY_ALIAS") ?: localProperties.getProperty("KEYSTORE_KEY_ALIAS")
+            keyPassword System.getenv("KEYSTORE_KEY_PASSWORD") ?: localProperties.getProperty("KEYSTORE_KEY_PASSWORD")
+            storePassword System.getenv("KEYSTORE_STORE_PASSWORD") ?: localProperties.getProperty("KEYSTORE_STORE_PASSWORD")
+        }
+        debug {
+            storeFile file("${project.rootDir.absolutePath}/debug.keystore")
+            keyAlias "androiddebugkey"
+            keyPassword "android"
+            storePassword "android"
+        }
+    }
+
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
+            signingConfig signingConfigs.release
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
             signingConfig signingConfigs.debug
+            debuggable true
+            minifyEnabled false
+            multiDexEnabled true
+            testCoverageEnabled false
+        }
+    }
+
+    flavorDimensions "app"
+
+    productFlavors {
+        development {
+            dimension "app"
+            resValue "string", "app_name", "Spotted Alpha"
+            applicationIdSuffix ".alpha"
+            versionNameSuffix "-alpha"
+        }
+        staging {
+            dimension "app"
+            resValue "string", "app_name", "Spotted Beta"
+            applicationIdSuffix ".beta"
+            versionNameSuffix "-beta"
+        }
+        production {
+            dimension "app"
+            resValue "string", "app_name", "Spotted"
         }
     }
 }
