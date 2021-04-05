@@ -38,7 +38,7 @@ class PostCreationBloc extends Bloc<PostCreationEvent, PostCreationState> {
     yield state.copyWith(isLoading: false);
 
     final createdPostResponse = await _postService.createPost(
-      PostCreation(body: state.postInput.value, lat: 10.0, lon: 10.0),
+      PostCreation(body: state.postInput.value, lat: event.lon, lon: event.lat),
     );
 
     yield createdPostResponse.fold(

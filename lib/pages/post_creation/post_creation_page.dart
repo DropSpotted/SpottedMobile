@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spotted/common/bloc/geo_manager/geo_manager_bloc.dart';
 import 'package:spotted/common/formz/post_formz.dart';
 import 'package:spotted/injector_container.dart';
 import 'package:spotted/pages/post_creation/bloc/post_creation_bloc.dart';
@@ -15,21 +16,49 @@ class PostCreationPage extends StatelessWidget with AutoRouteWrapper {
 
   @override
   Widget wrappedRoute(BuildContext context) {
-    return BlocProvider(
-      create: (context) => sl<PostCreationBloc>(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => sl<GeoManagerBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => sl<PostCreationBloc>(),
+          child: this,
+        ),
+      ],
       child: this,
     );
+    // return BlocProvider(
+    //   create: (context) => sl<PostCreationBloc>(),
+    //   child: this,
+    // );
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<PostCreationBloc, PostCreationState>(
-      listener: (context, state) {
-        if (state.isSuccess && onSuccess != null) {
-          onSuccess!();
-          context.router.pop();
-        }
-      },
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<PostCreationBloc, PostCreationState>(
+          listener: (context, state) {
+            if (state.isSuccess && onSuccess != null) {
+              onSuccess!();
+              context.router.pop();
+            }
+          },
+        ),
+        BlocListener<GeoManagerBloc, GeoManagerState>(
+          listener: (context, state) {
+            state.map(
+              initial: (state) {},
+              load: (state) {
+                context.read<PostCreationBloc>()
+                  ..add(PostCreationEvent.submitted(state.geoPosition.latitude, state.geoPosition.longitude));
+              },
+              failure: (state) {},
+            );
+          },
+        )
+      ],
       child: Scaffold(
         appBar: PostCreationAppBar(),
         body: _PostCreationTextField(),
@@ -59,6 +88,7 @@ class _PostCreationTextField extends StatelessWidget {
           maxLines: 100,
           maxLength: 200,
           onChanged: (value) => context.read<PostCreationBloc>()..add(PostCreationEvent.typed(value)),
+          autofocus: true,
           decoration: InputDecoration(
             errorText: _errorText(state.postInput.error),
           ),

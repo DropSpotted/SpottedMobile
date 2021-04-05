@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spotted/common/bloc/geo_manager/geo_manager_bloc.dart';
 import 'package:spotted/pages/post_creation/bloc/post_creation_bloc.dart';
 
 class PostCreationAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -10,7 +11,7 @@ class PostCreationAppBar extends StatelessWidget implements PreferredSizeWidget 
         actions: [
           TextButton(
             onPressed: () {
-              if (!state.lockSubmitButton) context.read<PostCreationBloc>()..add(PostCreationEvent.submitted());
+              if (!state.lockSubmitButton) context.read<GeoManagerBloc>()..add(GeoManagerEvent.currentLocationAsked());
             },
             child: Text('Create!'),
           )

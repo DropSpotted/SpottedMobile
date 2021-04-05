@@ -27,7 +27,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
 
   Stream<DashboardState> _mapStartedToState(_Started event) async* {
     yield state.copyWith(isLoading: true);
-    final response = await _postService.postList(10.0, 10.0);
+    final response = await _postService.postList(event.lat, event.lon);
 
     yield response.fold(
       (l) => state.copyWith(isLoading: false),
