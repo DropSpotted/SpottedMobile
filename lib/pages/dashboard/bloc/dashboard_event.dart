@@ -1,4 +1,6 @@
 part of 'dashboard_bloc.dart';
 
-@immutable
-abstract class DashboardEvent {}
+@freezed
+class DashboardEvent with _$DashboardEvent {
+  const factory DashboardEvent.started() = _Started;
+}

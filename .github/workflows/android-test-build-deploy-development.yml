@@ -3,7 +3,8 @@ name: Build Android Development
 on:
   push:
     branches:
-      - develop
+      - develop_ci
+      # - develop
 
 env:
   flutter_channel: 'stable'
@@ -46,6 +47,8 @@ jobs:
       #     flutter build apk --debug --flavor development --build-number=${{ github.run_number }}
       - name: Test & Build
         run: |
+          chmod +x easy_localization.sh
+          ./easy_localization.sh
           chmod +x build_runner_rebuild.sh
           ./build_runner_rebuild.sh
           flutter build apk --debug --flavor development --build-number=${{ github.run_number }}

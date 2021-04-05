@@ -1,6 +1,14 @@
 part of 'dashboard_bloc.dart';
 
-@immutable
-abstract class DashboardState {}
+@freezed
+class DashboardState with _$DashboardState {
+  const factory DashboardState({
+    required List<Post> posts,
+    required bool isLoading,
+  }) = _DashboardState;
 
-class DashboardInitial extends DashboardState {}
+  factory DashboardState.initial() => DashboardState(
+        isLoading: false,
+        posts: const [],
+      );
+}

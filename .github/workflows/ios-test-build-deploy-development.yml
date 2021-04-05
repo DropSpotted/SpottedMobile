@@ -3,7 +3,7 @@ name: Build iOS Development
 on:
   push:
     branches:
-      - master
+      - develop_ci
       # - develop
 
 env:
@@ -51,6 +51,8 @@ jobs:
       #     flutter build ios --release --flavor development --no-codesign --build-number=${{ github.run_number }}
       - name: Test & Build
         run: |
+          chmod +x easy_localization.sh
+          ./easy_localization.sh
           chmod +x build_runner_rebuild.sh
           ./build_runner_rebuild.sh
           flutter build ios --release --flavor development --no-codesign --build-number=${{ github.run_number }}
