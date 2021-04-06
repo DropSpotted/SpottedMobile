@@ -1,3 +1,3 @@
-enum PermissionErrorCode {
+enum GeoErrorCode {
   denied, deniedForever, geoLocationDisabled
 }

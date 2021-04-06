@@ -5,6 +5,7 @@ import 'package:spotted/common/bloc/geo_manager/geo_manager_bloc.dart';
 import 'package:spotted/injector_container.dart';
 import 'package:spotted/pages/dashboard/bloc/dashboard_bloc.dart';
 import 'package:spotted/router/app_router.gr.dart';
+import 'package:spotted/widgets/geo_use_scaffold.dart';
 
 class DashboardPage extends StatelessWidget with AutoRouteWrapper {
   @override
@@ -35,19 +36,18 @@ class DashboardPage extends StatelessWidget with AutoRouteWrapper {
           failure: (state) {},
         );
       },
-      child: Scaffold(
+      child: GeoUseScaffold(
         appBar: AppBar(actions: [
           TextButton(
             child: Text('Add'),
             onPressed: () => context.router.push(
               PostCreationRoute(
                 onSuccess: () => context.read<GeoManagerBloc>()..add(GeoManagerEvent.currentLocationAsked()),
-                // onSuccess: () => context.read<DashboardBloc>()..add(DashboardEvent.started()),
               ),
             ),
           ),
         ]),
-        body: _DashboardList(),
+        loadedContainer: _DashboardList(),
       ),
     );
   }

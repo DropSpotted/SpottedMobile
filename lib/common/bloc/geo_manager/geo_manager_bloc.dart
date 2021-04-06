@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:geo/error/geo_error.dart';
+import 'package:geo/error/error_code.dart';
 import 'package:geo/model/geo_position.dart';
 import 'package:geo/service/geo_service.dart';
 

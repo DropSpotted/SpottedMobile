@@ -3,7 +3,8 @@ name: Build Android Development
 on:
   push:
     branches:
-      - develop_ci
+      - master
+      # - develop_ci
       # - develop
 
 env:
