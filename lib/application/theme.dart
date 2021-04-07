@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:spotted/application/colorful.dart';
 
 abstract class Palette {
   late Brightness brightness;
@@ -42,7 +43,7 @@ class LightPalette extends Palette {
   @override
   final Color iconColor = const Color(0xff221D35);
   @override
-  final Color scaffoldBackgroundColor = const Color(0xffffffff);
+  final Color scaffoldBackgroundColor = Colorful.linen;
   @override
   final Color textOnPrimaryColor = Colors.white70;
   @override
@@ -117,9 +118,9 @@ class AppTheme {
         brightness: palette.brightness,
         elevation: 0,
         color: palette.appBarBackgroundColor,
-        iconTheme: IconThemeData(),
-        actionsIconTheme: IconThemeData(),
-        // textTheme: _textThemeHandset,
+        iconTheme: const IconThemeData(),
+        actionsIconTheme: const IconThemeData(),
+        textTheme: _textThemeHandset,
       ),
       cardColor: palette.cardColor,
       colorScheme: theme.colorScheme.copyWith(
@@ -132,12 +133,12 @@ class AppTheme {
       ),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: theme.accentColor,
-        selectedIconTheme: IconThemeData(),
-        unselectedIconTheme: IconThemeData(),
+        selectedIconTheme: const IconThemeData(),
+        unselectedIconTheme: const IconThemeData(),
         selectedItemColor: Colors.white,
-        unselectedItemColor: Color(0xff93cb80),
-        selectedLabelStyle: TextStyle(color: Colors.white),
-        unselectedLabelStyle: TextStyle(color: Color(0xff93cb80)),
+        unselectedItemColor: const Color(0xff93cb80),
+        selectedLabelStyle: const TextStyle(color: Colors.white),
+        unselectedLabelStyle: const TextStyle(color: Color(0xff93cb80)),
         showSelectedLabels: true,
         showUnselectedLabels: true,
         type: BottomNavigationBarType.fixed,
@@ -146,65 +147,68 @@ class AppTheme {
   }
 
   TextTheme get _textThemeHandset => TextTheme(
-        headline1: GoogleFonts.abrilFatface(
-          fontSize: 36,
-          fontWeight: FontWeight.w400,
-          letterSpacing: 0.48,
+        headline1: GoogleFonts.manrope(
+          fontSize: 96,
+          fontWeight: FontWeight.w700,
+          letterSpacing: -1.5,
         ),
-        headline2: GoogleFonts.abrilFatface(
-          fontSize: 28,
-          fontWeight: FontWeight.w400,
-          letterSpacing: 0.48,
+        headline2: GoogleFonts.manrope(
+          fontSize: 60,
+          fontWeight: FontWeight.w700,
+          letterSpacing: -1,
         ),
-        headline3: GoogleFonts.abrilFatface(
-          fontSize: 22,
-          fontWeight: FontWeight.w400,
-          letterSpacing: 0.48,
+        headline3: GoogleFonts.manrope(
+          fontSize: 48,
+          fontWeight: FontWeight.w700,
+          letterSpacing: -0.5,
         ),
-        headline5: GoogleFonts.inter(
-          fontSize: 17,
+        headline4: GoogleFonts.manrope(
+          fontSize: 34,
+          fontWeight: FontWeight.w700,
+        ),
+        headline5: GoogleFonts.manrope(
+          fontSize: 24,
+          fontWeight: FontWeight.w700,
+        ),
+        headline6: GoogleFonts.manrope(
+          fontSize: 20,
           fontWeight: FontWeight.w600,
-          letterSpacing: -0.408,
+          letterSpacing: 0.75,
         ),
-        headline6: GoogleFonts.inter(
-          fontSize: 13,
-          fontWeight: FontWeight.w400,
-          letterSpacing: -0.078,
-        ),
-        subtitle1: GoogleFonts.inter(
+        subtitle1: GoogleFonts.manrope(
           fontSize: 16,
-          fontWeight: FontWeight.w500,
-          letterSpacing: 0.32,
+          fontWeight: FontWeight.w600,
+          letterSpacing: 0.5,
         ),
-        subtitle2: GoogleFonts.inter(
-          fontSize: 12,
-          fontWeight: FontWeight.w500,
-          letterSpacing: 0.64,
-        ),
-        bodyText1: GoogleFonts.inter(
-          fontSize: 16,
-          fontWeight: FontWeight.w500,
-          letterSpacing: 0.32,
-        ),
-        bodyText2: GoogleFonts.inter(
+        subtitle2: GoogleFonts.manrope(
           fontSize: 14,
-          fontWeight: FontWeight.w300,
-          letterSpacing: 0.32,
+          fontWeight: FontWeight.w600,
+          letterSpacing: 0.5,
         ),
-        button: GoogleFonts.inter(
-          fontSize: 18,
-          fontWeight: FontWeight.w500,
-          letterSpacing: 0.32,
-        ),
-        caption: GoogleFonts.inter(
-          fontSize: 18,
+        bodyText1: GoogleFonts.manrope(
+          fontSize: 16,
           fontWeight: FontWeight.w400,
-          letterSpacing: 0.32,
+          letterSpacing: 1.68,
         ),
-        overline: GoogleFonts.inter(
+        bodyText2: GoogleFonts.manrope(
+          fontSize: 14,
+          fontWeight: FontWeight.w400,
+          letterSpacing: 1.68,
+        ),
+        button: GoogleFonts.manrope(
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+          letterSpacing: 5,
+        ),
+        caption: GoogleFonts.manrope(
           fontSize: 12,
-          fontWeight: FontWeight.w300,
-          letterSpacing: 0.64,
+          fontWeight: FontWeight.w400,
+          letterSpacing: 3,
+        ),
+        overline: GoogleFonts.manrope(
+          fontSize: 10,
+          fontWeight: FontWeight.w700,
+          letterSpacing: 15,
         ),
       );
 

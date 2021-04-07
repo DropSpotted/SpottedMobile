@@ -50,10 +50,8 @@ class PostCreationPage extends StatelessWidget with AutoRouteWrapper {
           listener: (context, state) {
             state.map(
               initial: (state) {},
-              load: (state) {
-                context.read<PostCreationBloc>()
-                  ..add(PostCreationEvent.submitted(state.geoPosition.latitude, state.geoPosition.longitude));
-              },
+              load: (state) => context.read<PostCreationBloc>()
+                ..add(PostCreationEvent.submitted(state.geoPosition.latitude, state.geoPosition.longitude)),
               failure: (state) {},
             );
           },

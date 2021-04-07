@@ -10,7 +10,7 @@ class PostCreationState with _$PostCreationState {
 
   const PostCreationState._();
 
-  factory PostCreationState.initial() => PostCreationState(
+  factory PostCreationState.initial() => const PostCreationState(
         isLoading: false,
         postInput: PostInput.pure(),
         isSuccess: false,

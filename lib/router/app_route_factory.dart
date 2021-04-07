@@ -14,7 +14,7 @@ class AppRouteFactory {
 
     return MaterialPageRoute(
       settings: settings,
-      builder: (context) => Scaffold(
+      builder: (context) => const Scaffold(
         body: Center(
           child: Text(''),
         ),

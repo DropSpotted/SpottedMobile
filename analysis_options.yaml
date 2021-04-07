@@ -1,0 +1,35 @@
+include: package:pedantic/analysis_options.yaml
+
+linter:
+   rules:
+    - avoid_types_on_closure_parameters
+    - close_sinks
+    - prefer_const_literals_to_create_immutables
+    - cancel_subscriptions
+    - prefer_const_constructors
+    - unnecessary_brace_in_string_interps
+    - unnecessary_statements
+    - sort_constructors_first
+    - sort_unnamed_constructors_first
+    - prefer_final_locals
+    - prefer_const_constructors_in_immutables
+    - prefer_const_declarations
+    - avoid_field_initializers_in_const_classes
+    - use_string_buffers
+    - use_is_even_rather_than_modulo
+    - prefer_is_not_operator
+    - constant_identifier_names
+    - avoid_unused_constructor_parameters
+    - avoid_unnecessary_containers
+    - unnecessary_await_in_return
+
+analyzer:
+  errors:
+    missing_required_param: error
+    missing_return: error
+    must_be_immutable: error
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+    - "**/l10n/*.dart"
+    - "**/environment_config.dart"

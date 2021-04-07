@@ -1,5 +1,3 @@
-import 'package:domain/model/post_creation.dart';
-import 'package:geo/service/geo.dart';
 import 'package:geo/service/geo_service.dart';
 import 'package:get_it/get_it.dart';
 import 'package:spotted/common/bloc/geo_manager/geo_manager_bloc.dart';

@@ -7,8 +7,8 @@ class DashboardState with _$DashboardState {
     required bool isLoading,
   }) = _DashboardState;
 
-  factory DashboardState.initial() => DashboardState(
+  factory DashboardState.initial() => const DashboardState(
         isLoading: false,
-        posts: const [],
+        posts: [],
       );
 }

@@ -14,7 +14,7 @@ class GeoManagerBloc extends Bloc<GeoManagerEvent, GeoManagerState> {
   GeoManagerBloc({
     required GeoService geoService,
   })   : _geoService = geoService,
-        super(_Initial());
+        super(const _Initial());
 
   final GeoService _geoService;
 
@@ -24,7 +24,7 @@ class GeoManagerBloc extends Bloc<GeoManagerEvent, GeoManagerState> {
   }
 
   Stream<GeoManagerState> _mapCurrentLocationAskedToState(_CurrentLocationAsked event) async* {
-    yield _Initial();
+    yield const _Initial();
     final response = await _geoService.currentPosition();
 
     yield response.fold(

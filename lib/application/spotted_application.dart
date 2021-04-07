@@ -1,14 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:spotted/application/theme.dart';
-import 'package:spotted/pages/dashboard/dashboard_page.dart';
-import 'package:spotted/pages/splash/splash_page.dart';
 import 'package:spotted/router/app_route_factory.dart';
 import 'package:spotted/router/app_router.gr.dart';
 import 'package:stacked_themes/stacked_themes.dart';
 
 class SpottedApplication extends StatelessWidget {
-  SpottedApplication({
+  const SpottedApplication({
     required this.appTheme,
     required this.appRouteFactory,
     required this.appRouter,
@@ -22,11 +20,11 @@ class SpottedApplication extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return EasyLocalization(
-      supportedLocales: [
+      supportedLocales: const [
         Locale('en'),
       ],
       path: 'assets/translations',
-      fallbackLocale: Locale('en'),
+      fallbackLocale: const Locale('en'),
       child: ThemeBuilder(
         lightTheme: appTheme.theme(LightPalette()),
         darkTheme: appTheme.theme(LightPalette()),

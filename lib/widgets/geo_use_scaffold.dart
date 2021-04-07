@@ -4,7 +4,7 @@ import 'package:geo/error/error_code.dart';
 import 'package:spotted/common/bloc/geo_manager/geo_manager_bloc.dart';
 
 class GeoUseScaffold extends StatelessWidget {
-  GeoUseScaffold({
+  const GeoUseScaffold({
     required this.loadedContainer,
     this.loadingContainer,
     this.appBar,
@@ -27,7 +27,7 @@ class GeoUseScaffold extends StatelessWidget {
 }
 
 class _GeoUseScaffoldBody extends StatelessWidget {
-  _GeoUseScaffoldBody({
+  const _GeoUseScaffoldBody({
     required this.loadedContainer,
     this.loadingContainer,
   });
@@ -58,9 +58,9 @@ class _GeoLoadingContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Column(
-        children: [
+        children: const [
           CircularProgressIndicator(),
-          Text('Location accessing')
+          Text('Location accessing'),
         ],
       ),
     );
@@ -68,7 +68,7 @@ class _GeoLoadingContainer extends StatelessWidget {
 }
 
 class _GeoFailureContainer extends StatelessWidget {
-  _GeoFailureContainer(this.geoErrorCode);
+  const _GeoFailureContainer(this.geoErrorCode);
 
   final GeoErrorCode geoErrorCode;
 

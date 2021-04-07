@@ -35,6 +35,10 @@ class GeoServiceImpl implements GeoService {
           GeoErrorCode.denied,
         );
       }
+    } else if (permission == GeoLocationPermission.deniedForever) {
+      return left(
+        GeoErrorCode.deniedForever,
+      );
     }
 
     final currentPosition = await _geo.getCurrentPosition();
