@@ -21,6 +21,18 @@ class RoundedTextButton extends StatelessWidget {
     );
   }
 
+  factory RoundedTextButton.blue({
+    Function()? onPressed,
+    required String text,
+  }) {
+    return RoundedTextButton(
+      onPressed: onPressed,
+      text: text,
+      textColor: Colorful.white,
+      backgroundColor: Colorful.toryBlue,
+    );
+  }
+
   final Function()? onPressed;
   final String text;
   final Color textColor;

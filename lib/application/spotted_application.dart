@@ -16,7 +16,6 @@ class SpottedApplication extends StatelessWidget {
   final AppRouteFactory appRouteFactory;
   final AppRouter appRouter;
 
-
   @override
   Widget build(BuildContext context) {
     return EasyLocalization(
@@ -38,18 +37,18 @@ class SpottedApplication extends StatelessWidget {
             themeMode: themeMode,
             routerDelegate: appRouter.delegate(),
             routeInformationParser: appRouter.defaultRouteParser(),
+            builder: (context, child) {
+              final mediaQueryData = MediaQuery.of(context);
+
+              final constrainedTextScaleFactor = mediaQueryData.textScaleFactor.clamp(1.0, 1.5);
+              return MediaQuery(
+                data: mediaQueryData.copyWith(
+                  textScaleFactor: constrainedTextScaleFactor,
+                ),
+                child: child!,
+              );
+            },
           );
-          // return MaterialApp(
-          //   localizationsDelegates: context.localizationDelegates,
-          //   supportedLocales: context.supportedLocales,
-          //   locale: context.locale,
-          //   home: DashboardPage(),
-          //   theme: regularTheme,
-          //   darkTheme: darkTheme,
-          //   themeMode: themeMode,
-          //   // initialRoute: SplashPage.routeName,
-          //   onGenerateRoute: appRouteFactory.route,
-          // );
         },
       ),
     );

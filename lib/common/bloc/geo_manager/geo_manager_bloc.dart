@@ -24,12 +24,11 @@ class GeoManagerBloc extends Bloc<GeoManagerEvent, GeoManagerState> {
   }
 
   Stream<GeoManagerState> _mapCurrentLocationAskedToState(_CurrentLocationAsked event) async* {
-    yield const _Initial();
     final response = await _geoService.currentPosition();
 
     yield response.fold(
       (error) => GeoManagerState.failure(error),
-      (position) => GeoManagerState.load(position),
+      (position) => GeoManagerState.load(position, event.includeChildLoading),
     );
   }
 }

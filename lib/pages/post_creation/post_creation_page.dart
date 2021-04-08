@@ -28,10 +28,6 @@ class PostCreationPage extends StatelessWidget with AutoRouteWrapper {
       ],
       child: this,
     );
-    // return BlocProvider(
-    //   create: (context) => sl<PostCreationBloc>(),
-    //   child: this,
-    // );
   }
 
   @override

@@ -55,7 +55,7 @@ class LightPalette extends Palette {
   @override
   final Color primaryTextDisplayColor = Colors.black;
   @override
-  final Color appBarBackgroundColor = Colors.grey.shade50;
+  final Color appBarBackgroundColor = Colorful.linen;
 }
 
 class DarkPalette extends Palette {
@@ -100,14 +100,14 @@ class AppTheme {
       primarySwatch: generateMaterialColor(palette.primaryColor),
       accentColor: palette.accentColor,
       visualDensity: VisualDensity.adaptivePlatformDensity,
-      // primaryTextTheme: _textThemeHandset.apply(
-      //   bodyColor: palette.primaryTextBodyColor,
-      //   displayColor: palette.primaryTextDisplayColor,
-      // ),
-      // textTheme: _textThemeHandset.apply(
-      //   bodyColor: palette.primaryTextBodyColor,
-      //   displayColor: palette.primaryTextDisplayColor,
-      // ),
+      primaryTextTheme: _textThemeHandset.apply(
+        bodyColor: palette.primaryTextBodyColor,
+        displayColor: palette.primaryTextDisplayColor,
+      ),
+      textTheme: _textThemeHandset.apply(
+        bodyColor: palette.primaryTextBodyColor,
+        displayColor: palette.primaryTextDisplayColor,
+      ),
       canvasColor: palette.scaffoldBackgroundColor,
       backgroundColor: palette.scaffoldBackgroundColor,
       scaffoldBackgroundColor: palette.scaffoldBackgroundColor,

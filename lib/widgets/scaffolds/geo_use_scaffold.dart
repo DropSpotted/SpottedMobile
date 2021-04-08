@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geo/error/error_code.dart';
 import 'package:spotted/common/bloc/geo_manager/geo_manager_bloc.dart';
+import 'package:spotted/widgets/containers/geo_disabled_container.dart';
 
 class GeoUseScaffold extends StatelessWidget {
   const GeoUseScaffold({
@@ -43,27 +44,13 @@ class _GeoUseScaffoldBody extends StatelessWidget {
           if (loadingContainer != null) {
             return loadingContainer!;
           } else {
-            return _GeoLoadingContainer();
+            return const SizedBox();
           }
         },
         load: (state) => loadedContainer,
         failure: (state) => _GeoFailureContainer(state.geoError),
       );
     });
-  }
-}
-
-class _GeoLoadingContainer extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        children: const [
-          CircularProgressIndicator(),
-          Text('Location accessing'),
-        ],
-      ),
-    );
   }
 }
 
@@ -74,18 +61,13 @@ class _GeoFailureContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text(() {
-        switch (geoErrorCode) {
-          case GeoErrorCode.denied:
-            return 'Permission Denied';
-          case GeoErrorCode.deniedForever:
-            return 'Permission Denied Forever go to settings';
-
-          case GeoErrorCode.geoLocationDisabled:
-            return 'Location Disabled go to settings';
-        }
-      }()),
-    );
+    switch (geoErrorCode) {
+      case GeoErrorCode.denied:
+        return GeoDisabledContainer.denied();
+      case GeoErrorCode.deniedForever:
+        return GeoDisabledContainer.deniedForever();
+      case GeoErrorCode.geoLocationDisabled:
+        return GeoDisabledContainer.locationDisabled();
+    }
   }
 }

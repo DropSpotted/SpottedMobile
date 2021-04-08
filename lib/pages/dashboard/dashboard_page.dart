@@ -1,5 +1,4 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:domain/model/post.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,7 +7,8 @@ import 'package:spotted/common/bloc/geo_manager/geo_manager_bloc.dart';
 import 'package:spotted/injector_container.dart';
 import 'package:spotted/pages/dashboard/bloc/dashboard_bloc.dart';
 import 'package:spotted/router/app_router.gr.dart';
-import 'package:spotted/widgets/geo_use_scaffold.dart';
+import 'package:spotted/widgets/scaffolds/geo_use_scaffold.dart';
+import 'package:spotted/widgets/tiles/card_tile.dart';
 
 class DashboardPage extends StatelessWidget with AutoRouteWrapper {
   @override
@@ -33,7 +33,7 @@ class DashboardPage extends StatelessWidget with AutoRouteWrapper {
         state.map(
           initial: (state) {},
           load: (state) => context.read<DashboardBloc>()
-            ..add(DashboardEvent.started(state.geoPosition.latitude, state.geoPosition.longitude)),
+            ..add(DashboardEvent.started(state.geoPosition.latitude, state.geoPosition.longitude, state.includeChildLoading)),
           failure: (state) {},
         );
       },
@@ -67,57 +67,17 @@ class _DashboardList extends StatelessWidget {
           );
         } else {
           return RefreshIndicator(
-            onRefresh: () async => context.read<GeoManagerBloc>()..add(const GeoManagerEvent.currentLocationAsked()),
+            onRefresh: () async => context.read<GeoManagerBloc>()..add(const GeoManagerEvent.currentLocationAsked(false)),
             child: ListView.builder(
-              padding: const EdgeInsets.symmetric(horizontal: Insets.medium),
+              padding: const EdgeInsets.symmetric(horizontal: Insets.small),
               itemBuilder: (context, index) {
-                return _CardItem(post: state.posts[index]);
+                return CardTile(post: state.posts[index]);
               },
               itemCount: state.posts.length,
             ),
           );
         }
       },
-    );
-  }
-}
-
-class _CardItem extends StatelessWidget {
-  const _CardItem({
-    required this.post,
-  });
-
-  final Post post;
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12.0),
-        side: BorderSide(color: Color(0xffC0C0C0)),
-      ),
-      elevation: 0,
-      child: Padding(
-        padding: EdgeInsets.all(Insets.large),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Text(
-                  post.createdAt.toString(),
-                  style: Theme.of(context).textTheme.caption,
-                ),
-              ],
-            ),
-            SizedBox(height: Insets.xSmall),
-            Text(
-              post.body,
-              style: Theme.of(context).textTheme.bodyText1,
-            )
-          ],
-        ),
-      ),
     );
   }
 }
