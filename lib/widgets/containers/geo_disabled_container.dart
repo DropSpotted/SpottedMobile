@@ -72,7 +72,11 @@ class GeoDisabledContainer extends StatelessWidget {
 }
 
 class _IconContainer extends StatelessWidget {
-  _IconContainer({required this.backgroundColor, required this.icon, required this.iconColor,})
+  const _IconContainer({
+    required this.backgroundColor,
+    required this.icon,
+    required this.iconColor,
+  });
 
   final Color backgroundColor;
   final Color iconColor;
@@ -80,7 +84,10 @@ class _IconContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    return Container(
+      height: 120,
+      width: 120,
+      
+    );
   }
 }
