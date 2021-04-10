@@ -1,4 +1,13 @@
 {
     "app_name": "Spotted",
-    "splash": "Splash"
+    "splash": "Splash",
+    "location_denied": "Location denied",
+    "location_disabled": "Location disabled",
+    "go_to_settings": "Go To Settings",
+    "go_to_settings_and_update_permission": "Go to settings and update permission",
+    "go_to_settings_and_enable_location": "Go to settings and enable location",
+    "post_cannot_be_empty": "Post cannot be empty",
+    "post_cannot_have_more_than": "Post have to many chars",
+    "what_are_you_thinking_about_now": "What are you thinking about now?",
+    "add": "Add"
 }

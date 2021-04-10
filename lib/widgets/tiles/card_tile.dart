@@ -12,16 +12,17 @@ class CardTile extends StatelessWidget {
 
   final Post post;
 
-  static const double _borderRadius = 12.0;
+  static const double _borderRadius = 6.0;
+  static const double _cardElevation = 0.3;
 
   @override
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(_borderRadius),
-        side: const BorderSide(color: Colorful.silver),
+        // side: const BorderSide(color: Colorful.silver),
       ),
-      elevation: 0,
+      elevation: _cardElevation,
       child: Padding(
         padding: const EdgeInsets.all(Insets.large),
         child: Column(

@@ -20,7 +20,10 @@ class GeoManagerBloc extends Bloc<GeoManagerEvent, GeoManagerState> {
 
   @override
   Stream<GeoManagerState> mapEventToState(GeoManagerEvent event) async* {
-    yield* event.map(currentLocationAsked: _mapCurrentLocationAskedToState);
+    yield* event.map(
+        currentLocationAsked: _mapCurrentLocationAskedToState,
+        settingsOpened: _mapSettingsOpenedToState,
+        locationOpened: _mapLocationOpenedToState);
   }
 
   Stream<GeoManagerState> _mapCurrentLocationAskedToState(_CurrentLocationAsked event) async* {
@@ -30,5 +33,13 @@ class GeoManagerBloc extends Bloc<GeoManagerEvent, GeoManagerState> {
       (error) => GeoManagerState.failure(error),
       (position) => GeoManagerState.load(position, event.includeChildLoading),
     );
+  }
+
+  Stream<GeoManagerState> _mapSettingsOpenedToState(_SettingsOpened event) async* {
+    await _geoService.openAppSettings();
+  }
+
+  Stream<GeoManagerState> _mapLocationOpenedToState(_LocationOpened event) async* {
+    await _geoService.openLocationSettings();
   }
 }

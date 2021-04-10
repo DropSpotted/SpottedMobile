@@ -1,8 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spotted/application/dimen.dart';
 import 'package:spotted/common/bloc/geo_manager/geo_manager_bloc.dart';
 import 'package:spotted/common/formz/post_formz.dart';
+import 'package:spotted/generated/easy_localization_export.dart';
 import 'package:spotted/injector_container.dart';
 import 'package:spotted/pages/post_creation/bloc/post_creation_bloc.dart';
 import 'package:spotted/pages/post_creation/widgets/post_creation_app_bar.dart';
@@ -62,29 +64,44 @@ class PostCreationPage extends StatelessWidget with AutoRouteWrapper {
 }
 
 class _PostCreationTextField extends StatelessWidget {
-  String? _errorText(PostInputError? postInputError) {
-    switch (postInputError) {
-      case PostInputError.empty:
-        return 'Empty';
-      case PostInputError.toManyCharacters:
-        return 'To much chars!';
-      default:
-        return null;
+  static const int _maxLength = 200;
+  static const int _maxLines = 100;
+  static const bool _autofocus = true;
+
+  String? _errorText(PostInputError? postInputError, bool invalid) {
+    if (invalid) {
+      switch (postInputError) {
+        case PostInputError.empty:
+          return LocaleKeys.post_cannot_be_empty.tr();
+        case PostInputError.toManyCharacters:
+          return LocaleKeys.post_cannot_have_more_than.tr();
+        default:
+          return null;
+      }
+    } else {
+      return null;
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<PostCreationBloc, PostCreationState>(
+      buildWhen: (previous, current) => previous.postInput != current.postInput,
       builder: (context, state) {
-        return TextField(
-          keyboardType: TextInputType.multiline,
-          maxLines: 100,
-          maxLength: 200,
-          onChanged: (value) => context.read<PostCreationBloc>()..add(PostCreationEvent.typed(value)),
-          autofocus: true,
-          decoration: InputDecoration(
-            errorText: _errorText(state.postInput.error),
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: Insets.medium, vertical: Insets.small),
+          child: TextField(
+            keyboardType: TextInputType.multiline,
+            maxLines: _maxLines,
+            maxLength: _maxLength,
+            onChanged: (value) => context.read<PostCreationBloc>()..add(PostCreationEvent.typed(value)),
+            autofocus: _autofocus,
+            textCapitalization: TextCapitalization.sentences,
+            textInputAction: TextInputAction.newline,
+            decoration: InputDecoration(
+              errorText: _errorText(state.postInput.error, state.postInput.invalid),
+              hintText: LocaleKeys.what_are_you_thinking_about_now.tr(),
+            ),
           ),
         );
       },

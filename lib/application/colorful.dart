@@ -10,4 +10,8 @@ extension Colorful on Colors {
   static const Color toryBlue = Color(0xff0F56B3);
   static const Color gray = Color(0xff818181);
   static const Color tundora = Color(0xff414141);
+  static const Color razzmatazz = Color(0xffE1125E);
+  static const Color cinderella = Color(0xffFCD0CF);
+  static const Color wildSand = Color(0xffF6F6F6);
+  static const Color flamingo = Color(0xffF5413D);
 }

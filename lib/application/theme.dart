@@ -43,7 +43,7 @@ class LightPalette extends Palette {
   @override
   final Color iconColor = const Color(0xff221D35);
   @override
-  final Color scaffoldBackgroundColor = Colorful.linen;
+  final Color scaffoldBackgroundColor = Colorful.wildSand;
   @override
   final Color textOnPrimaryColor = Colors.white70;
   @override
@@ -55,7 +55,7 @@ class LightPalette extends Palette {
   @override
   final Color primaryTextDisplayColor = Colors.black;
   @override
-  final Color appBarBackgroundColor = Colorful.linen;
+  final Color appBarBackgroundColor = Colors.transparent;
 }
 
 class DarkPalette extends Palette {
@@ -143,6 +143,11 @@ class AppTheme {
         showUnselectedLabels: true,
         type: BottomNavigationBarType.fixed,
       ),
+      inputDecorationTheme: InputDecorationTheme(
+        errorStyle: _textThemeHandset.caption?.copyWith(
+          color: Colorful.flamingo,
+        ),
+      ),
     );
   }
 
@@ -212,8 +217,7 @@ class AppTheme {
         ),
       );
 
-  MaterialColor generateMaterialColor(Color color) =>
-      MaterialColor(color.value, {
+  MaterialColor generateMaterialColor(Color color) => MaterialColor(color.value, {
         50: tintColor(color, 0.9),
         100: tintColor(color, 0.8),
         200: tintColor(color, 0.6),

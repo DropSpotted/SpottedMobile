@@ -45,4 +45,14 @@ class GeoServiceImpl implements GeoService {
 
     return right(currentPosition);
   }
+
+  @override
+  Future<bool> openAppSettings() async {
+    return _geo.openAppSettings();
+  }
+
+  @override
+  Future<bool> openLocationSettings() async {
+    return _geo.openLocationSettings();
+  }
 }

@@ -18,13 +18,40 @@ class GeoUseScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar,
+      appBar: _GeoUsScaffoldAppBar(appBar),
       body: _GeoUseScaffoldBody(
         loadedContainer: loadedContainer,
         loadingContainer: loadingContainer,
       ),
     );
   }
+}
+
+class _GeoUsScaffoldAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const _GeoUsScaffoldAppBar(this.appBar);
+
+  final PreferredSizeWidget? appBar;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<GeoManagerBloc, GeoManagerState>(
+      builder: (context, state) {
+        return state.maybeMap(
+          load: (state) {
+            if(appBar != null) {
+              return appBar!;
+            } else {
+              return const SizedBox();
+            }
+          },
+          orElse: () => const SizedBox(),
+        );
+      },
+    );
+  }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
 
 class _GeoUseScaffoldBody extends StatelessWidget {
@@ -63,11 +90,17 @@ class _GeoFailureContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     switch (geoErrorCode) {
       case GeoErrorCode.denied:
-        return GeoDisabledContainer.denied();
+        return GeoDisabledContainer.denied(
+          onSettingsButtonPressed: () => context.read<GeoManagerBloc>().add(const GeoManagerEvent.settingsOpened()),
+        );
       case GeoErrorCode.deniedForever:
-        return GeoDisabledContainer.deniedForever();
+        return GeoDisabledContainer.deniedForever(
+          onSettingsButtonPressed: () => context.read<GeoManagerBloc>().add(const GeoManagerEvent.settingsOpened()),
+        );
       case GeoErrorCode.geoLocationDisabled:
-        return GeoDisabledContainer.locationDisabled();
+        return GeoDisabledContainer.locationDisabled(
+          onSettingsButtonPressed: () => context.read<GeoManagerBloc>().add(const GeoManagerEvent.locationOpened()),
+        );
     }
   }
 }

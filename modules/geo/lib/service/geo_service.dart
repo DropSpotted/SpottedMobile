@@ -8,4 +8,8 @@ abstract class GeoService {
   static GeoService create() => GeoServiceImpl(geo: Geo.create());
 
   Future<Either<GeoErrorCode, GeoPosition>> currentPosition();
+
+  Future<bool> openAppSettings();
+
+  Future<bool> openLocationSettings();
 }

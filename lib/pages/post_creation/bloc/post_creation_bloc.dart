@@ -35,7 +35,7 @@ class PostCreationBloc extends Bloc<PostCreationEvent, PostCreationState> {
   }
 
   Stream<PostCreationState> _mapSubmittedToState(_Submitted event) async* {
-    yield state.copyWith(isLoading: false);
+    yield state.copyWith(isLoading: true);
 
     final createdPostResponse = await _postService.createPost(
       PostCreation(body: state.postInput.value, lat: event.lon, lon: event.lat),
