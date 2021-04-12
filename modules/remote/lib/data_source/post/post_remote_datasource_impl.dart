@@ -1,7 +1,9 @@
+import 'package:domain/model/detailed_post.dart';
 import 'package:domain/model/post_creation.dart';
 import 'package:domain/model/post.dart';
 import 'package:dartz/dartz.dart';
 import 'package:remote/data_source/post/model/request/create_post_model.dart';
+import 'package:remote/data_source/post/model/response/detailed_post_model.dart';
 import 'package:remote/data_source/post/post_rest_api.dart';
 import 'package:domain/failure/failure.dart';
 import 'package:dio/src/dio_error.dart';
@@ -30,6 +32,16 @@ class PostRemoteDataSourceImpl implements PostRemoteDataSource {
       final postModelList = await _postRestApi.getPostList(lat, lon);
       final postList = postModelList.map((post) => post.toDomain()).toList();
       return right(postList);
+    } on DioError catch (e) {
+      return left(mapDioFailure(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, DetailedPost>> detailedPost(String id) async {
+    try {
+      final detailedPost = await _postRestApi.getPostById(id);
+      return right(detailedPost.toDomain());
     } on DioError catch (e) {
       return left(mapDioFailure(e));
     }

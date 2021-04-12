@@ -1,15 +1,14 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'post.freezed.dart';
+part 'comment.freezed.dart';
 
 @freezed
-abstract class Post with _$Post {
-   factory Post({
+abstract class Comment with _$Comment {
+   factory Comment({
     required String id,
     required String body,
     required DateTime createdAt,
     required DateTime modifiedAt,
-    required String geoLocationCoords,
-    required int commentsCount,
-  }) = _Post;
+    required String parent,
+  }) = _Comment;
 }

@@ -5,6 +5,7 @@ import 'package:spotted/pages/dashboard/bloc/dashboard_bloc.dart';
 import 'package:domain/domain_injector.dart';
 import 'package:remote/remote_injector.dart';
 import 'package:spotted/pages/post_creation/bloc/post_creation_bloc.dart';
+import 'package:spotted/pages/post_details/bloc/post_details_bloc.dart';
 
 final sl = GetIt.instance;
 
@@ -27,6 +28,11 @@ Future<void> init() async {
     ..registerFactory(
       () => GeoManagerBloc(
         geoService: sl(),
+      ),
+    )
+    ..registerFactory(
+      () => PostDetailsBloc(
+        postService: sl(),
       ),
     );
 }

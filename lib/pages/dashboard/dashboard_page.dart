@@ -33,7 +33,8 @@ class DashboardPage extends StatelessWidget with AutoRouteWrapper {
         state.map(
           initial: (state) {},
           load: (state) => context.read<DashboardBloc>()
-            ..add(DashboardEvent.started(state.geoPosition.latitude, state.geoPosition.longitude, state.includeChildLoading)),
+            ..add(DashboardEvent.started(
+                state.geoPosition.latitude, state.geoPosition.longitude, state.includeChildLoading)),
           failure: (state) {},
         );
       },
@@ -67,11 +68,17 @@ class _DashboardList extends StatelessWidget {
           );
         } else {
           return RefreshIndicator(
-            onRefresh: () async => context.read<GeoManagerBloc>()..add(const GeoManagerEvent.currentLocationAsked(false)),
+            onRefresh: () async =>
+                context.read<GeoManagerBloc>()..add(const GeoManagerEvent.currentLocationAsked(false)),
             child: ListView.builder(
               padding: const EdgeInsets.symmetric(horizontal: Insets.small),
               itemBuilder: (context, index) {
-                return CardTile(post: state.posts[index]);
+                return CardTile(
+                  post: state.posts[index],
+                  onPressed: () => context.router.push(
+                    const PostDetailsRoute(),
+                  ),
+                );
               },
               itemCount: state.posts.length,
             ),

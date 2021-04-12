@@ -30,6 +30,7 @@ dependencies:
   google_fonts: 2.0.0
   stacked_themes: 0.3.0
   pedantic: 1.11.0
+  responsive_framework: 0.1.0
 
   cupertino_icons: ^1.0.2
 
