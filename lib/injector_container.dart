@@ -5,6 +5,7 @@ import 'package:spotted/pages/dashboard/bloc/dashboard_bloc.dart';
 import 'package:domain/domain_injector.dart';
 import 'package:remote/remote_injector.dart';
 import 'package:spotted/pages/post_creation/bloc/post_creation_bloc.dart';
+import 'package:spotted/pages/post_creation/post_creation_arguments.dart';
 import 'package:spotted/pages/post_details/bloc/post_details_bloc.dart';
 
 final sl = GetIt.instance;
@@ -20,8 +21,9 @@ Future<void> init() async {
         postService: sl(),
       ),
     )
-    ..registerFactory(
-      () => PostCreationBloc(
+    ..registerFactoryParam<PostCreationBloc, PostCreationArguments, void>(
+      (arguments, _) => PostCreationBloc(
+        postCreationArguments: arguments!,
         postService: sl(),
       ),
     )

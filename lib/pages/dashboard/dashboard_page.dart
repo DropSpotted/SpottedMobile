@@ -6,9 +6,12 @@ import 'package:spotted/application/dimen.dart';
 import 'package:spotted/common/bloc/geo_manager/geo_manager_bloc.dart';
 import 'package:spotted/injector_container.dart';
 import 'package:spotted/pages/dashboard/bloc/dashboard_bloc.dart';
+import 'package:spotted/pages/post_creation/bloc/post_creation_bloc.dart';
 import 'package:spotted/router/app_router.gr.dart';
 import 'package:spotted/widgets/scaffolds/geo_use_scaffold.dart';
 import 'package:spotted/widgets/tiles/card_tile.dart';
+import 'package:foundation/dates.dart';
+import 'package:spotted/widgets/tiles/post_tile.dart';
 
 class DashboardPage extends StatelessWidget with AutoRouteWrapper {
   @override
@@ -45,7 +48,11 @@ class DashboardPage extends StatelessWidget with AutoRouteWrapper {
               icon: const Icon(Icons.edit_outlined),
               onPressed: () => context.router.push(
                 PostCreationRoute(
-                  onSuccess: () => context.read<GeoManagerBloc>()..add(const GeoManagerEvent.currentLocationAsked()),
+                  onSuccess: () => context.read<GeoManagerBloc>()
+                    ..add(
+                      const GeoManagerEvent.currentLocationAsked(),
+                    ),
+                  creationType: CreationType.post,
                 ),
               ),
             ),
@@ -73,11 +80,11 @@ class _DashboardList extends StatelessWidget {
             child: ListView.builder(
               padding: const EdgeInsets.symmetric(horizontal: Insets.small),
               itemBuilder: (context, index) {
-                return CardTile(
-                  post: state.posts[index],
-                  onPressed: () => context.router.push(
-                    const PostDetailsRoute(),
-                  ),
+                return PostTile(
+                  onTap: () => context.router.push(PostDetailsRoute(postId: state.posts[index].id)),
+                  body: state.posts[index].body,
+                  creationDate: state.posts[index].createdAt,
+                  commentCount: state.posts[index].commentsCount,
                 );
               },
               itemCount: state.posts.length,

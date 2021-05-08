@@ -29,7 +29,7 @@ class PostDetailsBloc extends Bloc<PostDetailsEvent, PostDetailsState> {
       yield const PostDetailsState.inProgress();
     }
 
-    final response = await _postService.detailedPost('');
+    final response = await _postService.detailedPost(event.postId);
 
     yield response.fold(
       (l) => const PostDetailsState.failure(),

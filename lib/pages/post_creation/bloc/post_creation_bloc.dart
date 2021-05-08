@@ -5,6 +5,7 @@ import 'package:domain/model/post_creation.dart';
 import 'package:domain/service/post/post_service.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:spotted/common/formz/post_formz.dart';
+import 'package:spotted/pages/post_creation/post_creation_arguments.dart';
 
 part 'post_creation_event.dart';
 part 'post_creation_state.dart';
@@ -13,8 +14,12 @@ part 'post_creation_bloc.freezed.dart';
 class PostCreationBloc extends Bloc<PostCreationEvent, PostCreationState> {
   PostCreationBloc({
     required PostService postService,
+    required PostCreationArguments postCreationArguments,
   })   : _postService = postService,
-        super(PostCreationState.initial());
+        super(PostCreationState.initial(
+          creationType: postCreationArguments.creationType,
+          parentPostId: postCreationArguments.parentPostId,
+        ));
 
   final PostService _postService;
 

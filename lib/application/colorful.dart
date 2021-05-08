@@ -14,4 +14,5 @@ extension Colorful on Colors {
   static const Color cinderella = Color(0xffFCD0CF);
   static const Color wildSand = Color(0xffF6F6F6);
   static const Color flamingo = Color(0xffF5413D);
+  static const Color alto = Color(0xffE0E0E0);
 }

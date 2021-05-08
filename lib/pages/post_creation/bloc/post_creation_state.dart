@@ -4,19 +4,27 @@ part of 'post_creation_bloc.dart';
 class PostCreationState with _$PostCreationState {
   const factory PostCreationState({
     required PostInput postInput,
+    required CreationType creationType,
     required bool isLoading,
     required bool isSuccess,
+    String? parentPostId,
   }) = _PostCreationState;
 
   const PostCreationState._();
 
-  factory PostCreationState.initial() => const PostCreationState(
+  factory PostCreationState.initial({required CreationType creationType, String? parentPostId}) => PostCreationState(
         isLoading: false,
-        postInput: PostInput.pure(),
+        postInput: const PostInput.pure(),
         isSuccess: false,
+        creationType: creationType,
+        parentPostId: parentPostId,
       );
 
   bool get isFormValid => postInput.valid;
 
   bool get lockSubmitButton => !isFormValid || isLoading;
+}
+
+enum CreationType {
+  post, comment,
 }

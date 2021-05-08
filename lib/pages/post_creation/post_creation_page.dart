@@ -7,14 +7,20 @@ import 'package:spotted/common/formz/post_formz.dart';
 import 'package:spotted/generated/easy_localization_export.dart';
 import 'package:spotted/injector_container.dart';
 import 'package:spotted/pages/post_creation/bloc/post_creation_bloc.dart';
+import 'package:spotted/pages/post_creation/post_creation_arguments.dart';
 import 'package:spotted/pages/post_creation/widgets/post_creation_app_bar.dart';
 
 class PostCreationPage extends StatelessWidget with AutoRouteWrapper {
   PostCreationPage({
-    this.onSuccess,
+    required this.postCreationArguments,
+    // required this.creationType,
+    // this.onSuccess,
   });
 
-  final Function()? onSuccess;
+  final PostCreationArguments postCreationArguments;
+
+  // final Function()? onSuccess;
+  // final CreationType creationType;
 
   @override
   Widget wrappedRoute(BuildContext context) {
@@ -24,7 +30,7 @@ class PostCreationPage extends StatelessWidget with AutoRouteWrapper {
           create: (context) => sl<GeoManagerBloc>(),
         ),
         BlocProvider(
-          create: (context) => sl<PostCreationBloc>(),
+          create: (context) => sl<PostCreationBloc>(param1: creationType),
           child: this,
         ),
       ],
