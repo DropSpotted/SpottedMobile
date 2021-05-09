@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart' hide Headers;
+import 'package:remote/data_source/comment/model/response/comment_model.dart';
 import 'package:remote/data_source/post/model/request/create_comment_model.dart';
 
 import 'package:retrofit/retrofit.dart';
@@ -9,6 +10,6 @@ part 'comment_rest_api.g.dart';
 abstract class CommentRestApi {
   factory CommentRestApi(Dio dio) = _CommentRestApi;
 
-  @GET('/api/v1/comments')
+  @POST('/api/v1/comments')
   Future<void> createComment(@Body() CreateCommentModel createCommentModel);
 }

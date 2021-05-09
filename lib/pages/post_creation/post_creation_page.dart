@@ -13,14 +13,9 @@ import 'package:spotted/pages/post_creation/widgets/post_creation_app_bar.dart';
 class PostCreationPage extends StatelessWidget with AutoRouteWrapper {
   PostCreationPage({
     required this.postCreationArguments,
-    // required this.creationType,
-    // this.onSuccess,
   });
 
   final PostCreationArguments postCreationArguments;
-
-  // final Function()? onSuccess;
-  // final CreationType creationType;
 
   @override
   Widget wrappedRoute(BuildContext context) {
@@ -30,7 +25,7 @@ class PostCreationPage extends StatelessWidget with AutoRouteWrapper {
           create: (context) => sl<GeoManagerBloc>(),
         ),
         BlocProvider(
-          create: (context) => sl<PostCreationBloc>(param1: creationType),
+          create: (context) => sl<PostCreationBloc>(param1: postCreationArguments),
           child: this,
         ),
       ],
@@ -44,8 +39,8 @@ class PostCreationPage extends StatelessWidget with AutoRouteWrapper {
       listeners: [
         BlocListener<PostCreationBloc, PostCreationState>(
           listener: (context, state) {
-            if (state.isSuccess && onSuccess != null) {
-              onSuccess!();
+            if (state.isSuccess && postCreationArguments.onSuccess != null) {
+              postCreationArguments.onSuccess!();
               context.router.pop();
             }
           },
@@ -63,7 +58,9 @@ class PostCreationPage extends StatelessWidget with AutoRouteWrapper {
       ],
       child: Scaffold(
         appBar: PostCreationAppBar(),
-        body: _PostCreationTextField(),
+        body: SafeArea(
+          child: _PostCreationTextField(),
+        ),
       ),
     );
   }

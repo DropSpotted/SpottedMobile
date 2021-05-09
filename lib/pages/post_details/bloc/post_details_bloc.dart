@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:dartz/dartz.dart';
 import 'package:domain/service/post/post_service.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:domain/model/detailed_post.dart';
@@ -12,8 +13,13 @@ part 'post_details_bloc.freezed.dart';
 class PostDetailsBloc extends Bloc<PostDetailsEvent, PostDetailsState> {
   PostDetailsBloc({
     required PostService postService,
+    required String parentPostId,
   })   : _postService = postService,
-        super(const _InProgress());
+        super(
+          PostDetailsState.initial(
+            parentPostId: parentPostId,
+          ),
+        );
 
   final PostService _postService;
 
@@ -26,14 +32,20 @@ class PostDetailsBloc extends Bloc<PostDetailsEvent, PostDetailsState> {
 
   Stream<PostDetailsState> _mapStartedToState(_Started event) async* {
     if (event.showProgress) {
-      yield const PostDetailsState.inProgress();
+      yield state.copyWith(isFailureOrLoading: right(true));
+      // yield const PostDetailsState.inProgress();
     }
 
-    final response = await _postService.detailedPost(event.postId);
+    final response = await _postService.detailedPost(state.parentPostId);
 
     yield response.fold(
-      (l) => const PostDetailsState.failure(),
-      (r) => PostDetailsState.success(r),
+      (_) => state.copyWith(
+        isFailureOrLoading: left(unit),
+      ),
+      (detailedPost) => state.copyWith(
+        isFailureOrLoading: right(false),
+        detailedPost: detailedPost,
+      ),
     );
   }
 }

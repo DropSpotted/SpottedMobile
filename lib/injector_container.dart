@@ -25,6 +25,7 @@ Future<void> init() async {
       (arguments, _) => PostCreationBloc(
         postCreationArguments: arguments!,
         postService: sl(),
+        commentService: sl(),
       ),
     )
     ..registerFactory(
@@ -32,9 +33,10 @@ Future<void> init() async {
         geoService: sl(),
       ),
     )
-    ..registerFactory(
-      () => PostDetailsBloc(
+    ..registerFactoryParam<PostDetailsBloc, String, void>(
+      (arguments, _) => PostDetailsBloc(
         postService: sl(),
+        parentPostId: arguments ?? '',
       ),
     );
 }

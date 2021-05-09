@@ -5,6 +5,7 @@ import 'package:spotted/application/colorful.dart';
 import 'package:spotted/application/dimen.dart';
 import 'package:spotted/injector_container.dart';
 import 'package:spotted/pages/post_creation/bloc/post_creation_bloc.dart';
+import 'package:spotted/pages/post_creation/post_creation_arguments.dart';
 import 'package:spotted/pages/post_details/bloc/post_details_bloc.dart';
 import 'package:spotted/widgets/tiles/post_tile.dart';
 import 'package:spotted/router/app_router.gr.dart';
@@ -19,7 +20,9 @@ class PostDetailsPage extends StatelessWidget with AutoRouteWrapper {
   @override
   Widget wrappedRoute(BuildContext context) {
     return BlocProvider(
-      create: (context) => sl<PostDetailsBloc>()..add(PostDetailsEvent.started(_postId)),
+      create: (context) => sl<PostDetailsBloc>(
+        param1: _postId,
+      )..add(const PostDetailsEvent.started()),
       child: this,
     );
   }
@@ -29,7 +32,9 @@ class PostDetailsPage extends StatelessWidget with AutoRouteWrapper {
     return Scaffold(
       appBar: AppBar(),
       body: _PostDetailsBody(),
-      bottomNavigationBar: _BottomCommentTextField(),
+      bottomNavigationBar: _BottomCommentTextField(
+        parentPostId: _postId,
+      ),
     );
   }
 }
@@ -39,38 +44,56 @@ class _PostDetailsBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<PostDetailsBloc, PostDetailsState>(
       builder: (context, state) {
-        return state.map(
-          inProgress: (state) => const Center(
-            child: CircularProgressIndicator(),
-          ),
-          success: (state) => CustomScrollView(
-            slivers: [
-              SliverToBoxAdapter(
-                child: PostTile(
-                  body: state.detailedPost.body,
-                  creationDate: state.detailedPost.createdAt,
-                ),
-              ),
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                    (context, index) => PostTile(
-                          body: state.detailedPost.comments[index].body,
-                          creationDate: state.detailedPost.comments[index].createdAt,
-                        ),
-                    childCount: state.detailedPost.comments.length),
-              )
-            ],
-          ),
-          failure: (state) => const Center(
+        return state.isFailureOrLoading.fold((l) {
+          return const Center(
             child: Text('failure'),
-          ),
-        );
+          );
+        }, (isLoading) {
+          if (isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else {
+            if (state.detailedPost != null) {
+              return CustomScrollView(
+                slivers: [
+                  SliverToBoxAdapter(
+                    child: PostTile(
+                      body: state.detailedPost!.body,
+                      creationDate: state.detailedPost!.createdAt,
+                    ),
+                  ),
+                  SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) => PostTile(
+                        body: state.detailedPost!.comments[index].body,
+                        creationDate: state.detailedPost!.comments[index].createdAt,
+                        showLeftBorder: true,
+                      ),
+                      childCount: state.detailedPost!.comments.length,
+                    ),
+                  )
+                ],
+              );
+            } else {
+              return const Center(
+                child: Text('empty'),
+              );
+            }
+          }
+        });
       },
     );
   }
 }
 
 class _BottomCommentTextField extends StatelessWidget {
+  const _BottomCommentTextField({
+    required this.parentPostId,
+  });
+
+  final String parentPostId;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -82,8 +105,10 @@ class _BottomCommentTextField extends StatelessWidget {
           child: InkWell(
             onTap: () => context.router.push(
               PostCreationRoute(
-                onSuccess: () {},
-                creationType: CreationType.comment,
+                postCreationArguments: PostCreationArguments.comment(
+                  onSuccess: () => context.read<PostDetailsBloc>().add(const PostDetailsEvent.started()),
+                  parentPostId: parentPostId,
+                ),
               ),
             ),
             child: Container(

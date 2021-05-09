@@ -9,14 +9,18 @@ class PostTile extends StatelessWidget {
     required this.body,
     this.commentCount,
     this.onTap,
+    this.showLeftBorder = false,
   });
 
   final DateTime creationDate;
   final String body;
   final int? commentCount;
   final VoidCallback? onTap;
+  final bool showLeftBorder;
 
-  static const double _borderRadius = 8;
+  // static const double _borderRadius = 8;
+  double get _borderRadius => showLeftBorder ? 0 : 8;
+  static const double _borderWidth = 4;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +31,13 @@ class PostTile extends StatelessWidget {
           onTap: onTap,
           child: Container(
             padding: const EdgeInsets.all(Insets.medium),
+            decoration: BoxDecoration(
+              border: Border(
+                left: showLeftBorder ? const BorderSide(
+                  width: _borderWidth
+                ) : BorderSide.none,
+              ),
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
