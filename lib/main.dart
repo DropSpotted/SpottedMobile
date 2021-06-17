@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:fire/fire.dart';
 import 'package:flutter/material.dart';
 import 'package:spotted/application/spotted_application.dart';
 import 'package:spotted/application/theme.dart';
@@ -10,8 +11,9 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
 
-  await ThemeManager.initialise();
 
+  await Fire.initialize();
+  await ThemeManager.initialise();
   await di.init();
 
   runApp(

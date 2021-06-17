@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart' hide Headers;
-import 'package:remote/data_source/comment/model/response/comment_model.dart';
 import 'package:remote/data_source/post/model/request/create_comment_model.dart';
 
 import 'package:retrofit/retrofit.dart';

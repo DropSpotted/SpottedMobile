@@ -1,4 +1,3 @@
-import 'package:domain/model/post.dart';
 import 'package:flutter/material.dart';
 import 'package:foundation/dates.dart';
 import 'package:spotted/application/dimen.dart';

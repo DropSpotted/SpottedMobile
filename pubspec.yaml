@@ -19,27 +19,30 @@ dependencies:
     path: modules/foundation
   geo:
     path: modules/geo
+  fire:
+    path: modules/fire
   
-  auto_route: 1.0.2
-  dartz: 0.10.0-nullsafety.1
+  auto_route: 2.2.0
+  dartz: 0.10.0-nullsafety.2
   formz: 0.4.0-nullsafety.0
   easy_localization: 3.0.0
   flutter_bloc: 7.0.0
-  freezed_annotation: 0.14.1
+  freezed_annotation: 0.14.2
   get_it: 6.0.0
   google_fonts: 2.0.0
   stacked_themes: 0.3.0
   pedantic: 1.11.0
   responsive_framework: 0.1.0
+  sms_autofill: 2.0.0
 
   cupertino_icons: ^1.0.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  auto_route_generator: 1.0.2
-  build_runner: 1.12.2
-  freezed: 0.14.1+2
+  auto_route_generator: 2.1.0
+  build_runner: 2.0.4
+  freezed: 0.14.2
 
 flutter:
   uses-material-design: true

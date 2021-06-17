@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spotted/application/colorful.dart';
 import 'package:spotted/application/dimen.dart';
 import 'package:spotted/injector_container.dart';
-import 'package:spotted/pages/post_creation/bloc/post_creation_bloc.dart';
 import 'package:spotted/pages/post_creation/post_creation_arguments.dart';
 import 'package:spotted/pages/post_details/bloc/post_details_bloc.dart';
 import 'package:spotted/widgets/tiles/post_tile.dart';

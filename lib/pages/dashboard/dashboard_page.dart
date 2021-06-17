@@ -6,7 +6,6 @@ import 'package:spotted/application/dimen.dart';
 import 'package:spotted/common/bloc/geo_manager/geo_manager_bloc.dart';
 import 'package:spotted/injector_container.dart';
 import 'package:spotted/pages/dashboard/bloc/dashboard_bloc.dart';
-import 'package:spotted/pages/post_creation/bloc/post_creation_bloc.dart';
 import 'package:spotted/pages/post_creation/post_creation_arguments.dart';
 import 'package:spotted/router/app_router.gr.dart';
 import 'package:spotted/widgets/scaffolds/geo_use_scaffold.dart';
