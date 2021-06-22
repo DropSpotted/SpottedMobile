@@ -42,4 +42,7 @@ class FireAuthServiceImpl implements FireAuthService {
       codeAutoRetrievalTimeout: codeAutoRetrievalTimeout,
     );
   }
+
+  @override
+  bool isAuthencitcated() => _fireAuth.isAuthencitcated();
 }

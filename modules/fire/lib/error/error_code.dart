@@ -11,7 +11,8 @@ enum SignInWithCredentialErrorCode {
   wrongPassword,
   invalidVerificationCode,
   invalidVerificationId,
-  abort
+  abort,
+  tooManyRequests,
 }
 
 
@@ -42,6 +43,9 @@ extension FirebaseAuthExceptionExtension on FirebaseAuthException {
         break;
       case 'invalid-verification-id':
         errorCode = SignInWithCredentialErrorCode.invalidVerificationId;
+        break;
+      case 'too-many-requests':
+        errorCode = SignInWithCredentialErrorCode.tooManyRequests;
         break;
     }
 

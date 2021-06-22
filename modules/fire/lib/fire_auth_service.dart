@@ -10,6 +10,8 @@ import 'model/fire_phone_auth_credential.dart';
 abstract class FireAuthService {
   static FireAuthService create() => FireAuthServiceImpl(fireAuth: FireAuth.create());
 
+  bool isAuthencitcated();
+
   Future<void> verifyPhoneNumber(
       {required String phoneNumber,
       Function(FirePhoneAuthCredential)? verificationCompleted,

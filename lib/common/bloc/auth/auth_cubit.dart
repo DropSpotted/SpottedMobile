@@ -1,17 +1,24 @@
 import 'package:bloc/bloc.dart';
+import 'package:fire/fire_auth_service.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'auth_state.dart';
 part 'auth_cubit.freezed.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-  AuthCubit() : super(const AuthState.initial());
+  AuthCubit({required FireAuthService fireAuthService})
+      : _fireAuthService = fireAuthService,
+        super(const AuthState.initial());
+
+  final FireAuthService _fireAuthService;
 
   Future<void> authCheckRequested() async {
-    // await Future.delayed(const Duration(milliseconds: 3));
+    final isAuthenticated = _fireAuthService.isAuthencitcated();
 
-    emit(AuthState.unauthenticated());
-
-    // emit(AuthState.authenticate(AuthenticatedScreen.nickname));
+    if (isAuthenticated) {
+      emit(const AuthState.authenticate(AuthenticatedScreen.dashboard));
+    } else {
+      emit(const AuthState.unauthenticated());
+    }
   }
 }

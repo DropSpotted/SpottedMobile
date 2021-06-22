@@ -93,6 +93,20 @@ class DarkPalette extends Palette {
   final Color appBarBackgroundColor = Colors.grey.shade900;
 }
 
+class ProjectColors {
+  static const LinearGradient purpleToBlue = LinearGradient(
+    begin: Alignment.bottomLeft,
+    end: Alignment.topRight,
+    colors: [
+      Color(0xffD96FF8),
+      Color(0xff1A50FF),
+    ],
+  );
+
+  static const Color gray2 = Color(0xff1D1929);
+  static const Color gray8 = Color(0xffA5A3A9);
+}
+
 class AppTheme {
   ThemeData theme(Palette palette) {
     final theme = ThemeData(
@@ -152,68 +166,80 @@ class AppTheme {
   }
 
   TextTheme get _textThemeHandset => TextTheme(
-        headline1: GoogleFonts.manrope(
+        headline1: GoogleFonts.nunitoSans(
           fontSize: 96,
           fontWeight: FontWeight.w700,
-          letterSpacing: -1.5,
         ),
-        headline2: GoogleFonts.manrope(
+        //title1
+        headline2: GoogleFonts.nunitoSans(
           fontSize: 60,
           fontWeight: FontWeight.w700,
-          letterSpacing: -1,
+          height: 72 / 60,
         ),
-        headline3: GoogleFonts.manrope(
+        //title2
+        headline3: GoogleFonts.nunitoSans(
           fontSize: 48,
           fontWeight: FontWeight.w700,
-          letterSpacing: -0.5,
+          height: 56 / 48,
         ),
-        headline4: GoogleFonts.manrope(
+        //title3
+        headline4: GoogleFonts.nunitoSans(
           fontSize: 34,
-          fontWeight: FontWeight.w700,
+          fontWeight: FontWeight.w800,
+          height: 40 / 34,
         ),
-        headline5: GoogleFonts.manrope(
+        //headline
+        headline5: GoogleFonts.nunitoSans(
           fontSize: 24,
-          fontWeight: FontWeight.w700,
+          fontWeight: FontWeight.w800,
+          height: 32 / 24,
         ),
-        headline6: GoogleFonts.manrope(
+        headline6: GoogleFonts.nunitoSans(
           fontSize: 20,
           fontWeight: FontWeight.w600,
           letterSpacing: 0.75,
         ),
-        subtitle1: GoogleFonts.manrope(
-          fontSize: 16,
-          fontWeight: FontWeight.w600,
-          letterSpacing: 0.5,
-        ),
-        subtitle2: GoogleFonts.manrope(
-          fontSize: 14,
-          fontWeight: FontWeight.w600,
-          letterSpacing: 0.5,
-        ),
-        bodyText1: GoogleFonts.manrope(
+        //body
+        subtitle1: GoogleFonts.nunitoSans(
           fontSize: 16,
           fontWeight: FontWeight.w400,
-          letterSpacing: 1.68,
+          height: 24 / 16,
         ),
-        bodyText2: GoogleFonts.manrope(
+        //body small
+        subtitle2: GoogleFonts.nunitoSans(
           fontSize: 14,
           fontWeight: FontWeight.w400,
-          letterSpacing: 1.68,
+          height: 24 / 14,
         ),
-        button: GoogleFonts.manrope(
+        //body body
+        bodyText1: GoogleFonts.nunitoSans(
           fontSize: 16,
-          fontWeight: FontWeight.w500,
-          letterSpacing: 5,
-        ),
-        caption: GoogleFonts.manrope(
-          fontSize: 12,
-          fontWeight: FontWeight.w400,
-          letterSpacing: 3,
-        ),
-        overline: GoogleFonts.manrope(
-          fontSize: 10,
           fontWeight: FontWeight.w700,
-          letterSpacing: 15,
+          height: 24 / 16,
+        ),
+        //body small bold
+        bodyText2: GoogleFonts.nunitoSans(
+          fontSize: 14,
+          fontWeight: FontWeight.w700,
+          height: 24 / 14,
+        ),
+        //button
+        button: GoogleFonts.nunitoSans(
+          fontSize: 16,
+          fontWeight: FontWeight.w700,
+          height: 24 / 16,
+        ),
+        //button medium
+        caption: GoogleFonts.nunitoSans(
+          fontSize: 14,
+          fontWeight: FontWeight.w400,
+          height: 16 / 14,
+        ),
+        //button small
+        overline: GoogleFonts.nunitoSans(
+          fontSize: 12,
+          fontWeight: FontWeight.w700,
+          height: 16 / 12,
         ),
       );
 

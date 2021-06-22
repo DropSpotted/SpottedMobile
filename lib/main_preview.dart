@@ -20,7 +20,7 @@ Future<void> main() async {
     SpottedApplication(
       appTheme: AppTheme(),
       appRouter: AppRouter(),
-      enableDevicePreview: false,
+      enableDevicePreview: true,
     ),
   );
 }

@@ -1,9 +1,12 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:spotted/pages/auth_wizard/auth_wizard_wrapper_page.dart';
 import 'package:spotted/pages/auth_wizard/nickname/nickname_page.dart';
 import 'package:spotted/pages/auth_wizard/phone_code/phone_code_page.dart';
 import 'package:spotted/pages/auth_wizard/phone_number/phone_number_page.dart';
 import 'package:spotted/pages/dashboard/dashboard_page.dart';
 import 'package:spotted/pages/landing/landing_page.dart';
+import 'package:spotted/pages/navbar/navbar_page.dart';
+import 'package:spotted/pages/own_profile/own_profile_page.dart';
 import 'package:spotted/pages/post_creation/post_creation_page.dart';
 import 'package:spotted/pages/post_details/post_details_page.dart';
 import 'package:spotted/pages/splash/splash_page.dart';
@@ -16,13 +19,47 @@ import 'package:spotted/pages/splash/splash_page.dart';
       // initial: true,
     ),
     AutoRoute(
-      page: EmptyRouterPage,
       name: 'LoggedRouter',
+      initial: true,
+      page: EmptyRouterPage,
       children: [
+        // AutoRoute(
+        //   name: 'DashboardRouter',
+        //   page: EmptyRouterPage,
+        //   path: 'dashboard',
+        //   // initial: true,
+        //   children: [
+        //     AutoRoute(
+        //       page: DashboardPage,
+        //       // initial: true,
+        //       path: '',
+        //     ),
+        //     AutoRoute(
+        //       page: PostCreationPage,
+        //       path: 'post-creation',
+        //     ),
+        //     AutoRoute(
+        //       page: PostDetailsPage,
+        //       path: 'post-details',
+        //     ),
+        //   ],
+        // ),
         AutoRoute(
-          page: DashboardPage,
-          initial: true,
+          name: 'NavbarRouter',
+          page: NavbarPage,
+          children: [
+            AutoRoute(
+              page: DashboardPage,
+              // initial: true,
+              path: '',
+            ),
+            AutoRoute(
+              page: OwnProfilePage,
+              path: 'own-profile',
+            ),
+          ],
         ),
+
         AutoRoute(
           page: PostCreationPage,
           path: 'post-creation',
@@ -31,6 +68,7 @@ import 'package:spotted/pages/splash/splash_page.dart';
           page: PostDetailsPage,
           path: 'post-details',
         ),
+
         AutoRoute(
           page: NicknamePage,
           path: 'nickname',
@@ -38,7 +76,7 @@ import 'package:spotted/pages/splash/splash_page.dart';
       ],
     ),
     AutoRoute(
-      page: EmptyRouterPage,
+      page: AuthWizardWrapperPage,
       path: '/login',
       name: 'LoginRouter',
       children: [

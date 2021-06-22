@@ -15,5 +15,16 @@
                 "development"
             ]
         },
+        {
+            "name": "Flutter Device Preview",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "debug",
+            "program": "lib/main_preview.dart",
+            "args": [
+                "--flavor",
+                "development"
+            ]
+        },
     ]
 }
