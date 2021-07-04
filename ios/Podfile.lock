@@ -50,6 +50,14 @@ PODS:
   - GoogleUtilities/Reachability (7.4.1):
     - GoogleUtilities/Logger
   - GTMSessionFetcher/Core (1.5.0)
+  - libphonenumber (0.0.1):
+    - Flutter
+    - libPhoneNumber-iOS
+  - libPhoneNumber-iOS (0.9.15)
+  - libphonenumber_plugin (0.0.1):
+    - Flutter
+    - libphonenumber
+    - libPhoneNumber-iOS
   - nanopb (2.30908.0):
     - nanopb/decode (= 2.30908.0)
     - nanopb/encode (= 2.30908.0)
@@ -69,6 +77,8 @@ DEPENDENCIES:
   - Flutter (from `Flutter`)
   - flutter_statusbarcolor_ns (from `.symlinks/plugins/flutter_statusbarcolor_ns/ios`)
   - geolocator (from `.symlinks/plugins/geolocator/ios`)
+  - libphonenumber (from `.symlinks/plugins/libphonenumber/ios`)
+  - libphonenumber_plugin (from `.symlinks/plugins/libphonenumber_plugin/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
   - sms_autofill (from `.symlinks/plugins/sms_autofill/ios`)
@@ -82,6 +92,7 @@ SPEC REPOS:
     - GoogleDataTransport
     - GoogleUtilities
     - GTMSessionFetcher
+    - libPhoneNumber-iOS
     - nanopb
     - PromisesObjC
 
@@ -96,6 +107,10 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_statusbarcolor_ns/ios"
   geolocator:
     :path: ".symlinks/plugins/geolocator/ios"
+  libphonenumber:
+    :path: ".symlinks/plugins/libphonenumber/ios"
+  libphonenumber_plugin:
+    :path: ".symlinks/plugins/libphonenumber_plugin/ios"
   path_provider:
     :path: ".symlinks/plugins/path_provider/ios"
   shared_preferences:
@@ -116,6 +131,9 @@ SPEC CHECKSUMS:
   GoogleDataTransport: 04c3e9a480bbcaa2ec3f5d27f1cdeb6a92f20c8d
   GoogleUtilities: f8a43108b38a68eebe8b3540e1f4f2d28843ce20
   GTMSessionFetcher: b3503b20a988c4e20cc189aa798fd18220133f52
+  libphonenumber: bd14d5abfc5939ab0b0767234e2d8e2593af258e
+  libPhoneNumber-iOS: 0a32a9525cf8744fe02c5206eb30d571e38f7d75
+  libphonenumber_plugin: 7cf755ad1656145935d6c208173a476bd3f12898
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:spotted/application/dimen.dart';
+import 'package:spotted/application/theme.dart';
 import 'package:spotted/router/app_router.gr.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:spotted/widgets/buttons/gradient_button.dart';
+import 'package:spotted/widgets/buttons/spotted_button.dart';
 
 class LandingPage extends StatelessWidget {
   @override
@@ -45,7 +47,6 @@ class LandingPage extends StatelessWidget {
             child: SizedBox.fromSize(size: MediaQuery.of(context).size),
           ),
           Scaffold(
-            // resizeToAvoidBottomInset: false,
             backgroundColor: Colors.transparent,
             body: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -66,9 +67,12 @@ class LandingPage extends StatelessWidget {
                 ),
                 const Spacer(flex: 4),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 32),
-                  child: GradientButton(
+                  padding: const EdgeInsets.symmetric(horizontal: Insets.xLarge),
+                  child: SpottedButton(
                     onPressed: () => context.router.push(const PhoneNumberRoute()),
+                    text: 'Start your journey',
+                    gradientColors: ProjectColors.purpleToBlue,
+                    spottedButtonType: SpottedButtonType.large,
                   ),
                 ),
                 const Spacer(),

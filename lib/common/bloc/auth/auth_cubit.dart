@@ -21,4 +21,9 @@ class AuthCubit extends Cubit<AuthState> {
       emit(const AuthState.unauthenticated());
     }
   }
+
+  Future<void> signOut() async {
+    await _fireAuthService.signOut();
+    emit(const AuthState.unauthenticated());
+  }
 }

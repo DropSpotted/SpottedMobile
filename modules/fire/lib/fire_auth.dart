@@ -24,4 +24,6 @@ abstract class FireAuth {
     required String verificationId,
     required String smsCode,
   });
+
+  Future<void> signOut();
 }

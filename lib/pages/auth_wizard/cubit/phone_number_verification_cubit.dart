@@ -19,26 +19,30 @@ class PhoneNumberVerificationCubit extends Cubit<PhoneNumberVerificationState> {
   final FireAuthService _fireAuthService;
   final SmsFill _smsFill;
 
-  void phoneNumberTyped(String number) => emit(
+  void phoneNumberTyped(String countryCode, String number) => emit(
         state.copyWith(
+          countrCode: countryCode,
           phoneNumberInput: PhoneNumberInput.dirty(value: number),
         ),
       );
 
-  void codeTyped(String? code) => emit(
-        state.copyWith(
-          codeInput: CodeInput.dirty(value: code ?? ''),
-        ),
-      );
+  void checkboxChecked(bool value) => emit(state.copyWith(isAgreed: value));
+
+  void codeTyped(String? code) {
+    emit(
+      state.copyWith(
+        codeInput: CodeInput.dirty(value: code ?? ''),
+      ),
+    );
+  }
 
   Future<void> initialize() async {
     await _smsFill.listenForCode();
   }
 
   Future<void> phoneSubmitted() async {
-    // emit(state.copyWith(verificationId: 'verificationId', isSuccessfulySend: true));
     await _fireAuthService.verifyPhoneNumber(
-      phoneNumber: state.phoneNumberInput.value,
+      phoneNumber: state.countrCode + state.phoneNumberInput.value,
       verificationCompleted: (value) {
         print(value);
       },
@@ -60,7 +64,8 @@ class PhoneNumberVerificationCubit extends Cubit<PhoneNumberVerificationState> {
   }
 
   Future<void> verifyCode() async {
-    final result = await _fireAuthService.signInWithPhone(verificationId: state.verificationId, smsCode: state.codeInput.value);
+    final result =
+        await _fireAuthService.signInWithPhone(verificationId: state.verificationId, smsCode: state.codeInput.value);
 
     result.fold((l) {
       print(l);

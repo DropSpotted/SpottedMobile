@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
 enum SpottedButtonType {
   small,
@@ -6,23 +7,18 @@ enum SpottedButtonType {
   large,
 }
 
-enum SpottedButtonFillType {
-  filled,
-  outlined,
-}
-
-class SpottedButton extends StatelessWidget {
+class SpottedButton extends HookWidget {
   const SpottedButton({
     Key? key,
     required this.text,
     this.spottedButtonType = SpottedButtonType.small,
-    this.spottedButtonFillType = SpottedButtonFillType.filled,
     this.leading,
     this.trailing,
     this.onPressed,
     this.backgroundColor,
-    this.backgroundGradient,
     this.textStyle,
+    this.gradientColors,
+    this.isActive = true,
   }) : super(key: key);
 
   final String text;
@@ -31,78 +27,151 @@ class SpottedButton extends StatelessWidget {
   final Widget? trailing;
   final VoidCallback? onPressed;
   final Color? backgroundColor;
-  final Gradient? backgroundGradient;
   final TextStyle? textStyle;
-  final SpottedButtonFillType spottedButtonFillType;
+  final List<Color>? gradientColors;
+  final bool isActive;
 
   @override
   Widget build(BuildContext context) {
-    var padding = EdgeInsets.zero;
+    var color = backgroundColor ?? Theme.of(context).accentColor;
 
-    switch (spottedButtonType) {
+    if (!isActive) {
+      color = color.withOpacity(0.2);
+    }
+
+    final animation = useAnimationController(
+      upperBound: 4.0,
+      lowerBound: 0.0,
+      initialValue: 4.0,
+      duration: const Duration(milliseconds: 100),
+    );
+
+    LinearGradient? linearGradient;
+    LinearGradient? linearGradientBackground;
+
+    if (gradientColors != null) {
+      linearGradient = LinearGradient(
+        colors: gradientColors!.map((color) {
+          if(isActive) {
+            return color;
+          }  else {
+            return color.withOpacity(0.2);
+          }
+        }).toList(),
+      );
+      linearGradientBackground = LinearGradient(
+        colors: gradientColors!
+            .map(
+              (color) => color.withOpacity(0.7),
+            )
+            .toList(),
+        begin: Alignment.bottomLeft,
+        end: Alignment.topRight,
+      );
+    }
+
+    return GestureDetector(
+      onTapCancel: () {
+        if (isActive) {
+          animation.forward();
+        }
+      },
+      onTapDown: (_) {
+        if (isActive) {
+          animation.reverse();
+        }
+      },
+      onTapUp: (_) {
+        if (isActive) {
+          animation.forward();
+        }
+      },
+      onTap: isActive ? onPressed : null,
+      child: Stack(
+        fit: StackFit.passthrough,
+        alignment: Alignment.center,
+        children: [
+          _SpottedColoredButton(
+            text: text,
+            type: spottedButtonType,
+            color: gradientColors != null ? backgroundColor : color.withOpacity(0.2),
+            gradient: linearGradientBackground,
+          ),
+          AnimatedBuilder(
+            animation: animation,
+            builder: (context, widget) {
+              return _SpottedColoredButton(
+                text: text,
+                type: spottedButtonType,
+                color: color,
+                additionalPadding: animation.value,
+                gradient: linearGradient,
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SpottedColoredButton extends StatelessWidget {
+  const _SpottedColoredButton({
+    required this.type,
+    required this.text,
+    this.color,
+    this.gradient,
+    this.additionalPadding = 4,
+  });
+
+  final SpottedButtonType type;
+  final String text;
+  final Color? color;
+  final double additionalPadding;
+  final Gradient? gradient;
+
+  static const double _borderRadius = 14;
+
+  EdgeInsets get _padding {
+    switch (type) {
       case SpottedButtonType.small:
-        padding = const EdgeInsets.symmetric(vertical: 8, horizontal: 16);
-        break;
+        return EdgeInsets.symmetric(
+          vertical: 4 + additionalPadding,
+          horizontal: 12 + additionalPadding,
+        );
       case SpottedButtonType.medium:
-        padding = const EdgeInsets.all(16);
-        break;
+        return EdgeInsets.all(12 + additionalPadding);
       case SpottedButtonType.large:
-        padding = const EdgeInsets.symmetric(vertical: 16, horizontal: 24);
-        break;
+        return EdgeInsets.symmetric(
+          vertical: 12 + additionalPadding,
+          horizontal: 20 + additionalPadding,
+        );
     }
+  }
 
-    final child = Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        if (leading != null) ...[
-          leading!,
-          const SizedBox(width: 20),
-        ],
-        Padding(
-          padding: const EdgeInsets.all(5),
-          child: Text(
-            text,
-            style: textStyle ?? const TextStyle(color: Colors.white),
-          ),
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 4 - additionalPadding),
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.circular(_borderRadius + additionalPadding),
+          gradient: gradient,
         ),
-        if (trailing != null) ...[
-          const SizedBox(width: 20),
-          trailing!,
-        ],
-      ],
-    );
-
-    final buttonStyle = ButtonStyle(
-      padding: ButtonStyleButton.allOrNull<EdgeInsetsGeometry>(padding),
-      backgroundColor: ButtonStyleButton.allOrNull<Color>(
-        spottedButtonFillType == SpottedButtonFillType.filled ? backgroundColor ?? Theme.of(context).accentColor : null,
-      ),
-      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-        RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16.0),
+        child: Padding(
+          padding: _padding,
+          child: SizedBox(
+            child: Text(
+              text,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                    color: Colors.white,
+                  ),
+            ),
+          ),
         ),
       ),
     );
-
-    switch (spottedButtonFillType) {
-      case SpottedButtonFillType.outlined:
-        return OutlinedButton(
-          onPressed: onPressed,
-          style: buttonStyle,
-          child: child,
-        );
-      default:
-        return DecoratedBox(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(11),
-            gradient: backgroundGradient,
-          ),
-          child: TextButton(
-            onPressed: onPressed,
-            style: buttonStyle,
-            child: child,
-          ),
-        );
-    }
   }
 }

@@ -13,8 +13,6 @@ class PhoneNumberInput extends FormzInput<String, PhoneNumberInputError> {
       final trimmedValue = value.trim();
       if (trimmedValue.isEmpty) {
         return PhoneNumberInputError.empty;
-      } else if (trimmedValue.length > 9) {
-        return PhoneNumberInputError.toManyCharacters;
       } else {
         return null;
       }

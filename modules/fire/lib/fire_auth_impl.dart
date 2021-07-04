@@ -57,4 +57,9 @@ class FireAuthImpl implements FireAuth {
       rethrow;
     }
   }
+
+  @override
+  Future<void> signOut() async {
+    return _firebaseAuth.signOut();
+  }
 }

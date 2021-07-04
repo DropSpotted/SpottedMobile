@@ -94,14 +94,10 @@ class DarkPalette extends Palette {
 }
 
 class ProjectColors {
-  static const LinearGradient purpleToBlue = LinearGradient(
-    begin: Alignment.bottomLeft,
-    end: Alignment.topRight,
-    colors: [
-      Color(0xffD96FF8),
-      Color(0xff1A50FF),
-    ],
-  );
+  static const List<Color> purpleToBlue = [
+    Color(0xffD96FF8),
+    Color(0xff1A50FF),
+  ];
 
   static const Color gray2 = Color(0xff1D1929);
   static const Color gray8 = Color(0xffA5A3A9);
@@ -232,7 +228,7 @@ class AppTheme {
         //button medium
         caption: GoogleFonts.nunitoSans(
           fontSize: 14,
-          fontWeight: FontWeight.w400,
+          fontWeight: FontWeight.w700,
           height: 16 / 14,
         ),
         //button small

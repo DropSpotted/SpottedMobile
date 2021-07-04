@@ -45,4 +45,7 @@ class FireAuthServiceImpl implements FireAuthService {
 
   @override
   bool isAuthencitcated() => _fireAuth.isAuthencitcated();
+
+  @override
+  Future<void> signOut() => _fireAuth.signOut();
 }
