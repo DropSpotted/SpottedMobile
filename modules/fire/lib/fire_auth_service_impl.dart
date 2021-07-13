@@ -48,4 +48,7 @@ class FireAuthServiceImpl implements FireAuthService {
 
   @override
   Future<void> signOut() => _fireAuth.signOut();
+
+  @override
+  Future<String> getToken() => _fireAuth.getToken();
 }

@@ -7,12 +7,11 @@ import 'package:spotted/pages/auth_wizard/phone_number/widgets/agree_container.d
 import 'package:spotted/router/app_router.gr.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:spotted/widgets/buttons/spotted_button.dart';
-import 'package:spotted/widgets/buttons/spotted_text_button.dart';
 
 class PhoneNumberPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final focusNode = FocusNode();
+    FocusNode();
     print(Localizations.localeOf(context).languageCode);
 
     return BlocConsumer<PhoneNumberVerificationCubit, PhoneNumberVerificationState>(

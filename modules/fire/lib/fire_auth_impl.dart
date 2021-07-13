@@ -62,4 +62,9 @@ class FireAuthImpl implements FireAuth {
   Future<void> signOut() async {
     return _firebaseAuth.signOut();
   }
+
+  @override
+  Future<String> getToken() async {
+    return await _firebaseAuth.currentUser?.getIdToken() ?? '';
+  }
 }

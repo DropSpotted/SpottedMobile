@@ -19,10 +19,12 @@ abstract class FireAuthService {
       Function(String, int?)? codeSent,
       Function(String)? codeAutoRetrievalTimeout});
 
-  Future<Either<FireError<SignInWithCredentialErrorCode>,FireUserCredential>> signInWithPhone({
+  Future<Either<FireError<SignInWithCredentialErrorCode>, FireUserCredential>> signInWithPhone({
     required String verificationId,
     required String smsCode,
   });
 
   Future<void> signOut();
+
+  Future<String> getToken();
 }

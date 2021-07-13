@@ -26,4 +26,6 @@ abstract class FireAuth {
   });
 
   Future<void> signOut();
+
+  Future<String> getToken();
 }

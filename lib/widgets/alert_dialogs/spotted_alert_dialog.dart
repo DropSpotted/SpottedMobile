@@ -42,14 +42,14 @@ class _SpottedAlertDialog<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 50),
+        padding: const EdgeInsets.symmetric(horizontal: 50),
         child: DecoratedBox(
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(24),
           ),
           child: Padding(
-            padding: EdgeInsets.all(40),
+            padding: const EdgeInsets.all(40),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -59,24 +59,24 @@ class _SpottedAlertDialog<T> extends StatelessWidget {
                   style: Theme.of(context).textTheme.headline4,
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(height: Insets.xxLarge),
+                const SizedBox(height: Insets.xxLarge),
                 Text(
                   title,
                   style: Theme.of(context).textTheme.headline5,
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(height: Insets.xSmall),
+                const SizedBox(height: Insets.xSmall),
                 Text(
                   subtitle,
                   style: Theme.of(context).textTheme.subtitle1,
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(height: Insets.xLarge),
+                const SizedBox(height: Insets.xLarge),
                 SpottedButton(
                   text: 'Okay',
                   onPressed: () => Navigator.of(context).pop(agree),
                 ),
-                SizedBox(height: Insets.xSmall),
+                const SizedBox(height: Insets.xSmall),
                 SpottedTextButton(
                   text: 'Dismiss',
                   onTap: () => Navigator.of(context).pop(disagree),

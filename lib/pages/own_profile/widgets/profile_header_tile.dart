@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:spotted/application/dimen.dart';
-import 'package:spotted/pages/own_profile/widgets/profile_list_tile.dart';
 
 class ProfileHeaderTile extends StatelessWidget {
   const ProfileHeaderTile({required this.title});

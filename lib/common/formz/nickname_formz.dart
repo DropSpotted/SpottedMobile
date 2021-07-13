@@ -13,7 +13,7 @@ class NicknameInput extends FormzInput<String, NicknameInputError> {
       final trimmedValue = value.trim();
       if (trimmedValue.isEmpty) {
         return NicknameInputError.empty;
-      } else if (trimmedValue.length > 200) {
+      } else if (trimmedValue.length > 30) {
         return NicknameInputError.toManyCharacters;
       } else {
         return null;

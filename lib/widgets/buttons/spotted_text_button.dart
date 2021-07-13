@@ -19,7 +19,6 @@ class SpottedTextButton extends StatelessWidget {
   final String text;
 
   static const double _buttonRadius = 18;
-  static const double _iconSize = 25;
   static const double _colorOpacity = 0.12;
 
   EdgeInsets get _padding {

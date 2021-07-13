@@ -2,6 +2,7 @@ import 'package:fire/fire_auth_service.dart';
 import 'package:geo/service/geo_service.dart';
 import 'package:get_it/get_it.dart';
 import 'package:sms_autofill/sms_autofill.dart';
+import 'package:spotted/common/auth_token_provider_impl.dart';
 import 'package:spotted/common/bloc/geo_manager/geo_manager_bloc.dart';
 import 'package:spotted/common/sms_fill.dart';
 import 'package:spotted/pages/dashboard/bloc/dashboard_bloc.dart';
@@ -10,6 +11,7 @@ import 'package:remote/remote_injector.dart';
 import 'package:spotted/pages/post_creation/bloc/post_creation_bloc.dart';
 import 'package:spotted/pages/post_creation/post_creation_arguments.dart';
 import 'package:spotted/pages/post_details/bloc/post_details_bloc.dart';
+import 'package:remote/auth_token_provider.dart';
 
 final sl = GetIt.instance;
 
@@ -21,6 +23,11 @@ Future<void> init() async {
     // ..registerFactory(() => FireAuth.create())
     ..registerFactory(() => FireAuthService.create())
     ..registerFactory(() => GeoService.create())
+    ..registerFactory<AuthTokenProvider>(
+      () => AuthTokenProviderImpl(
+        fireAuthService: sl<FireAuthService>(),
+      ),
+    )
     ..registerFactory(() => SmsAutoFill())
     ..registerFactory<SmsFill>(
       () => SmsFillImpl(

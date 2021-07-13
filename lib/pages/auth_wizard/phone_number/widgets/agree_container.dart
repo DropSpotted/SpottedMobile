@@ -29,7 +29,7 @@ class AgreeContainer extends StatelessWidget {
                       print('dada1');
                     },
                 ),
-                TextSpan(text: ' and '),
+                const TextSpan(text: ' and '),
                 TextSpan(
                   text: 'Privacy Policy',
                   style: Theme.of(context).textTheme.caption?.copyWith(
