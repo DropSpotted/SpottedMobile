@@ -23,21 +23,23 @@ class AuthCubit extends Cubit<AuthState> {
     final user = await _userService.loggedUser();
 
     if (isAuthenticated) {
-      emit(user.fold(
-        (failure) => const AuthState.authenticate(AuthenticatedScreen.dashboard),
-        (result) {
-          if(result.isUserSavedNickname) {
-            return const AuthState.authenticate(AuthenticatedScreen.dashboard);
-          } else {
-            return const AuthState.authenticate(AuthenticatedScreen.nickname);
-          }
+      emit(user.fold((failure) => const AuthState.authenticate(AuthenticatedScreen.dashboard), (result) {
+        if (result.isUserSavedNickname) {
+          return const AuthState.authenticate(AuthenticatedScreen.dashboard);
+        } else {
+          return const AuthState.authenticate(AuthenticatedScreen.nickname);
         }
-        // (r) => AuthState.authenticate(AuthenticatedScreen.nickname),
-      ));
+      }
+          // (r) => AuthState.authenticate(AuthenticatedScreen.nickname),
+          ));
       // emit(const AuthState.authenticate(AuthenticatedScreen.dashboard));
     } else {
       emit(const AuthState.unauthenticated());
     }
+  }
+
+  void xd() {
+    return emit(const AuthState.authenticate(AuthenticatedScreen.dashboard));
   }
 
   Future<void> signOut() async {

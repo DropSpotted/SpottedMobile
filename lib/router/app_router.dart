@@ -15,37 +15,16 @@ import 'package:spotted/pages/splash/splash_page.dart';
   replaceInRouteName: 'Page,Route',
   routes: <AutoRoute>[
     AutoRoute(
-      page: SplashPage, path: '/splash',
-      // initial: true,
+      page: SplashPage,
+      path: '/splash',
     ),
     AutoRoute(
       name: 'LoggedRouter',
       initial: true,
       page: EmptyRouterPage,
       children: [
-        // AutoRoute(
-        //   name: 'DashboardRouter',
-        //   page: EmptyRouterPage,
-        //   path: 'dashboard',
-        //   // initial: true,
-        //   children: [
-        //     AutoRoute(
-        //       page: DashboardPage,
-        //       // initial: true,
-        //       path: '',
-        //     ),
-        //     AutoRoute(
-        //       page: PostCreationPage,
-        //       path: 'post-creation',
-        //     ),
-        //     AutoRoute(
-        //       page: PostDetailsPage,
-        //       path: 'post-details',
-        //     ),
-        //   ],
-        // ),
         AutoRoute(
-          name: 'NavbarRouter',
+          // name: 'NavbarRouter',
           page: NavbarPage,
           children: [
             AutoRoute(
@@ -59,7 +38,6 @@ import 'package:spotted/pages/splash/splash_page.dart';
             ),
           ],
         ),
-
         AutoRoute(
           page: PostCreationPage,
           path: 'post-creation',
@@ -68,9 +46,16 @@ import 'package:spotted/pages/splash/splash_page.dart';
           page: PostDetailsPage,
           path: 'post-details',
         ),
-
+      ],
+    ),
+    AutoRoute(
+      name: 'LoggedWizardRouter',
+      path: '/logged-wiazrd',
+      page: EmptyRouterPage,
+      children: [
         AutoRoute(
           page: NicknamePage,
+          initial: true,
           path: 'nickname',
         ),
       ],

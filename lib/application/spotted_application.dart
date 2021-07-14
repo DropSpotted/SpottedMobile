@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:device_preview/device_preview.dart';
+import 'package:domain/model/logged_user.dart';
 import 'package:domain/service/user/user_service.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fire/fire_auth_service.dart';
@@ -59,24 +60,22 @@ class SpottedApplication extends StatelessWidget {
                   routes: (_) => [
                     state.map(
                       initial: (state) => const SplashRoute(),
-                      authenticate: (state) => LoggedRouter(children: [
-                        if (state.authenticatedScreen == AuthenticatedScreen.nickname) ...[
-                          const NicknameRoute()
-                        ] else ...[
-                          const NavbarRouter()
-                        ],
-                      ]),
+                      authenticate: (state) {
+                        if (state.authenticatedScreen == AuthenticatedScreen.nickname) {
+                          return const LoggedWizardRouter(children: [
+                            NicknameRoute(),
+                          ]);
+                        } else {
+                          return const LoggedRouter(children: [
+                            NavbarRoute(),
+                          ]);
+                        }
+                      },
                       unauthenticated: (state) => const LoginRouter(),
                     ),
                   ],
                 ),
-                // routerDelegate: appRouter.delegate(),
                 routeInformationParser: appRouter.defaultRouteParser(),
-                // builder: (context, child) {
-                //   return _ResponsiveContainer(
-                //     child: child,
-                //   );
-                // },
               );
             },
           ),

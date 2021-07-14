@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:domain/data_source/user_remote_data_source.dart';
 import 'package:domain/failure/failure.dart';
+import 'package:domain/model/error/update_logger_user_error.dart';
 import 'package:domain/model/logged_user.dart';
 import 'package:domain/model/update_logged_user.dart';
 import 'package:domain/model/user.dart';
@@ -10,7 +11,7 @@ abstract class UserService {
 
   Future<Either<Failure, User>> getUserById(String userId);
 
-  Future<Either<Failure, Unit>> updateUser(UpdateLoggedUser updateLoggedUser);
+  Future<Either<Failure<UpdateLoggedUserError>, Unit>> updateUser(UpdateLoggedUser updateLoggedUser);
 }
 
 class UserServiceImpl implements UserService {
@@ -31,7 +32,7 @@ class UserServiceImpl implements UserService {
   }
 
   @override
-  Future<Either<Failure, Unit>> updateUser(UpdateLoggedUser updateLoggedUser) async {
+  Future<Either<Failure<UpdateLoggedUserError>, Unit>> updateUser(UpdateLoggedUser updateLoggedUser) async {
     return _userRemoteDataSource.updateUser(updateLoggedUser);
   }
 }

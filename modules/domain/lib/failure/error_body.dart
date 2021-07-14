@@ -1,11 +1,9 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+class ErrorBody<T> {
+  const ErrorBody({
+    this.data,
+    this.errorCode,
+  });
 
-part 'error_body.freezed.dart';
-
-@freezed
-class ErrorBody<T> with _$ErrorBody {
-  const factory ErrorBody({
-    T? data,
-    int? errorCode,
-  }) = _ErrorBody;
+  final T? data;
+  final int? errorCode;
 }

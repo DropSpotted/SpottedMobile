@@ -1,11 +1,31 @@
 import 'package:domain/failure/failure.dart';
 import 'package:dio/src/dio_error.dart';
+import 'package:domain/model/error/update_logger_user_error.dart';
+import 'package:remote/data_source/user/model/error/update_logged_user_error_model.dart';
 import 'package:remote/data_source/user/user_remote_data_source_impl.dart';
+import 'package:domain/failure/error_body.dart';
 
 extension UserFilureMapper on UserRemoteDataSourceImpl {
-  Failure mapDioFailure(DioError dioError) {
+  Failure<T> mapDioFailure<T>(DioError dioError) {
     if (dioError.type == DioErrorType.response) {
-      return const Failure.defaultType(); //TODO: map here api errors to errorBody
+      try {
+        if (T == UpdateLoggedUserError) {
+          var xd = (UpdateLoggedUserErrorModel.fromJson(dioError.response?.data).toDomain() as T);
+
+          var xd2 = ErrorBody(data: xd);
+
+          return Failure.errorBody(
+            xd2,
+          );
+          // return Failure.errorBody(
+          //   ErrorBody(data: UpdateLoggedUserErrorModel.fromJson(dioError.response?.data) as T),
+          // );
+        } else {
+          return const Failure.defaultType();
+        }
+      } catch (e) {
+        return const Failure.defaultType(); //TODO: map here api errors to errorBody
+      }
     } else {
       switch (dioError.type) {
         case DioErrorType.connectTimeout:

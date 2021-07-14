@@ -31,6 +31,26 @@ abstract class SpottedSnackbar {
 
     Overlay.of(context)?.insert(entry);
   }
+
+  static Future<void> showError(
+    BuildContext context, {
+    required String message,
+    String? title,
+    Duration duration = const Duration(seconds: 5),
+  }) async {
+    OverlayEntry? entry;
+    entry = OverlayEntry(
+      builder: (context) => _SpottedSnackbar(
+        toastDuration: duration,
+        overlayEntry: entry,
+        title: title,
+        message: message,
+        type: SpottedSnackbarType.error,
+      ),
+    );
+
+    Overlay.of(context)?.insert(entry);
+  }
 }
 
 class _SpottedSnackbar extends StatefulWidget {

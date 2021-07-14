@@ -6,14 +6,15 @@ abstract class NicknameState with _$NicknameState {
   const factory NicknameState({
     required bool isLoading,
     required NicknameInput nicknameInput,
-    required bool isSuccess,
+    required Option<Either<Failure, Unit>> isFailureOrSuccess,
   }) = _NicknameState;
 
   const NicknameState._();
 
-  factory NicknameState.initial() => const NicknameState(
+  factory NicknameState.initial() =>  NicknameState(
         isLoading: false,
-        nicknameInput: NicknameInput.pure(),
-        isSuccess: false,
+        nicknameInput: const NicknameInput.pure(),
+        isFailureOrSuccess: none()
+        // isSuccess: false,
       );
 }

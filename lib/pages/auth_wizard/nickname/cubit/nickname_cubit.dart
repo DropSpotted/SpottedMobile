@@ -1,8 +1,10 @@
 import 'package:bloc/bloc.dart';
+import 'package:domain/failure/failure.dart';
 import 'package:domain/service/user/user_service.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:spotted/common/formz/nickname_formz.dart';
 import 'package:domain/model/update_logged_user.dart';
+import 'package:dartz/dartz.dart';
 
 part 'nickname_state.dart';
 part 'nickname_cubit.freezed.dart';
@@ -17,11 +19,12 @@ class NicknameCubit extends Cubit<NicknameState> {
   void nicknameTyped(String nickname) => emit(
         state.copyWith(
           nicknameInput: NicknameInput.dirty(value: nickname),
+          isFailureOrSuccess: none(),
         ),
       );
 
   Future<void> nicknameSubmitted() async {
-    emit(state.copyWith(isLoading: true));
+    emit(state.copyWith(isLoading: true, isFailureOrSuccess: none()));
 
     final result = await _userService.updateUser(
       UpdateLoggedUser(username: state.nicknameInput.value, isUserSavedNickname: true),
@@ -30,12 +33,17 @@ class NicknameCubit extends Cubit<NicknameState> {
     emit(
       result.fold(
         (failure) {
-          return state.copyWith(isLoading: false);
+          return state.copyWith(
+            isLoading: false,
+            isFailureOrSuccess: optionOf(
+              left(failure),
+            ),
+          );
         },
         (result) {
           return state.copyWith(
             isLoading: false,
-            isSuccess: true,
+            isFailureOrSuccess: optionOf(right(unit)),
           );
         },
       ),
