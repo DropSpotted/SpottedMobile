@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "285756322210",
+    "project_id": "spotted-development-830d2",
+    "storage_bucket": "spotted-development-830d2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:285756322210:android:24b8836f5c6f470ae502fb",
+        "android_client_info": {
+          "package_name": "com.michalsokol.spotted.alpha"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "285756322210-fmreb5v6a7o8kdku86lpijvc7em63st0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3whjglynKi6PaP3kldaIWMZic66ML52o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "285756322210-fmreb5v6a7o8kdku86lpijvc7em63st0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "285756322210-htb1mshvt0848c4tfasbgpjccn4m7lgb.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.michalsokol.spotted.alpha"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

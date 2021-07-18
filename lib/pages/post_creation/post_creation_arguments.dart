@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:spotted/pages/post_creation/bloc/post_creation_bloc.dart';
+import 'package:spotted/pages/post_creation/cubit/post_creation_cubit.dart';
 
 part 'post_creation_arguments.freezed.dart';
 

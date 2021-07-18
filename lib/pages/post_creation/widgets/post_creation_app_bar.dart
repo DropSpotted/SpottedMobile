@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spotted/application/dimen.dart';
-import 'package:spotted/common/bloc/geo_manager/geo_manager_bloc.dart';
 import 'package:spotted/generated/easy_localization_export.dart';
-import 'package:spotted/pages/post_creation/bloc/post_creation_bloc.dart';
+import 'package:spotted/pages/post_creation/cubit/post_creation_cubit.dart';
 import 'package:spotted/widgets/buttons/rounded_text_button.dart';
 
 class PostCreationAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -28,7 +27,7 @@ class _AddPostButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<PostCreationBloc, PostCreationState>(
+    return BlocBuilder<PostCreationCubit, PostCreationState>(
       builder: (context, state) {
         return AnimatedCrossFade(
           alignment: Alignment.center,
@@ -40,7 +39,8 @@ class _AddPostButton extends StatelessWidget {
             text: LocaleKeys.add.tr(),
             onPressed: () {
               if (!state.lockSubmitButton) {
-                context.read<GeoManagerBloc>().add(const GeoManagerEvent.currentLocationAsked());
+                context.read<PostCreationCubit>().valueSubmitted();
+                // context.read<GeoManagerCubit>().add(const GeoManagerEvent.currentLocationAsked());
               }
             },
           ),

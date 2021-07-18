@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:spotted/application/dimen.dart';
+import 'package:spotted/application/application_export.dart';
 
 enum SpottedTextButtonType {
   small,
@@ -12,11 +12,13 @@ class SpottedTextButton extends StatelessWidget {
     this.type = SpottedTextButtonType.small,
     this.onTap,
     required this.text,
+    this.maxLines,
   });
 
   final SpottedTextButtonType type;
   final VoidCallback? onTap;
   final String text;
+  final int? maxLines;
 
   static const double _buttonRadius = 18;
   static const double _colorOpacity = 0.12;
@@ -46,6 +48,9 @@ class SpottedTextButton extends StatelessWidget {
           padding: _padding,
           child: Text(
             text,
+            style: context.textThemes.buttonLarge,
+            maxLines: maxLines,
+            overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
           ),
         ),

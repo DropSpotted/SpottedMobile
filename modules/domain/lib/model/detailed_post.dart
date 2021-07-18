@@ -1,4 +1,5 @@
 import 'package:domain/model/comment.dart';
+import 'package:domain/model/point.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'detailed_post.freezed.dart';
@@ -11,5 +12,6 @@ abstract class DetailedPost with _$DetailedPost {
     required DateTime createdAt,
     required DateTime modifiedAt,
     required List<Comment> comments,
+    required Point geoLocationCoords,
   }) = _DetailedPost;
 }

@@ -1,26 +1,36 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:domain/model/post.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spotted/application/dimen.dart';
-import 'package:spotted/common/bloc/geo_manager/geo_manager_bloc.dart';
+import 'package:spotted/common/bloc/geo_manager/geo_manager_cubit.dart';
 import 'package:spotted/injector_container.dart';
-import 'package:spotted/pages/dashboard/bloc/dashboard_bloc.dart';
-import 'package:spotted/pages/post_creation/post_creation_arguments.dart';
-import 'package:spotted/router/app_router.gr.dart';
-import 'package:spotted/widgets/scaffolds/geo_use_scaffold.dart';
+import 'package:spotted/pages/dashboard/cubit/dashboard/dashboard_cubit.dart';
+import 'package:spotted/pages/dashboard/cubit/favourites_creation/favorites_creation_cubit.dart';
+import 'package:spotted/pages/dashboard/cubit/location_info/location_info_cubit.dart';
+import 'package:spotted/pages/dashboard/widgets/dashboard_app_bar.dart';
 import 'package:spotted/widgets/tiles/post_tile.dart';
+import 'package:spotted/router/app_router.gr.dart';
 
 class DashboardPage extends StatelessWidget with AutoRouteWrapper {
+  const DashboardPage({Key? key}) : super(key: key);
+
   @override
   Widget wrappedRoute(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => sl<GeoManagerBloc>()..add(const GeoManagerEvent.currentLocationAsked()),
+          create: (context) => sl<GeoManagerCubit>(),
         ),
         BlocProvider(
-          create: (context) => sl<DashboardBloc>(),
+          create: (context) => sl<DashboardCubit>()..fetchPosts(),
+        ),
+        BlocProvider(
+          create: (context) => sl<FavoritesCreationCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => sl<LocationInfoCubit>(),
         )
       ],
       child: this,
@@ -29,68 +39,69 @@ class DashboardPage extends StatelessWidget with AutoRouteWrapper {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<GeoManagerBloc, GeoManagerState>(
-      listener: (context, state) {
-        state.map(
-          initial: (state) {},
-          load: (state) => context.read<DashboardBloc>()
-            ..add(DashboardEvent.started(
-                state.geoPosition.latitude, state.geoPosition.longitude, state.includeChildLoading)),
-          failure: (state) {},
-        );
-      },
-      child: GeoUseScaffold(
-        appBar: AppBar(actions: [
-          Center(
-            child: IconButton(
-              icon: const Icon(Icons.edit_outlined),
-              onPressed: () => context.router.push(
-                PostCreationRoute(
-                  postCreationArguments: PostCreationArguments.post(
-                    onSuccess: () => context.read<GeoManagerBloc>()
-                      ..add(
-                        const GeoManagerEvent.currentLocationAsked(),
-                      ),
-                  ),
-                ),
-              ),
-            ),
-          )
-        ]),
-        loadedContainer: _DashboardList(),
-      ),
+    return const Scaffold(
+      appBar: DashboardAppBar(),
+      body: DashboardBody(),
     );
   }
 }
 
-class _DashboardList extends StatelessWidget {
+class DashboardBody extends StatelessWidget {
+  const DashboardBody({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<DashboardBloc, DashboardState>(
-      builder: (context, state) {
-        if (state.isLoading) {
-          return const Center(
-            child: CircularProgressIndicator.adaptive(),
-          );
-        } else {
-          return RefreshIndicator(
-            onRefresh: () async =>
-                context.read<GeoManagerBloc>()..add(const GeoManagerEvent.currentLocationAsked(false)),
-            child: ListView.builder(
-              padding: const EdgeInsets.symmetric(horizontal: Insets.small),
-              itemBuilder: (context, index) {
-                return PostTile(
-                  onTap: () => context.router.push(PostDetailsRoute(postId: state.posts[index].id)),
-                  body: state.posts[index].body,
-                  creationDate: state.posts[index].createdAt,
-                  commentCount: state.posts[index].commentsCount,
-                );
-              },
-              itemCount: state.posts.length,
+    final state = context.watch<DashboardCubit>().state;
+
+    if (state.isLoadingPosts) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    } else {
+      return state.geoErrorCode.fold(
+        () => state.isFailureOrPosts.fold(
+          () => const SizedBox(),
+          (either) => either.fold(
+            (failure) => const Center(
+              child: Text('failed fetch posts'),
             ),
+            (posts) => DashboardLoadedPosts(posts: posts),
+          ),
+        ),
+        (failure) => const Center(
+          child: Text('failed fetch location'),
+        ),
+      );
+    }
+  }
+}
+
+class DashboardLoadedPosts extends StatelessWidget {
+  const DashboardLoadedPosts({
+    Key? key,
+    required this.posts,
+  }) : super(key: key);
+
+  final List<Post> posts;
+
+  @override
+  Widget build(BuildContext context) {
+    return RefreshIndicator(
+      onRefresh: () async => context.read<DashboardCubit>().fetchPosts(),
+      child: ListView.separated(
+        padding: const EdgeInsets.symmetric(horizontal: Insets.small),
+        itemBuilder: (context, index) {
+          return PostTile(
+            onTap: () => context.router.push(PostDetailsRoute(postId: posts[index].id)),
+            body: posts[index].body,
+            creationDate: posts[index].createdAt,
+            commentCount: posts[index].commentsCount,
+            place: posts[index].place,
           );
-        }
-      },
+        },
+        itemCount: posts.length,
+        separatorBuilder: (context, index) => const SizedBox(height: Insets.medium),
+      ),
     );
   }
 }

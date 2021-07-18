@@ -1,5 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:domain/model/favourite.dart';
+import 'package:remote/model/point_model.dart';
 
 part 'favourite_model.g.dart';
 
@@ -19,7 +20,7 @@ class FavouriteModel {
   factory FavouriteModel.fromJson(Map<String, dynamic> json) => _$FavouriteModelFromJson(json);
 
   final String id;
-  final String geoLocationCoords;
+  final PointModel geoLocationCoords;
   final String title;
   final String createdAt;
 
@@ -31,8 +32,7 @@ extension FavouriteModelExtenstion on FavouriteModel {
     return Favourite(
       id: id,
       createdAt: DateTime.parse(createdAt),
-      lat: 1.0,
-      lon: 1.0,
+      geoLocationCoords: geoLocationCoords.toDomain(),
       title: '',
     );
   }

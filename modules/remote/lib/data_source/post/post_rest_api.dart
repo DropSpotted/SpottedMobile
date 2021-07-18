@@ -15,7 +15,7 @@ abstract class PostRestApi {
   Future<void> createPost(@Body() CreatePostModel registerUserRemoteModel);
 
   @GET('/api/v1/posts')
-  Future<List<PostModel>> getPostList(@Query('lat') double lat, @Query('lon') double lon);
+  Future<List<PostModel>> getPostList(@Query('lat') double lat, @Query('lon') double lon, @Query('radius') double radius);
 
   @GET('/api/v1/post/{id}')
   Future<DetailedPostModel> getPostById(@Path('id') String postId);

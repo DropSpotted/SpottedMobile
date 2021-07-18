@@ -1,6 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:remote/data_source/comment/model/response/comment_model.dart';
 import 'package:domain/model/detailed_post.dart';
+import 'package:remote/model/point_model.dart';
 
 part 'detailed_post_model.g.dart';
 
@@ -24,7 +25,7 @@ class DetailedPostModel {
   final String body;
   final String createdAt;
   final String modifiedAt;
-  final String geoLocationCoords;
+  final PointModel geoLocationCoords;
   final List<CommentModel> comments;
 
   Map<String, dynamic> toJson() => _$DetailedPostModelToJson(this);
@@ -40,6 +41,7 @@ extension DetailedPostModelExtenstion on DetailedPostModel {
       createdAt: DateTime.parse(createdAt),
       modifiedAt: DateTime.parse(modifiedAt),
       comments: domainComments,
+      geoLocationCoords: geoLocationCoords.toDomain(),
     );
   }
 }

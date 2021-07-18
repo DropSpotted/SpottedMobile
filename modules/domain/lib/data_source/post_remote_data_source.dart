@@ -5,7 +5,7 @@ import 'package:domain/model/post.dart';
 import 'package:domain/model/post_creation.dart';
 
 abstract class PostRemoteDataSource {
-  Future<Either<Failure, List<Post>>> postList(double lat, double lon);
+  Future<Either<Failure, List<Post>>> postList(double lat, double lon, {double radius=4000});
   Future<Either<Failure, Unit>> createPost(PostCreation postCreation);
   Future<Either<Failure, DetailedPost>> detailedPost(String id);
 }

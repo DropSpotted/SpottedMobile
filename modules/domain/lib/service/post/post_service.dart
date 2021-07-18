@@ -6,7 +6,7 @@ import 'package:domain/model/post.dart';
 import 'package:domain/model/post_creation.dart';
 
 abstract class PostService {
-  Future<Either<Failure, List<Post>>> postList(double lat, double lon);
+  Future<Either<Failure, List<Post>>> postList(double lat, double lon, {double radius=4000});
 
   Future<Either<Failure, Unit>> createPost(PostCreation postCreatio);
 
@@ -21,8 +21,8 @@ class PostServiceImpl implements PostService {
   final PostRemoteDataSource _postDataSource;
 
   @override
-  Future<Either<Failure, List<Post>>> postList(double lat, double lon) async {
-    return _postDataSource.postList(lat, lon);
+  Future<Either<Failure, List<Post>>> postList(double lat, double lon, {double radius=4000}) async {
+    return _postDataSource.postList(lat, lon, radius: radius);
   }
 
   @override

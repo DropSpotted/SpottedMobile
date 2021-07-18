@@ -3,8 +3,6 @@ import 'package:domain/data_source/favourite_remote_data_source.dart';
 import 'package:domain/failure/failure.dart';
 import 'package:domain/model/favourite.dart';
 import 'package:domain/model/favourite_creation.dart';
-import 'package:domain/model/logged_user.dart';
-import 'package:domain/model/user.dart';
 
 abstract class FavouriteService {
   Future<Either<Failure, List<Favourite>>> favouriteList();

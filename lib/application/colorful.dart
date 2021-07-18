@@ -15,5 +15,9 @@ extension Colorful on Colors {
   static const Color wildSand = Color(0xffF6F6F6);
   static const Color flamingo = Color(0xffF5413D);
   static const Color alto = Color(0xffE0E0E0);
+  static const Color gray2 = Color(0xff1D1929);
   static const Color gray6 = Color(0xff77757F);
+  static const Color gray8 = Color(0xffA5A3A9);
+  static const Color gray11 = Color(0xffE8E8EA);
+  static const Color gray12 = Color(0xffF9F9F9);
 }

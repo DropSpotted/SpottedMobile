@@ -10,16 +10,9 @@ extension UserFilureMapper on UserRemoteDataSourceImpl {
     if (dioError.type == DioErrorType.response) {
       try {
         if (T == UpdateLoggedUserError) {
-          var xd = (UpdateLoggedUserErrorModel.fromJson(dioError.response?.data).toDomain() as T);
-
-          var xd2 = ErrorBody(data: xd);
-
           return Failure.errorBody(
-            xd2,
+            ErrorBody(data: UpdateLoggedUserErrorModel.fromJson(dioError.response?.data) as T),
           );
-          // return Failure.errorBody(
-          //   ErrorBody(data: UpdateLoggedUserErrorModel.fromJson(dioError.response?.data) as T),
-          // );
         } else {
           return const Failure.defaultType();
         }

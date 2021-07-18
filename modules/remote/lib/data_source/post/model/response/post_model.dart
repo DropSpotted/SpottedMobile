@@ -1,5 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:domain/model/post.dart';
+import 'package:remote/model/point_model.dart';
 
 part 'post_model.g.dart';
 
@@ -23,7 +24,7 @@ class PostModel {
   final String body;
   final String createdAt;
   final String modifiedAt;
-  final String geoLocationCoords;
+  final PointModel geoLocationCoords;
   final int commentsCount;
 
   Map<String, dynamic> toJson() => _$PostModelToJson(this);
@@ -36,7 +37,7 @@ extension PostModelExtenstion on PostModel {
       createdAt: DateTime.parse(createdAt),
       modifiedAt: DateTime.parse(modifiedAt),
       id: id,
-      geoLocationCoords: geoLocationCoords,
+      geoLocationCoords: geoLocationCoords.toDomain(),
       commentsCount: commentsCount,
     );
   }

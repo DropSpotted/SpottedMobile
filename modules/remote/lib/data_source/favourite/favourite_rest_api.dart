@@ -9,9 +9,9 @@ part 'favourite_rest_api.g.dart';
 abstract class FavouriteResetApi {
   factory FavouriteResetApi(Dio dio) = _FavouriteResetApi;
 
-  @GET('api/v1/favourites')
+  @GET('/api/v1/favourites')
   Future<List<FavouriteModel>> favouriteList();
   
-  @POST('api/v1/favourites')
+  @POST('/api/v1/favourites')
   Future<void> createFavourite(@Body() FavouriteCreationModel favouriteCreationModel);
 }

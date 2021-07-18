@@ -9,6 +9,7 @@ class NavbarPage extends StatelessWidget {
     return AutoTabsScaffold(
       routes: const [
         DashboardRoute(),
+        FavouritesRoute(),
         OwnProfileRoute(),
       ],
       bottomNavigationBuilder: (_, tabsRouter) {
@@ -19,8 +20,12 @@ class NavbarPage extends StatelessWidget {
               value: 0,
             ),
             SpottedBottomNavigationItem(
-              icon: Icons.account_circle_outlined,
+              icon: Icons.favorite_outline,
               value: 1,
+            ),
+            SpottedBottomNavigationItem(
+              icon: Icons.account_circle_outlined,
+              value: 2,
             ),
           ],
           active: tabsRouter.activeIndex,

@@ -166,76 +166,55 @@ class AppTheme {
           fontSize: 96,
           fontWeight: FontWeight.w700,
         ),
-        //title1
         headline2: GoogleFonts.nunitoSans(
           fontSize: 60,
           fontWeight: FontWeight.w700,
-          height: 72 / 60,
         ),
-        //title2
         headline3: GoogleFonts.nunitoSans(
           fontSize: 48,
           fontWeight: FontWeight.w700,
-          height: 56 / 48,
         ),
-        //title3
         headline4: GoogleFonts.nunitoSans(
           fontSize: 34,
           fontWeight: FontWeight.w800,
-          height: 40 / 34,
         ),
-        //headline
         headline5: GoogleFonts.nunitoSans(
           fontSize: 24,
           fontWeight: FontWeight.w800,
-          height: 32 / 24,
         ),
         headline6: GoogleFonts.nunitoSans(
           fontSize: 20,
           fontWeight: FontWeight.w600,
-          letterSpacing: 0.75,
         ),
-        //body
         subtitle1: GoogleFonts.nunitoSans(
           fontSize: 16,
           fontWeight: FontWeight.w400,
-          height: 24 / 16,
         ),
-        //body small
         subtitle2: GoogleFonts.nunitoSans(
           fontSize: 14,
           fontWeight: FontWeight.w400,
-          height: 24 / 14,
         ),
-        //body body
         bodyText1: GoogleFonts.nunitoSans(
           fontSize: 16,
           fontWeight: FontWeight.w700,
-          height: 24 / 16,
         ),
-        //body small bold
         bodyText2: GoogleFonts.nunitoSans(
           fontSize: 14,
           fontWeight: FontWeight.w700,
-          height: 24 / 14,
         ),
-        //button
         button: GoogleFonts.nunitoSans(
-          fontSize: 16,
-          fontWeight: FontWeight.w700,
-          height: 24 / 16,
-        ),
-        //button medium
-        caption: GoogleFonts.nunitoSans(
           fontSize: 14,
           fontWeight: FontWeight.w700,
-          height: 16 / 14,
         ),
-        //button small
-        overline: GoogleFonts.nunitoSans(
+        //caption
+        caption: GoogleFonts.nunitoSans(
           fontSize: 12,
-          fontWeight: FontWeight.w700,
+          fontWeight: FontWeight.w600,
           height: 16 / 12,
+        ),
+        overline: GoogleFonts.nunitoSans(
+          fontSize: 10,
+          fontWeight: FontWeight.w400,
         ),
       );
 
@@ -291,4 +270,77 @@ extension AppBarThemes on BuildContext {
 
 extension ColorShemas on BuildContext {
   ColorScheme get colors => themeData.colorScheme;
+}
+
+extension TextThemesExtension on TextTheme {
+  TextStyle get title1 => GoogleFonts.nunitoSans(
+        fontSize: 60,
+        fontWeight: FontWeight.w700,
+        height: 72 / 60,
+      );
+
+  TextStyle get title2 => GoogleFonts.nunitoSans(
+        fontSize: 48,
+        fontWeight: FontWeight.w700,
+        height: 56 / 48,
+      );
+
+  TextStyle get title3 => GoogleFonts.nunitoSans(
+        fontSize: 34,
+        fontWeight: FontWeight.w800,
+        height: 40 / 34,
+      );
+
+  TextStyle get hheadline => GoogleFonts.nunitoSans(
+        fontSize: 24,
+        fontWeight: FontWeight.w800,
+        height: 32 / 24,
+      );
+
+  TextStyle get subheadline => GoogleFonts.nunitoSans(
+        fontSize: 18,
+        fontWeight: FontWeight.bold,
+        height: 32 / 18,
+      );
+
+  TextStyle get body => GoogleFonts.nunitoSans(
+        fontSize: 16,
+        fontWeight: FontWeight.w400,
+        height: 24 / 16,
+      );
+
+  TextStyle get bodySmall => GoogleFonts.nunitoSans(
+        fontSize: 14,
+        fontWeight: FontWeight.w400,
+        height: 24 / 14,
+      );
+
+  TextStyle get bodyBold => GoogleFonts.nunitoSans(
+        fontSize: 16,
+        fontWeight: FontWeight.w700,
+        height: 24 / 16,
+      );
+
+  TextStyle get bodySmallBold => GoogleFonts.nunitoSans(
+        fontSize: 14,
+        fontWeight: FontWeight.w700,
+        height: 24 / 14,
+      );
+
+  TextStyle get buttonMedium => GoogleFonts.nunitoSans(
+        fontSize: 14,
+        fontWeight: FontWeight.w700,
+        height: 16 / 14,
+      );
+  TextStyle get buttonLarge => GoogleFonts.nunitoSans(
+        fontSize: 16,
+        height: 24 / 16,
+        fontWeight: FontWeight.w600,
+      );
+
+  TextStyle get buttonSmall => GoogleFonts.nunitoSans(
+        fontSize: 12,
+        height: 16 / 12,
+        fontWeight: FontWeight.bold,
+      );
 }

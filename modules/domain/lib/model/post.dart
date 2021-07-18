@@ -1,3 +1,4 @@
+import 'package:domain/model/point.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'post.freezed.dart';
@@ -9,7 +10,9 @@ abstract class Post with _$Post {
     required String body,
     required DateTime createdAt,
     required DateTime modifiedAt,
-    required String geoLocationCoords,
+    required Point geoLocationCoords,
     required int commentsCount,
+    // place is should be added from cubit
+    @Default('') String place,
   }) = _Post;
 }

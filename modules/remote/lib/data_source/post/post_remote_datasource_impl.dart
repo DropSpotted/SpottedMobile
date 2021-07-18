@@ -27,9 +27,9 @@ class PostRemoteDataSourceImpl implements PostRemoteDataSource {
   }
 
   @override
-  Future<Either<Failure, List<Post>>> postList(double lat, double lon) async {
+  Future<Either<Failure, List<Post>>> postList(double lat, double lon, {double radius=4000}) async {
     try {
-      final postModelList = await _postRestApi.getPostList(lat, lon);
+      final postModelList = await _postRestApi.getPostList(lat, lon, radius);
       final postList = postModelList.map((post) => post.toDomain()).toList();
       return right(postList);
     } on DioError catch (e) {

@@ -60,6 +60,7 @@ class _PostDetailsBody extends StatelessWidget {
                     child: PostTile(
                       body: state.detailedPost!.body,
                       creationDate: state.detailedPost!.createdAt,
+                      place: '',
                     ),
                   ),
                   SliverList(
@@ -68,6 +69,7 @@ class _PostDetailsBody extends StatelessWidget {
                         body: state.detailedPost!.comments[index].body,
                         creationDate: state.detailedPost!.comments[index].createdAt,
                         showLeftBorder: true,
+                        place: '',
                       ),
                       childCount: state.detailedPost!.comments.length,
                     ),

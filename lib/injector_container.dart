@@ -3,12 +3,14 @@ import 'package:geo/service/geo_service.dart';
 import 'package:get_it/get_it.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 import 'package:spotted/common/auth_token_provider_impl.dart';
-import 'package:spotted/common/bloc/geo_manager/geo_manager_bloc.dart';
+import 'package:spotted/common/bloc/geo_manager/geo_manager_cubit.dart';
 import 'package:spotted/common/sms_fill.dart';
-import 'package:spotted/pages/dashboard/bloc/dashboard_bloc.dart';
 import 'package:domain/domain_injector.dart';
 import 'package:remote/remote_injector.dart';
-import 'package:spotted/pages/post_creation/bloc/post_creation_bloc.dart';
+import 'package:spotted/pages/dashboard/cubit/dashboard/dashboard_cubit.dart';
+import 'package:spotted/pages/dashboard/cubit/favourites_creation/favorites_creation_cubit.dart';
+import 'package:spotted/pages/dashboard/cubit/location_info/location_info_cubit.dart';
+import 'package:spotted/pages/post_creation/cubit/post_creation_cubit.dart';
 import 'package:spotted/pages/post_creation/post_creation_arguments.dart';
 import 'package:spotted/pages/post_details/bloc/post_details_bloc.dart';
 import 'package:remote/auth_token_provider.dart';
@@ -34,21 +36,34 @@ Future<void> init() async {
         smsAutoFill: sl(),
       ),
     )
+    ..registerLazySingleton(
+      () => GeoManagerCubit(geoService: sl()),
+    )
     ..registerFactory(
-      () => DashboardBloc(
+      () => DashboardCubit(
         postService: sl(),
+        geoManagerCubit: sl(),
+        geoService: sl(),
       ),
     )
-    ..registerFactoryParam<PostCreationBloc, PostCreationArguments, void>(
-      (arguments, _) => PostCreationBloc(
+    ..registerFactory(
+      () => FavoritesCreationCubit(
+        geoManagerCubit: sl(),
+        favouriteService: sl(),
+      ),
+    )
+    ..registerFactory(
+      () => LocationInfoCubit(
+        geoManagerCubit: sl(),
+        geoService: sl(),
+      ),
+    )
+    ..registerFactoryParam<PostCreationCubit, PostCreationArguments, void>(
+      (arguments, _) => PostCreationCubit(
         postCreationArguments: arguments!,
         postService: sl(),
         commentService: sl(),
-      ),
-    )
-    ..registerFactory(
-      () => GeoManagerBloc(
-        geoService: sl(),
+        geoManagerCubit: sl(),
       ),
     )
     ..registerFactoryParam<PostDetailsBloc, String, void>(

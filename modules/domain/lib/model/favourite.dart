@@ -1,3 +1,4 @@
+import 'package:domain/model/point.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'favourite.freezed.dart';
@@ -6,8 +7,7 @@ part 'favourite.freezed.dart';
 abstract class Favourite with _$Favourite {
   factory Favourite({
     required String id,
-    required double lat,
-    required double lon,
+    required Point geoLocationCoords,
     required String title,
     required DateTime createdAt,
   }) = _Favourite;

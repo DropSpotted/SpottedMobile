@@ -1,6 +1,7 @@
 import 'package:geo/model/geo_location_permission.dart';
 import 'package:geo/model/geo_position.dart';
 import 'package:geo/service/geo.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 
 class GeoImpl implements Geo {
@@ -37,5 +38,14 @@ class GeoImpl implements Geo {
   @override
   Future<GeoPosition?> getLastKnownPosition() async {
     return (await Geolocator.getLastKnownPosition())?.toGeo();
+  }
+
+  @override
+  Future<List<Placemark>> placeFromCoordinates({
+    required double lat,
+    required double lon,
+    String? localeIdentifier,
+  }) async {
+    return placemarkFromCoordinates(lat, lon, localeIdentifier: localeIdentifier);
   }
 }

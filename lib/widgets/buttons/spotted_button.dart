@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:spotted/application/application_export.dart';
 
 enum SpottedButtonType {
   small,
@@ -52,9 +53,9 @@ class SpottedButton extends HookWidget {
     if (gradientColors != null) {
       linearGradient = LinearGradient(
         colors: gradientColors!.map((color) {
-          if(isActive) {
+          if (isActive) {
             return color;
-          }  else {
+          } else {
             return color.withOpacity(0.2);
           }
         }).toList(),
@@ -164,10 +165,10 @@ class _SpottedColoredButton extends StatelessWidget {
           child: SizedBox(
             child: Text(
               text,
+              style: context.textThemes.buttonLarge.copyWith(
+                color: Colors.white,
+              ),
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                    color: Colors.white,
-                  ),
             ),
           ),
         ),

@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:device_preview/device_preview.dart';
-import 'package:domain/model/logged_user.dart';
 import 'package:domain/service/user/user_service.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fire/fire_auth_service.dart';

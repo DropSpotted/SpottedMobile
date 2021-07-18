@@ -1,4 +1,4 @@
-part of 'post_creation_bloc.dart';
+part of 'post_creation_cubit.dart';
 
 @freezed
 class PostCreationState with _$PostCreationState {
@@ -6,7 +6,9 @@ class PostCreationState with _$PostCreationState {
     required PostInput postInput,
     required CreationType creationType,
     required bool isLoading,
-    required bool isSuccess,
+    required Option<Either<Failure, Unit>> failureOrSuccess,
+    required Option<GeoErrorCode> geoErrorCode,
+    // required bool isSuccess,
     String? parentPostId,
   }) = _PostCreationState;
 
@@ -15,9 +17,10 @@ class PostCreationState with _$PostCreationState {
   factory PostCreationState.initial({required CreationType creationType, String? parentPostId}) => PostCreationState(
         isLoading: false,
         postInput: const PostInput.pure(),
-        isSuccess: false,
+        failureOrSuccess: none(),
         creationType: creationType,
         parentPostId: parentPostId,
+        geoErrorCode: none(),
       );
 
   bool get isFormValid => postInput.valid;

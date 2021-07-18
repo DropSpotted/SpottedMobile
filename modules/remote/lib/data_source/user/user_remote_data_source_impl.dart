@@ -6,7 +6,6 @@ import 'package:domain/model/error/update_logger_user_error.dart';
 import 'package:domain/model/update_logged_user.dart';
 import 'package:domain/model/user.dart';
 import 'package:domain/model/logged_user.dart';
-import 'package:remote/data_source/user/model/error/update_logged_user_error_model.dart';
 import 'package:remote/data_source/user/user_rest_api.dart';
 import 'package:remote/data_source/user/user_failure_mapper.dart';
 import 'package:remote/data_source/user/model/response/logged_user_model.dart';

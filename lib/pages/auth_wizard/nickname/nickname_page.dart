@@ -1,5 +1,4 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:domain/failure/failure.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spotted/application/dimen.dart';
@@ -40,7 +39,12 @@ class NicknamePage extends StatelessWidget with AutoRouteWrapper {
         );
       },
       child: Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.close),
+            onPressed: () => context.read<AuthCubit>().signOut(),
+          ),
+        ),
         body: ListView(
           padding: const EdgeInsets.symmetric(horizontal: Insets.xLarge),
           children: [

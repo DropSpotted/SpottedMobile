@@ -32,7 +32,7 @@ extension CreatePostExtension on PostCreation {
   CreatePostModel toRemote() {
     return CreatePostModel(
       body: body,
-      geoLocationCoords: 'POINT($lat $lon)',
+      geoLocationCoords: 'POINT($lon $lat)',
     );
   }
 }

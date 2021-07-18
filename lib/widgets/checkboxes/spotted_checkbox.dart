@@ -20,7 +20,7 @@ class SpottedCheckbox extends HookWidget {
       duration: const Duration(milliseconds: 100),
       upperBound: 2.0,
       lowerBound: 0,
-      initialValue: 2.0,
+      initialValue: 1.0,
     );
 
     final value = useState(initialValue);
