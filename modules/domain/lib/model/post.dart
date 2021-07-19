@@ -14,7 +14,7 @@ abstract class Post with _$Post {
     required Point geoLocationCoords,
     required int commentsCount,
     required bool isAnonymous,
-    UserShorten? user,
+    UserShorten? author,
     // place is should be added from cubit
     @Default('') String place,
   }) = _Post;

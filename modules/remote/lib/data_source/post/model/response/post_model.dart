@@ -18,7 +18,7 @@ class PostModel {
     required this.geoLocationCoords,
     required this.commentsCount,
     required this.isAnonymous,
-    this.user,
+    this.author,
   });
 
   factory PostModel.fromJson(Map<String, dynamic> json) => _$PostModelFromJson(json);
@@ -28,7 +28,7 @@ class PostModel {
   final String createdAt;
   final String modifiedAt;
   final PointModel geoLocationCoords;
-  final UserShortenModel? user;
+  final UserShortenModel? author;
   final int commentsCount;
   final bool isAnonymous;
 
@@ -44,7 +44,7 @@ extension PostModelExtenstion on PostModel {
       id: id,
       geoLocationCoords: geoLocationCoords.toDomain(),
       commentsCount: commentsCount,
-      user: user?.toDomain(),
+      author: author?.toDomain(),
       isAnonymous: isAnonymous
     );
   }
