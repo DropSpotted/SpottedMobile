@@ -1,5 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:domain/model/post.dart';
+import 'package:remote/data_source/post/model/response/user_shorten_model.dart';
 import 'package:remote/model/point_model.dart';
 
 part 'post_model.g.dart';
@@ -16,6 +17,8 @@ class PostModel {
     required this.modifiedAt,
     required this.geoLocationCoords,
     required this.commentsCount,
+    required this.isAnonymous,
+    this.user,
   });
 
   factory PostModel.fromJson(Map<String, dynamic> json) => _$PostModelFromJson(json);
@@ -25,7 +28,9 @@ class PostModel {
   final String createdAt;
   final String modifiedAt;
   final PointModel geoLocationCoords;
+  final UserShortenModel? user;
   final int commentsCount;
+  final bool isAnonymous;
 
   Map<String, dynamic> toJson() => _$PostModelToJson(this);
 }
@@ -39,6 +44,8 @@ extension PostModelExtenstion on PostModel {
       id: id,
       geoLocationCoords: geoLocationCoords.toDomain(),
       commentsCount: commentsCount,
+      user: user?.toDomain(),
+      isAnonymous: isAnonymous
     );
   }
 }

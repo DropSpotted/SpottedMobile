@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:foundation/dates.dart';
 import 'package:spotted/application/application_export.dart';
+import 'package:domain/model/user_shorten.dart';
 
 class PostTile extends StatelessWidget {
   const PostTile({
     required this.creationDate,
     required this.body,
     required this.place,
+    required this.isAnonymous,
+    this.user,
     this.commentCount,
     this.onTap,
     this.showLeftBorder = false,
@@ -18,6 +21,8 @@ class PostTile extends StatelessWidget {
   final int? commentCount;
   final VoidCallback? onTap;
   final bool showLeftBorder;
+  final UserShorten? user;
+  final bool isAnonymous;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +36,12 @@ class PostTile extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Posted by michcio', style: context.textThemes.buttonMedium),
+            if (isAnonymous) ...[
+              Text('Posted by anonymous', style: context.textThemes.buttonMedium),
+            ],
+            if (!isAnonymous && user?.username != null) ...[
+              Text('Posted by ${user!.username}', style: context.textThemes.buttonMedium),
+            ],
             const SizedBox(height: Insets.xSmall),
             Text(
               '$place • ${creationDate.toTimaAgo}',
@@ -134,7 +144,7 @@ class _VoteButton extends StatelessWidget {
       containedInkWell: false,
       onTap: onTap,
       child: Padding(
-        padding:const EdgeInsets.all(5),
+        padding: const EdgeInsets.all(5),
         child: Icon(icon),
       ),
     );

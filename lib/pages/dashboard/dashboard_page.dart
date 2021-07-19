@@ -97,6 +97,8 @@ class DashboardLoadedPosts extends StatelessWidget {
             creationDate: posts[index].createdAt,
             commentCount: posts[index].commentsCount,
             place: posts[index].place,
+            isAnonymous: posts[index].isAnonymous,
+            user: posts[index].user,
           );
         },
         itemCount: posts.length,

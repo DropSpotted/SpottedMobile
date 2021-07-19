@@ -61,6 +61,7 @@ class _PostDetailsBody extends StatelessWidget {
                       body: state.detailedPost!.body,
                       creationDate: state.detailedPost!.createdAt,
                       place: '',
+                      isAnonymous: false,
                     ),
                   ),
                   SliverList(
@@ -70,6 +71,7 @@ class _PostDetailsBody extends StatelessWidget {
                         creationDate: state.detailedPost!.comments[index].createdAt,
                         showLeftBorder: true,
                         place: '',
+                        isAnonymous: false,
                       ),
                       childCount: state.detailedPost!.comments.length,
                     ),
