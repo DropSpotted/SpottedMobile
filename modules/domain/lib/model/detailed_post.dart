@@ -17,5 +17,7 @@ abstract class DetailedPost with _$DetailedPost {
     required bool isAnonymous,
     required int commentsCount,
     UserShorten? author,
+    // place is should be added from cubit
+    @Default('') String place,
   }) = _DetailedPost;
 }

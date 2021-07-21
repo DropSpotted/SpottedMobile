@@ -3,7 +3,6 @@ import 'package:remote/data_source/comment/model/response/comment_model.dart';
 import 'package:domain/model/detailed_post.dart';
 import 'package:remote/data_source/post/model/response/user_shorten_model.dart';
 import 'package:remote/model/point_model.dart';
-import 'package:remote/data_source/post/model/response/user_shorten_model.dart';
 
 part 'detailed_post_model.g.dart';
 

@@ -12,8 +12,8 @@ import 'package:spotted/pages/dashboard/cubit/favourites_creation/favorites_crea
 import 'package:spotted/pages/dashboard/cubit/location_info/location_info_cubit.dart';
 import 'package:spotted/pages/post_creation/cubit/post_creation_cubit.dart';
 import 'package:spotted/pages/post_creation/post_creation_arguments.dart';
-import 'package:spotted/pages/post_details/bloc/post_details_bloc.dart';
 import 'package:remote/auth_token_provider.dart';
+import 'package:spotted/pages/post_details/cubit/post_details_cubit.dart';
 
 final sl = GetIt.instance;
 
@@ -66,10 +66,11 @@ Future<void> init() async {
         geoManagerCubit: sl(),
       ),
     )
-    ..registerFactoryParam<PostDetailsBloc, String, void>(
-      (arguments, _) => PostDetailsBloc(
+    ..registerFactoryParam<PostDetailsCubit, String, void>(
+      (arguments, _) => PostDetailsCubit(
         postService: sl(),
         parentPostId: arguments ?? '',
+        geoService: sl(),
       ),
     );
 }

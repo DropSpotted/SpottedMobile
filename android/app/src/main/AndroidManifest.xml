@@ -5,6 +5,8 @@
    <application
         android:label="spotted"
         android:icon="@mipmap/ic_launcher">
+       <meta-data android:name="com.google.android.geo.API_KEY"
+           android:value="AIzaSyA3whjglynKi6PaP3kldaIWMZic66ML52o"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
