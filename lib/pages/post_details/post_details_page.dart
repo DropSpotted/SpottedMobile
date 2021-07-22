@@ -6,22 +6,23 @@ import 'package:spotted/application/colorful.dart';
 import 'package:spotted/injector_container.dart';
 import 'package:spotted/pages/post_creation/post_creation_arguments.dart';
 import 'package:spotted/pages/post_details/cubit/post_details_cubit.dart';
+import 'package:spotted/pages/post_details/post_details_arguments.dart';
 import 'package:spotted/widgets/tiles/comment_tile.dart';
 import 'package:spotted/widgets/tiles/post_tile.dart';
 import 'package:spotted/router/app_router.gr.dart';
 
 class PostDetailsPage extends StatelessWidget with AutoRouteWrapper {
   PostDetailsPage({
-    required String postId,
-  }) : _postId = postId;
+    required this.postDetailsArguments,
+  });
 
-  final String _postId;
+  final PostDetailsArguments postDetailsArguments;
 
   @override
   Widget wrappedRoute(BuildContext context) {
     return BlocProvider(
       create: (context) => sl<PostDetailsCubit>(
-        param1: _postId,
+        param1: postDetailsArguments,
       )..detailedPostFetch(),
       child: this,
     );
@@ -32,9 +33,9 @@ class PostDetailsPage extends StatelessWidget with AutoRouteWrapper {
     return Scaffold(
       appBar: AppBar(),
       body: _PostDetailsBody(),
-      bottomNavigationBar: _BottomCommentTextField(
-        parentPostId: _postId,
-      ),
+      bottomNavigationBar: postDetailsArguments.commentingEnabled ? _BottomCommentTextField(
+        parentPostId: postDetailsArguments.postId,
+      ) : null,
     );
   }
 }

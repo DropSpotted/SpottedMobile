@@ -27,9 +27,6 @@ class _GoogleMapsState extends State<GoogleMaps> {
           zoom: 14.4746,
         ),
         liteModeEnabled: true,
-        // onMapCreated: (GoogleMapController controller) {
-        //   _controller.complete(controller);
-        // },
       ),
     );
   }

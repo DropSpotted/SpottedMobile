@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:domain/model/point.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -10,5 +12,7 @@ abstract class Favourite with _$Favourite {
     required Point geoLocationCoords,
     required String title,
     required DateTime createdAt,
+    @Default('') String place,
+    Uint8List? iOSImage,
   }) = _Favourite;
 }

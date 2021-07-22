@@ -4,6 +4,7 @@ import 'package:spotted/pages/auth_wizard/nickname/nickname_page.dart';
 import 'package:spotted/pages/auth_wizard/phone_code/phone_code_page.dart';
 import 'package:spotted/pages/auth_wizard/phone_number/phone_number_page.dart';
 import 'package:spotted/pages/dashboard/dashboard_page.dart';
+import 'package:spotted/pages/favourite_details/favourite_details_page.dart';
 import 'package:spotted/pages/favourites/favourites_page.dart';
 import 'package:spotted/pages/landing/landing_page.dart';
 import 'package:spotted/pages/navbar/navbar_page.dart';
@@ -51,6 +52,11 @@ import 'package:spotted/pages/splash/splash_page.dart';
         AutoRoute(
           page: PostDetailsPage,
           path: 'post-details',
+        ),
+        AutoRoute(
+          page: FavouriteDetailsPage,
+          // initial: true,
+          path: 'favourite-details',
         ),
       ],
     ),

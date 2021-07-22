@@ -23,23 +23,24 @@ import MapKit
             }
             
             if let args = call.arguments as? Dictionary<String, Any>,
+                let imgWidth = args["imgWidth"] as? Double,
                 let lat = args["lat"] as? Double,
-                let lon = args["lon"] as? Double {
+               let lon = args["lon"] as? Double {
                 DispatchQueue.main.async {
-                    self?.receiveBatteryLevel(result: result, lat: lat, lon: lon)
-    //                    self.imageView.image = image
-                    }
-              } else {
+                    self?.receiveBatteryLevel(result: result, lat: lat, lon: lon, imgWidth: imgWidth)
+                    //                    self.imageView.image = image
+                }
+            } else {
                 result(FlutterError.init(code: "bad args", message: nil, details: nil))
-              }
+            }
             
             var args = call.arguments as? Dictionary<String, Any>
             
-//            DispatchQueue.main.async {
-//                self?.receiveBatteryLevel(result: result)
-////                    self.imageView.image = image
-//                }
-//            self?.receiveBatteryLevel(result: result)
+            //            DispatchQueue.main.async {
+            //                self?.receiveBatteryLevel(result: result)
+            ////                    self.imageView.image = image
+            //                }
+            //            self?.receiveBatteryLevel(result: result)
         })
         
         
@@ -47,7 +48,7 @@ import MapKit
         return super.application(application, didFinishLaunchingWithOptions: launchOptions)
     }
     
-    private func receiveBatteryLevel(result: @escaping FlutterResult, lat: Double, lon: Double) {
+    private func receiveBatteryLevel(result: @escaping FlutterResult, lat: Double, lon: Double, imgWidth: Double?) {
         let coordinates = CLLocationCoordinate2D(latitude: lat, longitude: lon)
         let region = MKCoordinateRegion(
             center:coordinates,
@@ -60,8 +61,14 @@ import MapKit
         // Map options.
         let mapOptions = MKMapSnapshotter.Options()
         mapOptions.region = region
-//        mapOptions.size = CGSize(width: 300, height: 300)
-//        mapSnapshotOptions.showsBuildings = true
+        mapOptions.showsBuildings = true
+        mapOptions.showsPointsOfInterest = true
+        if let unwrappedWidth = imgWidth {
+            mapOptions.size = CGSize(width: unwrappedWidth, height: unwrappedWidth * 1/2)
+        }
+        
+        //        mapOptions.size = CGSize(width: 300, height: 300)
+        //        mapSnapshotOptions.showsBuildings = true
         
         // Create the snapshotter and run it.
         let snapshotter = MKMapSnapshotter(options: mapOptions)
@@ -69,7 +76,7 @@ import MapKit
         snapshotter.start {  (snapshotOrNil, errorOrNil)  in
             if let error = errorOrNil {
                 print(error)
-//                result(nil)
+                //                result(nil)
                 return
             }
             if let snapshot = snapshotOrNil {
@@ -79,16 +86,16 @@ import MapKit
                 if let imageFromData =  imageData {
                     var flutterType = FlutterStandardTypedData(bytes: imageFromData)
                     result(flutterType) // (719.0, 808.0)
-                   }
+                }
                 
                 
-
-//                self.snapshotImage = snapshot.image
+                
+                //                self.snapshotImage = snapshot.image
             }
         }
         
         
-//        result(Int(666))
+        //        result(Int(666))
         //        let device = UIDevice.current
         //        device.isBatteryMonitoringEnabled = true
         //        if device.batteryState == UIDevice.BatteryState.unknown {

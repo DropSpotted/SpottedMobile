@@ -10,6 +10,8 @@ import 'package:spotted/pages/dashboard/cubit/dashboard/dashboard_cubit.dart';
 import 'package:spotted/pages/dashboard/cubit/favourites_creation/favorites_creation_cubit.dart';
 import 'package:spotted/pages/dashboard/cubit/location_info/location_info_cubit.dart';
 import 'package:spotted/pages/dashboard/widgets/dashboard_app_bar.dart';
+import 'package:spotted/pages/post_creation/cubit/post_creation_cubit.dart';
+import 'package:spotted/pages/post_details/post_details_arguments.dart';
 import 'package:spotted/widgets/tiles/post_tile.dart';
 import 'package:spotted/router/app_router.gr.dart';
 
@@ -92,7 +94,14 @@ class DashboardLoadedPosts extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: Insets.small),
         itemBuilder: (context, index) {
           return PostTile(
-            onTap: () => context.router.push(PostDetailsRoute(postId: posts[index].id)),
+            onTap: () => context.router.push(
+              PostDetailsRoute(
+                postDetailsArguments: PostDetailsArguments(
+                  commentingEnabled: true,
+                  postId: posts[index].id,
+                ),
+              ),
+            ),
             body: posts[index].body,
             creationDate: posts[index].createdAt,
             commentCount: posts[index].commentsCount,
