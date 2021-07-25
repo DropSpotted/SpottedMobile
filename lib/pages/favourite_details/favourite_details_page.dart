@@ -7,24 +7,31 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spotted/application/application_export.dart';
 import 'package:spotted/injector_container.dart';
 import 'package:spotted/pages/favourite_details/cubit/favourite_details_cubit.dart';
+import 'package:spotted/pages/favourite_details/favourite_details_arguments.dart';
+import 'package:spotted/pages/favourite_details/widgets/favourite_details_app_bar.dart';
 import 'package:spotted/pages/post_creation/cubit/post_creation_cubit.dart';
 import 'package:spotted/pages/post_details/post_details_arguments.dart';
 import 'package:spotted/widgets/tiles/post_tile.dart';
 import 'package:spotted/router/app_router.gr.dart';
 
+enum FavouriteDetailsMenu {
+  edit,
+  remove,
+}
+
 class FavouriteDetailsPage extends StatelessWidget with AutoRouteWrapper {
   const FavouriteDetailsPage({
     Key? key,
-    required this.favourite,
+    required this.arguments,
   }) : super(key: key);
 
-  final Favourite favourite;
+  final FavouriteDetailsArguments arguments;
 
   @override
   Widget wrappedRoute(BuildContext context) {
     return BlocProvider(
       create: (context) => sl<FavouriteDetailsCubit>(
-        param1: favourite,
+        param1: arguments,
       )..favouriteDetailsFetch(),
       child: this,
     );
@@ -32,16 +39,24 @@ class FavouriteDetailsPage extends StatelessWidget with AutoRouteWrapper {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Favourite Details',
-          style: context.textThemes.hheadline.copyWith(
-            color: Colorful.gray2,
+    return BlocListener<FavouriteDetailsCubit, FavouriteDetailsState>(
+      listener: (context, state) {
+        state.isFailureOrRemoved.fold(
+          () {},
+          (either) => either.fold(
+            (failure) => null,
+            (result) {
+              context.router.pop();
+            },
           ),
+        );
+      },
+      child: Scaffold(
+        appBar: FavouriteDetailsAppBar(
+          arguments: arguments,
         ),
+        body: const FavouriteDetailsBody(),
       ),
-      body: FavouriteDetailsBody(),
     );
   }
 }

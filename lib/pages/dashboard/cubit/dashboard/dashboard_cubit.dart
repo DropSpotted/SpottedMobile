@@ -7,6 +7,7 @@ import 'package:domain/model/post.dart';
 import 'package:domain/service/post/post_service.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:geo/error/error_code.dart';
+import 'package:geo/model/place.dart';
 import 'package:geo/service/geo_service.dart';
 import 'package:spotted/common/bloc/geo_manager/geo_manager_cubit.dart';
 import 'package:domain/model/enum/radius_enum.dart';
@@ -74,9 +75,14 @@ class DashboardCubit extends Cubit<DashboardState> {
                 lat: post.geoLocationCoords.coordinates.last,
                 lon: post.geoLocationCoords.coordinates.first,
               );
-              if (updatePost.isNotEmpty) {
+              final placeResult = updatePost.fold(
+                (failure) => <Place>[],
+                (result) => result,
+              );
+
+              if (placeResult.isNotEmpty) {
                 return post.copyWith(
-                  place: PlaceFormatter.formatToThoroughfareAndSubLocality(updatePost.first),
+                  place: PlaceFormatter.formatToThoroughfareAndSubLocality(placeResult.first),
                 );
               } else {
                 return post;

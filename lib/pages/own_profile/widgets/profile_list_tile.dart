@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:spotted/application/application_export.dart';
 import 'package:spotted/application/colorful.dart';
-import 'package:spotted/application/dimen.dart';
 
 class ProfileListTile extends StatelessWidget {
   const ProfileListTile({
@@ -30,7 +30,7 @@ class ProfileListTile extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Icon(icon, size: 25),
+            Icon(icon, size: context.textThemes.bodyText2?.height?? 10),
             const SizedBox(width: Insets.large),
             Text(
               title,

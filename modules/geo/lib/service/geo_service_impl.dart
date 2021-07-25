@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/services.dart';
 import 'package:geo/error/error_code.dart';
 import 'package:geo/model/geo_location_permission.dart';
 import 'package:geo/model/geo_position.dart';
@@ -58,9 +59,13 @@ class GeoServiceImpl implements GeoService {
   }
 
   @override
-  Future<List<Place>> placeFromCoordinates({required double lat, required double lon, String? localeIdentifier}) async {
-    return (await _geo.placeFromCoordinates(lat: lat, lon: lon, localeIdentifier: localeIdentifier))
-        .map((place) => place.toGeo())
-        .toList();
+  Future<Either<GeoErrorCode, List<Place>>> placeFromCoordinates(
+      {required double lat, required double lon, String? localeIdentifier}) async {
+    try {
+      final result = (await _geo.placeFromCoordinates(lat: lat, lon: lon)).map((place) => place.toGeo()).toList();
+      return right(result);
+    } on PlatformException catch (e) {
+      return left(GeoErrorCode.placePlatformError);
+    }
   }
 }

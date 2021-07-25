@@ -7,4 +7,6 @@ abstract class FavouriteRemoteDataSource {
   Future<Either<Failure,List<Favourite>>> favouriteList();
   
   Future<Either<Failure,Unit>> createFavourite(FavouriteCreation favouriteCreation);
+
+  Future<Either<Failure, Unit>> removeFavourite(String favoruiteId);
 }

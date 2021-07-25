@@ -14,7 +14,7 @@ abstract class GeoService {
 
   Future<bool> openLocationSettings();
 
-  Future<List<Place>> placeFromCoordinates({
+  Future<Either<GeoErrorCode, List<Place>>> placeFromCoordinates({
     required double lat,
     required double lon,
     String? localeIdentifier,

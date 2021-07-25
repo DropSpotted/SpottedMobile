@@ -5,6 +5,7 @@ import 'package:domain/model/favourite_creation.dart';
 import 'package:domain/service/favourite/favourite_service.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:geo/error/error_code.dart';
+import 'package:geo/service/geo_service.dart';
 import 'package:spotted/common/bloc/geo_manager/geo_manager_cubit.dart';
 
 part 'favorites_creation_state.dart';
@@ -14,12 +15,15 @@ class FavoritesCreationCubit extends Cubit<FavoritesCreationState> {
   FavoritesCreationCubit({
     required GeoManagerCubit geoManagerCubit,
     required FavouriteService favouriteService,
+    required GeoService geoService
   })  : _geoManagerCubit = geoManagerCubit,
         _favouriteService = favouriteService,
+        _geoService = geoService,
         super(FavoritesCreationState.initial());
 
   final GeoManagerCubit _geoManagerCubit;
   final FavouriteService _favouriteService;
+  final GeoService _geoService;
 
   Future<void> createFavourite() async {
     _geoManagerCubit.stream.listen((event) {

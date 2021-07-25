@@ -1,3 +1,6 @@
 enum GeoErrorCode {
-  denied, deniedForever, geoLocationDisabled
+  denied,
+  deniedForever,
+  geoLocationDisabled,
+  placePlatformError,
 }

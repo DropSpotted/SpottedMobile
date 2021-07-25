@@ -30,8 +30,10 @@ class LocationInfoCubit extends Cubit<LocationInfoState> {
         final result = await _geoService.placeFromCoordinates(
             lat: geoState.geoPosition.latitude, lon: geoState.geoPosition.longitude);
 
+        final resultPlace = result.fold((failure) => <Place>[], (result) => result);
+
         return state.copyWith(
-          isFailureOrPlaces: optionOf(right(result)),
+          isFailureOrPlaces: optionOf(right(resultPlace)),
           isLoading: false,
         );
       },

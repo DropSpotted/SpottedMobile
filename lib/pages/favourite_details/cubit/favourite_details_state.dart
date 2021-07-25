@@ -5,6 +5,7 @@ abstract class FavouriteDetailsState with _$FavouriteDetailsState {
   factory FavouriteDetailsState({
     required bool isLoadingPosts,
     required Option<Either<Failure, List<Post>>> isFailureOrPosts,
+    required Option<Either<Failure, Unit>> isFailureOrRemoved,
   }) = _FavouriteDetailsState;
 
   const FavouriteDetailsState._();
@@ -12,6 +13,7 @@ abstract class FavouriteDetailsState with _$FavouriteDetailsState {
   factory FavouriteDetailsState.initial() => FavouriteDetailsState(
         isLoadingPosts: false,
         isFailureOrPosts: none(),
+        isFailureOrRemoved: none(),
       );
 
 }

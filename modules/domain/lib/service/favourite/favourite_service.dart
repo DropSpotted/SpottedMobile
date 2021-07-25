@@ -8,6 +8,8 @@ abstract class FavouriteService {
   Future<Either<Failure, List<Favourite>>> favouriteList();
 
   Future<Either<Failure, Unit>> createFavourite(FavouriteCreation favouriteCreation);
+
+  Future<Either<Failure, Unit>> deleteFavourite(String favouriteId);
 }
 
 class FavouriteServiceImpl implements FavouriteService {
@@ -25,5 +27,10 @@ class FavouriteServiceImpl implements FavouriteService {
   @override
   Future<Either<Failure, List<Favourite>>> favouriteList() async {
     return _favouriteRemoteDataSource.favouriteList();
+  }
+
+  @override
+  Future<Either<Failure, Unit>> deleteFavourite(String favouriteId) async {
+    return _favouriteRemoteDataSource.removeFavourite(favouriteId);
   }
 }

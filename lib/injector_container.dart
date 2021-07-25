@@ -12,6 +12,7 @@ import 'package:spotted/pages/dashboard/cubit/dashboard/dashboard_cubit.dart';
 import 'package:spotted/pages/dashboard/cubit/favourites_creation/favorites_creation_cubit.dart';
 import 'package:spotted/pages/dashboard/cubit/location_info/location_info_cubit.dart';
 import 'package:spotted/pages/favourite_details/cubit/favourite_details_cubit.dart';
+import 'package:spotted/pages/favourite_details/favourite_details_arguments.dart';
 import 'package:spotted/pages/post_creation/cubit/post_creation_cubit.dart';
 import 'package:spotted/pages/post_creation/post_creation_arguments.dart';
 import 'package:remote/auth_token_provider.dart';
@@ -53,6 +54,7 @@ Future<void> init() async {
       () => FavoritesCreationCubit(
         geoManagerCubit: sl(),
         favouriteService: sl(),
+        geoService: sl(),
       ),
     )
     ..registerFactory(
@@ -76,11 +78,12 @@ Future<void> init() async {
         postDetailsArguments: arguments!,
       ),
     )
-    ..registerFactoryParam<FavouriteDetailsCubit, Favourite, void>(
+    ..registerFactoryParam<FavouriteDetailsCubit, FavouriteDetailsArguments, void>(
       (arguments, _) => FavouriteDetailsCubit(
-        favourite: arguments!,
+        arguments: arguments!,
         postService: sl(),
         geoService: sl(),
+        favouriteService: sl(),
       ),
     );
 }

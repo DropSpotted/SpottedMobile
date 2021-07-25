@@ -39,6 +39,10 @@ import 'package:spotted/pages/splash/splash_page.dart';
               // initial: true,
               path: 'favourites',
             ),
+            // AutoRoute(
+            //   page: FavouritesPage2,
+            //   path: 'favourites2',
+            // ),
             AutoRoute(
               page: OwnProfilePage,
               path: 'own-profile',

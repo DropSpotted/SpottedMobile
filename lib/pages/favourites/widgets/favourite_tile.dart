@@ -9,11 +9,7 @@ import 'package:spotted/application/application_export.dart';
 import 'package:foundation/dates.dart';
 
 class FavouriteTile extends StatelessWidget {
-  const FavouriteTile({
-    Key? key,
-    required this.favourite,
-    this.onTap
-  }) : super(key: key);
+  const FavouriteTile({Key? key, required this.favourite, this.onTap}) : super(key: key);
 
   final Favourite favourite;
   final VoidCallback? onTap;
@@ -55,7 +51,7 @@ class FavouriteTile extends StatelessWidget {
                 ),
               if (Platform.isIOS)
                 AppleMapImage(
-                  byteImage: favourite.iOSImage!,
+                  byteImage: favourite.iOSImage,
                 )
             ],
           ),
@@ -97,19 +93,28 @@ class GoogleMapImage extends StatelessWidget {
 class AppleMapImage extends StatelessWidget {
   const AppleMapImage({
     Key? key,
-    required this.byteImage,
+    this.byteImage,
   }) : super(key: key);
 
-  final Uint8List byteImage;
+  final Uint8List? byteImage;
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(16),
-      child: AspectRatio(
+    if (byteImage != null) {
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(16),
+        child: AspectRatio(
+          aspectRatio: 2 / 1,
+          child: Image.memory(byteImage!),
+        ),
+      );
+    } else {
+      return AspectRatio(
         aspectRatio: 2 / 1,
-        child: Image.memory(byteImage),
-      ),
-    );
+        child: DecoratedBox(
+          decoration: BoxDecoration(color: Colors.black),
+        ),
+      );
+    }
   }
 }

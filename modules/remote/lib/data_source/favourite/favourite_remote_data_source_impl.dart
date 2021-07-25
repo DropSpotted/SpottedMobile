@@ -34,4 +34,14 @@ class FavouriteRemoteDataSourceImpl implements FavouriteRemoteDataSource {
       return left(mapDioFailure(e));
     }
   }
+
+  @override
+  Future<Either<Failure, Unit>> removeFavourite(String favoruiteId) async {
+    try {
+      await _favouriteResetApi.removeFavourite(favoruiteId);
+      return right(unit);
+    } on DioError catch(e) {
+      return left(mapDioFailure(e));
+    }
+  }
 }

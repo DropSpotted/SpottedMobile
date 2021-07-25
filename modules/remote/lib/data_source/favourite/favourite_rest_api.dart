@@ -14,4 +14,7 @@ abstract class FavouriteResetApi {
   
   @POST('/api/v1/favourites')
   Future<void> createFavourite(@Body() FavouriteCreationModel favouriteCreationModel);
+
+  @DELETE('/api/v1/favourite/{id}/')
+  Future<void> removeFavourite(@Path('id') String favouriteID);
 }
