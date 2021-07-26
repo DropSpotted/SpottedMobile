@@ -1,4 +1,3 @@
-import 'package:domain/model/favourite.dart';
 import 'package:fire/fire_auth_service.dart';
 import 'package:geo/service/geo_service.dart';
 import 'package:get_it/get_it.dart';
@@ -11,7 +10,8 @@ import 'package:remote/remote_injector.dart';
 import 'package:spotted/pages/dashboard/cubit/dashboard/dashboard_cubit.dart';
 import 'package:spotted/pages/dashboard/cubit/favourites_creation/favorites_creation_cubit.dart';
 import 'package:spotted/pages/dashboard/cubit/location_info/location_info_cubit.dart';
-import 'package:spotted/pages/favourite_details/cubit/favourite_details_cubit.dart';
+import 'package:spotted/pages/favourite_details/cubit/favourite_details/favourite_details_cubit.dart';
+import 'package:spotted/pages/favourite_details/cubit/favourite_details_rename/favourite_details_rename_cubit.dart';
 import 'package:spotted/pages/favourite_details/favourite_details_arguments.dart';
 import 'package:spotted/pages/post_creation/cubit/post_creation_cubit.dart';
 import 'package:spotted/pages/post_creation/post_creation_arguments.dart';
@@ -85,5 +85,13 @@ Future<void> init() async {
         geoService: sl(),
         favouriteService: sl(),
       ),
+    )
+    ..registerFactoryParam<FavouriteDetailsRenameCubit, String, void>(
+      (arguments, _) => FavouriteDetailsRenameCubit(
+        initialName: arguments!,
+      ),
     );
+  // ..registerFactory(
+  //   () => FavouriteDetailsRenameCubit(),
+  // );
 }

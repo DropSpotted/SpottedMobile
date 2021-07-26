@@ -33,7 +33,7 @@ extension FavouriteModelExtenstion on FavouriteModel {
       id: id,
       createdAt: DateTime.parse(createdAt),
       geoLocationCoords: geoLocationCoords.toDomain(),
-      title: '',
+      title: title,
     );
   }
 }

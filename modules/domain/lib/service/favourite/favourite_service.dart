@@ -3,6 +3,7 @@ import 'package:domain/data_source/favourite_remote_data_source.dart';
 import 'package:domain/failure/failure.dart';
 import 'package:domain/model/favourite.dart';
 import 'package:domain/model/favourite_creation.dart';
+import 'package:domain/model/favourite_update.dart';
 
 abstract class FavouriteService {
   Future<Either<Failure, List<Favourite>>> favouriteList();
@@ -10,6 +11,8 @@ abstract class FavouriteService {
   Future<Either<Failure, Unit>> createFavourite(FavouriteCreation favouriteCreation);
 
   Future<Either<Failure, Unit>> deleteFavourite(String favouriteId);
+
+  Future<Either<Failure, Unit>> updateFavourite(String favouriteID, FavouriteUpdate favouriteUpdate);
 }
 
 class FavouriteServiceImpl implements FavouriteService {
@@ -32,5 +35,10 @@ class FavouriteServiceImpl implements FavouriteService {
   @override
   Future<Either<Failure, Unit>> deleteFavourite(String favouriteId) async {
     return _favouriteRemoteDataSource.removeFavourite(favouriteId);
+  }
+
+  @override
+  Future<Either<Failure, Unit>> updateFavourite(String favouriteID, FavouriteUpdate favouriteUpdate) async {
+    return _favouriteRemoteDataSource.updateFavourite(favouriteID, favouriteUpdate);
   }
 }

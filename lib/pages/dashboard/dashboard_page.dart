@@ -28,9 +28,9 @@ class DashboardPage extends StatelessWidget with AutoRouteWrapper {
         BlocProvider(
           create: (context) => sl<DashboardCubit>()..fetchPosts(),
         ),
-        BlocProvider(
-          create: (context) => sl<FavoritesCreationCubit>(),
-        ),
+        // BlocProvider(
+        //   create: (context) => sl<FavoritesCreationCubit>(),
+        // ),
         BlocProvider(
           create: (context) => sl<LocationInfoCubit>(),
         )

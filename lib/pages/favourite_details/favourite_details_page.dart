@@ -6,7 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spotted/application/application_export.dart';
 import 'package:spotted/injector_container.dart';
-import 'package:spotted/pages/favourite_details/cubit/favourite_details_cubit.dart';
+import 'package:spotted/pages/favourite_details/cubit/favourite_details/favourite_details_cubit.dart';
 import 'package:spotted/pages/favourite_details/favourite_details_arguments.dart';
 import 'package:spotted/pages/favourite_details/widgets/favourite_details_app_bar.dart';
 import 'package:spotted/pages/post_creation/cubit/post_creation_cubit.dart';

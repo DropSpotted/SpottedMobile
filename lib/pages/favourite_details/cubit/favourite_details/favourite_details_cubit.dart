@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:domain/failure/failure.dart';
 import 'package:domain/model/favourite.dart';
+import 'package:domain/model/favourite_update.dart';
 import 'package:domain/model/post.dart';
 import 'package:domain/service/favourite/favourite_service.dart';
 import 'package:domain/service/post/post_service.dart';
@@ -20,13 +21,11 @@ class FavouriteDetailsCubit extends Cubit<FavouriteDetailsState> {
     required FavouriteDetailsArguments arguments,
     required GeoService geoService,
     required FavouriteService favouriteService,
-  })  : _arguments = arguments,
-        _postService = postService,
+  })  : _postService = postService,
         _geoService = geoService,
         _favouriteService = favouriteService,
-        super(FavouriteDetailsState.initial());
+        super(FavouriteDetailsState.initial(arguments.favourite));
 
-  final FavouriteDetailsArguments _arguments;
   final PostService _postService;
   final GeoService _geoService;
   final FavouriteService _favouriteService;
@@ -39,8 +38,8 @@ class FavouriteDetailsCubit extends Cubit<FavouriteDetailsState> {
       ),
     );
 
-    final result = await _postService.postList(_arguments.favourite.geoLocationCoords.coordinates.first,
-        _arguments.favourite.geoLocationCoords.coordinates.last);
+    final result = await _postService.postList(
+        state.favourite.geoLocationCoords.coordinates.first, state.favourite.geoLocationCoords.coordinates.last);
 
     final newState = await result.fold(
       (failure) async => state.copyWith(
@@ -55,10 +54,7 @@ class FavouriteDetailsCubit extends Cubit<FavouriteDetailsState> {
             lon: post.geoLocationCoords.coordinates.first,
           );
 
-          final resultPlace = updatePost.fold(
-            (failure) => <Place>[],
-            (result) => result
-          );
+          final resultPlace = updatePost.fold((failure) => <Place>[], (result) => result);
           if (resultPlace.isNotEmpty) {
             return post.copyWith(
               place: PlaceFormatter.formatToThoroughfareAndSubLocality(resultPlace.first),
@@ -78,7 +74,7 @@ class FavouriteDetailsCubit extends Cubit<FavouriteDetailsState> {
   Future<void> removeFavourite() async {
     emit(state.copyWith(isFailureOrRemoved: none()));
 
-    final result = await _favouriteService.deleteFavourite(_arguments.favourite.id);
+    final result = await _favouriteService.deleteFavourite(state.favourite.id);
 
     emit(
       result.fold(
@@ -86,5 +82,31 @@ class FavouriteDetailsCubit extends Cubit<FavouriteDetailsState> {
         (result) => state.copyWith(isFailureOrRemoved: optionOf(right(result))),
       ),
     );
+  }
+
+  Future<void> updateFavouriteName(String favoriteName) async {
+    final result = await _favouriteService.updateFavourite(
+      state.favourite.id,
+      FavouriteUpdate(
+        title: favoriteName,
+      ),
+    );
+
+    emit(
+      result.fold(
+        (failure) => state.copyWith(
+          isFailureOrRenamed: optionOf(
+            left(failure),
+          ),
+        ),
+        (result) => state.copyWith(
+          favourite: state.favourite.copyWith(title: favoriteName),
+          isFailureOrRenamed: optionOf(
+            right(result),
+          ),
+        ),
+      ),
+    );
+    // final result = await _favouriteService.updateFavourite(_arguments.favourite.id, FavouriteCreation(lat: lat, lon: lon, title: title))
   }
 }

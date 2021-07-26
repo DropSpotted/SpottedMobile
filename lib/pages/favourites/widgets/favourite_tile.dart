@@ -34,11 +34,13 @@ class FavouriteTile extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                favourite.place,
-                style: context.textThemes.buttonMedium,
-              ),
-              const SizedBox(height: Insets.small),
+              if (favourite.title.isNotEmpty) ...[
+                Text(
+                  favourite.title,
+                  style: context.textThemes.buttonMedium,
+                ),
+                const SizedBox(height: Insets.small)
+              ],
               Text(
                 favourite.createdAt.toTimaAgo,
                 style: context.textThemes.caption?.copyWith(color: Colorful.gray8),

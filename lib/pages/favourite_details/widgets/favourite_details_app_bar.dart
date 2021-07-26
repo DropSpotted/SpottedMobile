@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:spotted/application/application_export.dart';
-import 'package:spotted/pages/favourite_details/cubit/favourite_details_cubit.dart';
+import 'package:spotted/pages/favourite_details/cubit/favourite_details/favourite_details_cubit.dart';
+import 'package:spotted/pages/favourite_details/cubit/favourite_details_rename/favourite_details_rename_cubit.dart';
 import 'package:spotted/pages/favourite_details/favourite_details_arguments.dart';
 import 'package:spotted/pages/favourite_details/favourite_details_page.dart';
 import 'package:spotted/widgets/alert_dialogs/spotted_alert_dialog.dart';
@@ -17,6 +18,8 @@ class FavouriteDetailsAppBar extends StatelessWidget with PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final state = context.watch<FavouriteDetailsCubit>().state;
+
     return AppBar(
       title: Text(
         'Favourite Details',
@@ -29,7 +32,15 @@ class FavouriteDetailsAppBar extends StatelessWidget with PreferredSizeWidget {
           onSelected: (value) async {
             switch (value) {
               case FavouriteDetailsMenu.edit:
-                // TODO: Handle this case.
+                final result = await SpottedAlertDialog.showName(
+                  context,
+                  title: 'Change favourite name',
+                  intitialText: state.favourite.title,
+                );
+                if ((result as String).isNotEmpty) {
+                  await context.read<FavouriteDetailsCubit>().updateFavouriteName(result);
+                  arguments.onSuccessDelete!();
+                }
                 break;
               case FavouriteDetailsMenu.remove:
                 final result = await SpottedAlertDialog.show<bool>(

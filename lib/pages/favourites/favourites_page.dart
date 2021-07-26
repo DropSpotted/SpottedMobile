@@ -10,6 +10,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spotted/application/application_export.dart';
 import 'package:spotted/injector_container.dart';
+import 'package:spotted/pages/dashboard/cubit/favourites_creation/favorites_creation_cubit.dart';
 import 'package:spotted/pages/favourite_details/favourite_details_arguments.dart';
 import 'package:spotted/pages/favourites/cubit/favourites_cubit.dart';
 import 'package:spotted/pages/favourites/widgets/favourite_tile.dart';
@@ -27,7 +28,19 @@ class FavouritesPage extends StatelessWidget with AutoRouteWrapper {
         geoService: sl(),
         imageWidth: MediaQuery.of(context).size.width,
       )..fetchFavourites(),
-      child: this,
+      child: BlocListener<FavoritesCreationCubit, FavoritesCreationState>(
+        listener: (context, state) async {
+          await state.isFailureOrSuccessFavouriteCreate.fold(
+            () async {},
+            (either) => either.fold(
+              (failure) async {},
+              (result) async => context.read<FavouritesCubit>().fetchFavourites(),
+            ),
+          );
+        },
+        child: this,
+      ),
+      // child: this,
     );
   }
 
@@ -84,18 +97,21 @@ class FavouriteList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cubit = context.read<FavouritesCubit>();
     return RefreshIndicator(
       onRefresh: () async => context.read<FavouritesCubit>().fetchFavourites(),
       child: ListView.separated(
         padding: const EdgeInsets.symmetric(horizontal: Insets.small),
-        itemBuilder: (context, index) {
+        itemBuilder: (_, index) {
           return FavouriteTile(
             favourite: favourite[index],
             onTap: () => context.router.push(
               FavouriteDetailsRoute(
                 arguments: FavouriteDetailsArguments(
                   favourite: favourite[index],
-                  onSuccessDelete: () => context.read<FavouritesCubit>().fetchFavourites(),
+                  onSuccessDelete: () async {
+                    await cubit.fetchFavourites();
+                  },
                 ),
               ),
             ),
