@@ -7,6 +7,7 @@ import 'package:spotted/pages/auth_wizard/phone_number/widgets/agree_container.d
 import 'package:spotted/router/app_router.gr.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:spotted/widgets/buttons/spotted_button.dart';
+import 'package:spotted/widgets/overlay/loader_overlay.dart';
 
 class PhoneNumberPage extends StatelessWidget {
   @override
@@ -16,52 +17,61 @@ class PhoneNumberPage extends StatelessWidget {
 
     return BlocConsumer<PhoneNumberVerificationCubit, PhoneNumberVerificationState>(
       listener: (context, state) {
-        if (state.isSuccessfulySend) {
-          context.read<PhoneNumberVerificationCubit>().resetState();
-          context.router.push(const PhoneCodeRoute());
-        }
+        state.isErrorOrSuccessSend.fold(
+          () {},
+          (either) => either.fold(
+            (failure) {},
+            (result) {
+              context.read<PhoneNumberVerificationCubit>().resetState();
+              context.router.push(const PhoneCodeRoute());
+            },
+          ),
+        );
       },
       builder: (context, state) {
         print(state.isPhoneValid);
-        return Scaffold(
-          appBar: AppBar(),
-          body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: Insets.xLarge),
-            child: ListView(
-              children: [
-                const SizedBox(height: Insets.xxLarge),
-                Text(
-                  'Enter your phone',
-                  style: Theme.of(context).textTheme.headline5,
-                  textAlign: TextAlign.left,
-                ),
-                const SizedBox(height: Insets.xxLarge),
-                IntlPhoneField(
-                  showDropdownIcon: false,
-                  decoration: InputDecoration(
-                    counterText: '',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16.0),
-                      borderSide: const BorderSide(
-                        width: 2.0,
+        return LoaderOverlay(
+          isLoading: state.isLoadingNumber,
+          child: Scaffold(
+            appBar: AppBar(),
+            body: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: Insets.xLarge),
+              child: ListView(
+                children: [
+                  const SizedBox(height: Insets.xxLarge),
+                  Text(
+                    'Enter your phone',
+                    style: Theme.of(context).textTheme.headline5,
+                    textAlign: TextAlign.left,
+                  ),
+                  const SizedBox(height: Insets.xxLarge),
+                  IntlPhoneField(
+                    showDropdownIcon: false,
+                    decoration: InputDecoration(
+                      counterText: '',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(16.0),
+                        borderSide: const BorderSide(
+                          width: 2.0,
+                        ),
                       ),
                     ),
+                    initialCountryCode: 'PL',
+                    onChanged: (phone) => context.read<PhoneNumberVerificationCubit>().phoneNumberTyped(
+                          phone.countryCode ?? '',
+                          phone.number ?? '',
+                        ),
                   ),
-                  initialCountryCode: 'PL',
-                  onChanged: (phone) => context.read<PhoneNumberVerificationCubit>().phoneNumberTyped(
-                        phone.countryCode ?? '',
-                        phone.number ?? '',
-                      ),
-                ),
-                const SizedBox(height: Insets.xLarge),
-                AgreeContainer(),
-                const SizedBox(height: Insets.xLarge),
-                SpottedButton(
-                  isActive: state.isPhoneValid,
-                  onPressed: () => context.read<PhoneNumberVerificationCubit>().phoneSubmitted(),
-                  text: 'Next',
-                ),
-              ],
+                  const SizedBox(height: Insets.xLarge),
+                  AgreeContainer(),
+                  const SizedBox(height: Insets.xLarge),
+                  SpottedButton(
+                    isActive: state.isPhoneValid,
+                    onPressed: () => context.read<PhoneNumberVerificationCubit>().phoneSubmitted(),
+                    text: 'Next',
+                  ),
+                ],
+              ),
             ),
           ),
         );

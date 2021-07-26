@@ -4,11 +4,12 @@ part of 'auth_cubit.dart';
 class AuthState with _$AuthState {
   const factory AuthState.initial() = _Initial;
 
-  const factory AuthState.authenticate(AuthenticatedScreen authenticatedScreen) = _Authenticate;
+  const factory AuthState.authenticate(
+    AuthenticatedScreen authenticatedScreen, {
+    @Default(false) bool isLoggingOut,
+  }) = _Authenticate;
 
   const factory AuthState.unauthenticated() = _UnAuthenticated;
 }
 
-enum AuthenticatedScreen {
-  dashboard, nickname
-}
+enum AuthenticatedScreen { dashboard, nickname }

@@ -6,6 +6,7 @@ import 'package:spotted/pages/own_profile/widgets/profile_list_tile.dart';
 import 'package:spotted/pages/own_profile/widgets/profile_sum_up_container.dart';
 import 'package:spotted/widgets/alert_dialogs/spotted_alert_dialog.dart';
 import 'package:spotted/widgets/buttons/spotted_icon_button.dart';
+import 'package:spotted/widgets/overlay/loader_overlay.dart';
 
 class OwnProfilePage extends StatelessWidget {
   Future<void> _onLogout(BuildContext context) async {
@@ -23,41 +24,44 @@ class OwnProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.symmetric(horizontal: Insets.xLarge),
-          children: [
-            Align(
-              alignment: Alignment.centerRight,
-              child: SpottedIconButton(
-                icon: Icons.settings_outlined,
-                padding: Insets.small,
-                onTap: () {},
+    return LoaderOverlay(
+      isLoading: false,
+      child: Scaffold(
+        body: SafeArea(
+          child: ListView(
+            padding: const EdgeInsets.symmetric(horizontal: Insets.xLarge),
+            children: [
+              Align(
+                alignment: Alignment.centerRight,
+                child: SpottedIconButton(
+                  icon: Icons.settings_outlined,
+                  padding: Insets.small,
+                  onTap: () {},
+                ),
               ),
-            ),
-            Text(
-              'michcio53',
-              style: context.textThemes.subheadline,
-              textAlign: TextAlign.center,
-            ),
-            Text(
-              'biogram',
-              style: context.textThemes.caption?.copyWith(
-                color: Colorful.gray8,
+              Text(
+                'michcio53',
+                style: context.textThemes.subheadline,
+                textAlign: TextAlign.center,
               ),
-            ),
-            const SizedBox(height: Insets.xLarge),
-            const ProfileSumUpContainer(),
-            const SizedBox(height: Insets.xxLarge),
-            CustomPaint(painter: DashedLinePainter()),
-            const SizedBox(height: Insets.xxLarge),
-            ProfileListTile(
-              icon: Icons.logout_outlined,
-              title: 'Logout',
-              onTap: () async => _onLogout(context),
-            ),
-          ],
+              Text(
+                'biogram',
+                style: context.textThemes.caption?.copyWith(
+                  color: Colorful.gray8,
+                ),
+              ),
+              const SizedBox(height: Insets.xLarge),
+              const ProfileSumUpContainer(),
+              const SizedBox(height: Insets.xxLarge),
+              CustomPaint(painter: DashedLinePainter()),
+              const SizedBox(height: Insets.xxLarge),
+              ProfileListTile(
+                icon: Icons.logout_outlined,
+                title: 'Logout',
+                onTap: () async => _onLogout(context),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -11,6 +11,7 @@ import 'package:spotted/pages/favourite_details/favourite_details_arguments.dart
 import 'package:spotted/pages/favourite_details/widgets/favourite_details_app_bar.dart';
 import 'package:spotted/pages/post_creation/cubit/post_creation_cubit.dart';
 import 'package:spotted/pages/post_details/post_details_arguments.dart';
+import 'package:spotted/widgets/overlay/loader_overlay.dart';
 import 'package:spotted/widgets/tiles/post_tile.dart';
 import 'package:spotted/router/app_router.gr.dart';
 
@@ -39,7 +40,7 @@ class FavouriteDetailsPage extends StatelessWidget with AutoRouteWrapper {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<FavouriteDetailsCubit, FavouriteDetailsState>(
+    return BlocConsumer<FavouriteDetailsCubit, FavouriteDetailsState>(
       listener: (context, state) {
         state.isFailureOrRemoved.fold(
           () {},
@@ -51,12 +52,17 @@ class FavouriteDetailsPage extends StatelessWidget with AutoRouteWrapper {
           ),
         );
       },
-      child: Scaffold(
-        appBar: FavouriteDetailsAppBar(
-          arguments: arguments,
-        ),
-        body: const FavouriteDetailsBody(),
-      ),
+      builder: (context, state) {
+        return LoaderOverlay(
+          isLoading: state.isModifyFav,
+          child: Scaffold(
+            appBar: FavouriteDetailsAppBar(
+              arguments: arguments,
+            ),
+            body: const FavouriteDetailsBody(),
+          ),
+        );
+      },
     );
   }
 }

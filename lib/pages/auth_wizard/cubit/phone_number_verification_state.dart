@@ -3,29 +3,31 @@ part of 'phone_number_verification_cubit.dart';
 @freezed
 abstract class PhoneNumberVerificationState with _$PhoneNumberVerificationState {
   const factory PhoneNumberVerificationState({
-    required bool isLoading,
+    required bool isLoadingNumber,
+    required bool isLoadingCode,
     required PhoneNumberInput phoneNumberInput,
     required String countrCode,
     required bool isAgreed,
     required CodeInput codeInput,
-    required bool isSuccessfulySend,
-    required bool isSuccessfulVerified,
+    required Option<Either<FireError<SignInWithCredentialErrorCode>, Unit>> isErrorOrSuccessSend,
+    required Option<Either<FireError<SignInWithCredentialErrorCode>, Unit>> isErrorOrSuccessVerified,
     required String verificationId,
   }) = _PhoneNumberVerificationState;
 
   const PhoneNumberVerificationState._();
 
-  factory PhoneNumberVerificationState.initial() => const PhoneNumberVerificationState(
-        isLoading: false,
-        phoneNumberInput: PhoneNumberInput.pure(),
+  factory PhoneNumberVerificationState.initial() => PhoneNumberVerificationState(
+        isLoadingNumber: false,
+        isLoadingCode: false,
+        phoneNumberInput: const PhoneNumberInput.pure(),
         countrCode: '',
-        isSuccessfulySend: false,
+        isErrorOrSuccessSend: none(),
         verificationId: '',
-        isSuccessfulVerified: false,
-        codeInput: CodeInput.pure(),
+        isErrorOrSuccessVerified: none(),
+        codeInput: const CodeInput.pure(),
         isAgreed: false,
       );
-  
+
   bool get isPhoneValid => isAgreed && phoneNumberInput.valid;
   bool get isCodeValid => codeInput.valid;
 }

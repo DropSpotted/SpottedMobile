@@ -34,10 +34,8 @@ class AuthCubit extends Cubit<AuthState> {
               return const AuthState.authenticate(AuthenticatedScreen.nickname);
             }
           },
-          // (r) => AuthState.authenticate(AuthenticatedScreen.nickname),
         ),
       );
-      // emit(const AuthState.authenticate(AuthenticatedScreen.dashboard));
     } else {
       emit(const AuthState.unauthenticated());
     }
@@ -48,6 +46,9 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> signOut() async {
+    if(state is _Authenticate) {
+      emit((state as _Authenticate).copyWith(isLoggingOut: true));
+    }
     await _fireAuthService.signOut();
     emit(const AuthState.unauthenticated());
   }

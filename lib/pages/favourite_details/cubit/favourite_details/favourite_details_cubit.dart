@@ -72,19 +72,37 @@ class FavouriteDetailsCubit extends Cubit<FavouriteDetailsState> {
   }
 
   Future<void> removeFavourite() async {
-    emit(state.copyWith(isFailureOrRemoved: none()));
+    emit(
+      state.copyWith(
+        isFailureOrRemoved: none(),
+        isModifyFav: true,
+      ),
+    );
 
     final result = await _favouriteService.deleteFavourite(state.favourite.id);
 
     emit(
       result.fold(
-        (failure) => state.copyWith(isFailureOrRemoved: optionOf(left(failure))),
-        (result) => state.copyWith(isFailureOrRemoved: optionOf(right(result))),
+        (failure) => state.copyWith(
+          isFailureOrRemoved: optionOf(left(failure)),
+          isModifyFav: false,
+        ),
+        (result) => state.copyWith(
+          isFailureOrRemoved: optionOf(right(result)),
+          isModifyFav: false,
+        ),
       ),
     );
   }
 
   Future<void> updateFavouriteName(String favoriteName) async {
+    emit(
+      state.copyWith(
+        isFailureOrRenamed: none(),
+        isModifyFav: true,
+      ),
+    );
+
     final result = await _favouriteService.updateFavourite(
       state.favourite.id,
       FavouriteUpdate(
@@ -95,18 +113,15 @@ class FavouriteDetailsCubit extends Cubit<FavouriteDetailsState> {
     emit(
       result.fold(
         (failure) => state.copyWith(
-          isFailureOrRenamed: optionOf(
-            left(failure),
-          ),
+          isFailureOrRenamed: optionOf(left(failure)),
+          isModifyFav: false,
         ),
         (result) => state.copyWith(
           favourite: state.favourite.copyWith(title: favoriteName),
-          isFailureOrRenamed: optionOf(
-            right(result),
-          ),
+          isFailureOrRenamed: optionOf(right(result)),
+          isModifyFav: false,
         ),
       ),
     );
-    // final result = await _favouriteService.updateFavourite(_arguments.favourite.id, FavouriteCreation(lat: lat, lon: lon, title: title))
   }
 }

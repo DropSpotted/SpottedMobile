@@ -6,6 +6,7 @@ import 'package:spotted/injector_container.dart';
 import 'package:spotted/pages/post_creation/cubit/post_creation_cubit.dart';
 import 'package:spotted/pages/post_creation/post_creation_arguments.dart';
 import 'package:spotted/pages/post_creation/widgets/post_creation_app_bar.dart';
+import 'package:spotted/widgets/overlay/loader_overlay.dart';
 import 'package:spotted/widgets/text_forms/spotted_multiline_text_field.dart';
 
 class PostCreationPage extends StatelessWidget with AutoRouteWrapper {
@@ -25,7 +26,7 @@ class PostCreationPage extends StatelessWidget with AutoRouteWrapper {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<PostCreationCubit, PostCreationState>(
+    return BlocConsumer<PostCreationCubit, PostCreationState>(
       listener: (context, state) {
         state.failureOrSuccess.fold(
           () {},
@@ -40,12 +41,17 @@ class PostCreationPage extends StatelessWidget with AutoRouteWrapper {
           ),
         );
       },
-      child: Scaffold(
-        appBar: PostCreationAppBar(),
-        body: SafeArea(
-          child: _PostCreationTextField(),
-        ),
-      ),
+      builder: (context, state) {
+        return LoaderOverlay(
+          isLoading: state.isLoading,
+          child: Scaffold(
+            appBar: PostCreationAppBar(),
+            body: SafeArea(
+              child: _PostCreationTextField(),
+            ),
+          ),
+        );
+      },
     );
   }
 }

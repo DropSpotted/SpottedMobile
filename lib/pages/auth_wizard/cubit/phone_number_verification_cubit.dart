@@ -1,4 +1,7 @@
 import 'package:bloc/bloc.dart';
+import 'package:dartz/dartz.dart';
+import 'package:fire/error/error_code.dart';
+import 'package:fire/error/fire_error.dart';
 import 'package:fire/fire_auth_service.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:spotted/common/formz/code_formz.dart';
@@ -41,6 +44,8 @@ class PhoneNumberVerificationCubit extends Cubit<PhoneNumberVerificationState> {
   }
 
   Future<void> phoneSubmitted() async {
+    emit(state.copyWith(isLoadingNumber: true));
+
     await _fireAuthService.verifyPhoneNumber(
       phoneNumber: state.countrCode + state.phoneNumberInput.value,
       verificationCompleted: (value) {
@@ -60,26 +65,47 @@ class PhoneNumberVerificationCubit extends Cubit<PhoneNumberVerificationState> {
   }
 
   void _codeSent(String verificationId, int? code) {
-    emit(state.copyWith(verificationId: verificationId, isSuccessfulySend: true));
+    emit(
+      state.copyWith(
+        isLoadingCode: false,
+        isLoadingNumber: false,
+        verificationId: verificationId,
+        isErrorOrSuccessSend: optionOf(right(unit)),
+      ),
+    );
   }
 
   Future<void> verifyCode() async {
+    emit(
+      state.copyWith(isLoadingCode: true),
+    );
     final result =
         await _fireAuthService.signInWithPhone(verificationId: state.verificationId, smsCode: state.codeInput.value);
 
-    result.fold((l) {
-      print(l);
-    }, (r) {
-      print(r);
-      _codeVerified();
-    });
-  }
-
-  void _codeVerified() {
-    emit(state.copyWith(isSuccessfulVerified: true));
+    emit(
+      result.fold(
+        (error) => state.copyWith(
+          isErrorOrSuccessVerified: optionOf(left(error)),
+          isLoadingCode: false,
+          isLoadingNumber: false,
+        ),
+        (result) => state.copyWith(
+          isErrorOrSuccessVerified: optionOf(right(unit)),
+          isLoadingCode: false,
+          isLoadingNumber: false,
+        ),
+      ),
+    );
   }
 
   void resetState() {
-    emit(state.copyWith(isSuccessfulySend: false, isSuccessfulVerified: false));
+    emit(
+      state.copyWith(
+        isLoadingNumber: false,
+        isLoadingCode: false,
+        isErrorOrSuccessSend: none(),
+        isErrorOrSuccessVerified: none(),
+      ),
+    );
   }
 }

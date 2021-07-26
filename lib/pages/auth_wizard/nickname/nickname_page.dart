@@ -7,6 +7,7 @@ import 'package:spotted/common/extensions/api_error_mapper.dart';
 import 'package:spotted/injector_container.dart';
 import 'package:spotted/pages/auth_wizard/nickname/cubit/nickname_cubit.dart';
 import 'package:spotted/widgets/buttons/spotted_button.dart';
+import 'package:spotted/widgets/overlay/loader_overlay.dart';
 import 'package:spotted/widgets/snackbars/spotted_snackbar.dart';
 import 'package:spotted/widgets/text_forms/spotted_text_form.dart';
 
@@ -23,7 +24,7 @@ class NicknamePage extends StatelessWidget with AutoRouteWrapper {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<NicknameCubit, NicknameState>(
+    return BlocConsumer<NicknameCubit, NicknameState>(
       listener: (context, state) {
         state.isFailureOrSuccess.fold(
           () {},
@@ -38,32 +39,37 @@ class NicknamePage extends StatelessWidget with AutoRouteWrapper {
           ),
         );
       },
-      child: Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(Icons.close),
-            onPressed: () => context.read<AuthCubit>().signOut(),
+      builder: (context, state) {
+        return LoaderOverlay(
+          isLoading: state.isLoading,
+          child: Scaffold(
+            appBar: AppBar(
+              leading: IconButton(
+                icon: const Icon(Icons.close),
+                onPressed: () => context.read<AuthCubit>().signOut(),
+              ),
+            ),
+            body: ListView(
+              padding: const EdgeInsets.symmetric(horizontal: Insets.xLarge),
+              children: [
+                const SizedBox(height: Insets.xxLarge),
+                Text(
+                  'Choose your nickname',
+                  style: Theme.of(context).textTheme.headline5,
+                  textAlign: TextAlign.left,
+                ),
+                const SizedBox(height: Insets.xxLarge),
+                SpottedTextForm(
+                  textCapitalization: TextCapitalization.none,
+                  onChanged: (value) => context.read<NicknameCubit>().nicknameTyped(value),
+                ),
+                const SizedBox(height: Insets.xLarge),
+                _NicknameSubmitButton()
+              ],
+            ),
           ),
-        ),
-        body: ListView(
-          padding: const EdgeInsets.symmetric(horizontal: Insets.xLarge),
-          children: [
-            const SizedBox(height: Insets.xxLarge),
-            Text(
-              'Choose your nickname',
-              style: Theme.of(context).textTheme.headline5,
-              textAlign: TextAlign.left,
-            ),
-            const SizedBox(height: Insets.xxLarge),
-            SpottedTextForm(
-              textCapitalization: TextCapitalization.none,
-              onChanged: (value) => context.read<NicknameCubit>().nicknameTyped(value),
-            ),
-            const SizedBox(height: Insets.xLarge),
-            _NicknameSubmitButton()
-          ],
-        ),
-      ),
+        );
+      },
     );
   }
 }

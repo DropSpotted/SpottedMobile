@@ -40,7 +40,6 @@ class FavouritesPage extends StatelessWidget with AutoRouteWrapper {
         },
         child: this,
       ),
-      // child: this,
     );
   }
 
